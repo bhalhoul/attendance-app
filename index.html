@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تطبيق الحضور GPS - بدون إنترنت</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2196f3"/>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    #map { height: 300px; width: 100%; margin-bottom: 15px; border-radius: 10px; }
+    button { padding: 10px 20px; font-size: 16px; border-radius: 5px; background-color: #2196f3; color: white; border: none; cursor: pointer; margin: 5px; }
+    button:disabled { background-color: #ccc; cursor: not-allowed; }
+    #status { margin-top: 15px; font-size: 16px; color: #333; }
+    #log { margin-top: 20px; background: #f0f0f0; padding: 10px; border-radius: 8px; max-height: 150px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+
+<h2>نظام الحضور عبر الموقع الجغرافي (يعمل بدون إنترنت)</h2>
+<div id="map"></div>
+<button id="checkInBtn" disabled>تسجيل الدخول</button>
+<button id="checkOutBtn" disabled>تسجيل الخروج</button>
+<p id="status">جاري تحديد الموقع...</p>
+<div id="log"></div>
+
+<script>
+  const workLat = 35.7596;
+  const workLng = -5.8339;
+  const radius = 50;
+  const checkInBtn = document.getElementById("checkInBtn");
+  const checkOutBtn = document.getElementById("checkOutBtn");
+  const statusText = document.getElementById("status");
+  const logBox = document.getElementById("log");
+
+  function initMap() {
+    const workLocation = { lat: workLat, lng: workLng };
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: workLocation,
+      zoom: 18
+    });
+
+    new google.maps.Marker({ position: workLocation, map: map, title: "موقع العمل" });
+    new google.maps.Circle({ map, center: workLocation, radius: radius, fillColor: '#90caf9', fillOpacity: 0.4, strokeColor: '#2196f3', strokeWeight: 2 });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        new google.maps.Marker({ position: userLoc, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png", title: "موقعك الحالي" });
+
+        const distance = getDistanceFromLatLonInM(workLat, workLng, userLoc.lat, userLoc.lng);
+        statusText.innerText = `أنت على بعد ${distance.toFixed(1)} متر من موقع العمل.`;
+
+        if (distance <= radius) {
+          checkInBtn.disabled = false;
+          checkOutBtn.disabled = false;
+        } else {
+          statusText.innerText += "\nأنت خارج المنطقة المسموح بها.";
+        }
+      }, () => {
+        statusText.innerText = "فشل تحديد الموقع.";
+      });
+    } else {
+      statusText.innerText = "المتصفح لا يدعم GPS.";
+    }
+    showLog();
+  }
+
+  function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  function logAttendance(type) {
+    const now = new Date().toLocaleString();
+    const record = { type, time: now };
+    let data = JSON.parse(localStorage.getItem("attendance") || "[]");
+    data.push(record);
+    localStorage.setItem("attendance", JSON.stringify(data));
+    alert(`تم تسجيل ${type === 'in' ? 'الدخول' : 'الخروج'} بنجاح في: ${now}`);
+    showLog();
+  }
+
+  function showLog() {
+    const data = JSON.parse(localStorage.getItem("attendance") || "[]");
+    logBox.innerHTML = "<strong>سجل الحضور:</strong><br>" + data.map(entry => `${entry.type === 'in' ? 'دخول' : 'خروج'} - ${entry.time}`).join("<br>");
+  }
+
+  checkInBtn.addEventListener("click", () => logAttendance('in'));
+  checkOutBtn.addEventListener("click", () => logAttendance('out'));
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js').then(() => console.log("Service Worker Registered"));
+  }
+
+  window.onload = initMap;
+</script>
+</body>
+</html>
