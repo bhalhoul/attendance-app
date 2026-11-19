@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:120px}
-html,body{overflow-x:clip}
+main,.hero,.ticker,.cats{overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}
 [dir=rtl] body{font-family:Cairo,Inter,sans-serif}
 img{max-width:100%;display:block}
@@ -31,7 +31,7 @@ button{font:inherit;cursor:pointer}
 /* top bar */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(14,14,14,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:12px;height:60px}
-.brand{font-family:Anton,sans-serif;font-size:22px;letter-spacing:.5px;text-decoration:none;white-space:nowrap}
+.brand{font-family:Anton,sans-serif;font-size:22px;letter-spacing:.5px;text-decoration:none;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .brand b{color:var(--brand);font-weight:400}
 .top .sp{flex:1}
 .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);padding:8px 12px;border-radius:999px;font-size:14px;text-decoration:none}
@@ -41,17 +41,69 @@ button{font:inherit;cursor:pointer}
 .hide-sm{display:inline-flex}
 
 /* hero */
-.hero{position:relative;border-bottom:1px solid var(--line);background:#0b0b0b}
-.hero .bg{width:100%;aspect-ratio:849/258;max-height:420px;background:url(img/hero.webp) center/cover no-repeat;position:relative}
-.hero .bg::after{content:"";position:absolute;inset:auto 0 0 0;height:30%;background:linear-gradient(180deg,transparent,#0b0b0b)}
-.hero .wrap{position:relative;padding-top:20px;padding-bottom:28px}
-.hero h1{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(32px,5vw,56px);line-height:1.05;margin:0}
-[dir=rtl] .hero h1{font-family:Cairo,sans-serif;font-weight:800}
-.hero h1 span{color:var(--brand)}
-.hero p{margin:10px 0 18px;color:#d8d4cb;max-width:620px}
+.hero{position:relative;background:radial-gradient(120% 90% at 85% 40%,#2a2410 0,#141208 38%,var(--bg) 70%);border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(245,184,0,.035) 0 2px,transparent 2px 22px);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:24px;padding-block:56px 64px}
+.hero-txt{min-width:0}
+.logo{display:flex;width:max-content;flex-direction:column;align-items:flex-start;line-height:1;margin-bottom:22px}
+.logo .a{font-family:Anton,sans-serif;font-size:clamp(20px,2.4vw,26px);letter-spacing:2px;color:var(--ink)}
+.logo .b{font-family:Anton,sans-serif;font-size:clamp(15px,1.6vw,18px);letter-spacing:6px;background:var(--brand);color:var(--brand-ink);padding:3px 14px 2px;border-radius:4px;margin-top:4px;transform:skewX(-8deg)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);font-weight:700;margin-bottom:14px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--brand)}
+.hero h1{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,92px);line-height:.95;margin:0;text-transform:uppercase;letter-spacing:.5px;text-wrap:balance}
+[dir=rtl] .hero h1{font-family:Cairo,sans-serif;font-weight:800;text-transform:none;line-height:1.15;font-size:clamp(38px,6vw,76px)}
+.hero h1 span{color:var(--brand);display:block}
+.hero h1 em{font-style:normal;-webkit-text-stroke:2px var(--brand);color:transparent}
+.hero p{margin:18px 0 26px;color:#cfcabd;max-width:520px;font-size:clamp(15px,1.4vw,17px)}
+.stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.stats div{display:flex;flex-direction:column}
+.stats b{font-family:Anton,sans-serif;font-weight:400;font-size:28px;color:var(--ink);line-height:1}
+.stats small{color:var(--muted);font-size:12px;margin-top:6px;letter-spacing:.04em}
+.art{position:relative;aspect-ratio:1/1;width:100%;max-width:560px;justify-self:center}
+.disc{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd24d,var(--brand) 45%,#c48f00);box-shadow:0 0 0 14px rgba(245,184,0,.08),0 0 0 30px rgba(245,184,0,.04),0 40px 120px rgba(245,184,0,.25)}
+.disc::after{content:"";position:absolute;inset:-9%;border-radius:50%;border:2px dashed rgba(245,184,0,.35);animation:spin 40s linear infinite}
+.art img{position:absolute;filter:drop-shadow(0 24px 30px rgba(0,0,0,.55))}
+.art .i1{width:92%;left:4%;top:18%;transform:rotate(-12deg);animation:float 6s ease-in-out infinite}
+.art .i2{width:62%;right:-6%;bottom:2%;animation:float 7s ease-in-out infinite reverse}
+.art .i3{width:46%;left:-4%;bottom:6%;transform:rotate(8deg);animation:float 8s ease-in-out infinite}
+.badge{position:absolute;top:2%;right:4%;width:112px;height:112px;border-radius:50%;background:var(--bg);border:2px solid var(--brand);display:grid;place-items:center;text-align:center;transform:rotate(10deg);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+[dir=rtl] .badge{right:auto;left:4%}
+.badge b{direction:ltr;unicode-bidi:isolate;display:block;font-family:Anton,sans-serif;font-weight:400;font-size:28px;color:var(--brand);line-height:1}
+.badge small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);line-height:1.2;display:block;margin-top:4px}
+@keyframes float{50%{translate:0 -10px}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ticker{background:var(--brand);color:var(--brand-ink);border-block:1px solid #000;overflow:hidden;white-space:nowrap}
+.ticker div{display:inline-flex;gap:28px;padding:12px 0;font-family:Anton,sans-serif;font-size:20px;letter-spacing:1px;animation:tick 30s linear infinite}
+.ticker span::after{content:"✦";margin-inline-start:28px;font-size:14px;vertical-align:middle}
+@keyframes tick{to{transform:translateX(-50%)}}
+[dir=rtl] .ticker div{animation-name:tickr}
+@keyframes tickr{to{transform:translateX(50%)}}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 26px}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:180px;min-width:0;padding:14px;border-radius:var(--r);background:linear-gradient(160deg,#232312,#151515);border:1px solid var(--line);text-decoration:none;overflow:hidden;transition:.2s}
+.tile:hover{border-color:var(--brand);transform:translateY(-3px)}
+.tile img{position:absolute;top:8px;right:-10px;width:72%;filter:drop-shadow(0 10px 14px rgba(0,0,0,.6));transition:.3s}
+[dir=rtl] .tile img{right:auto;left:-10px}
+.tile.sm img{width:42%;right:10px;top:12px}
+[dir=rtl] .tile.sm img{left:10px}
+.tile:hover img{transform:scale(1.06) rotate(-3deg)}
+.tile::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(12,12,8,.92));pointer-events:none}
+.tile b,.tile small{z-index:1;text-shadow:0 2px 8px #000}
+.tile b{position:relative;font-family:Anton,sans-serif;font-weight:400;font-size:19px;letter-spacing:.3px}
+[dir=rtl] .tile b{font-family:Cairo,sans-serif;font-weight:800}
+.tile small{position:relative;color:var(--brand);font-weight:700;font-size:12px}
+.h2x{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(26px,3vw,36px);margin:34px 0 14px;letter-spacing:.5px}
+[dir=rtl] .h2x{font-family:Cairo,sans-serif;font-weight:800}
+.h2x span{color:var(--brand)}
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;padding-block:28px 40px;gap:8px}
+  .art{max-width:380px;order:-1}
+  .badge{width:88px;height:88px}.badge b{font-size:22px}
+}
+@media (max-width:560px){.tiles{gap:8px}.tile{min-height:112px;padding:10px}.tile b{font-size:15px}.tile img{width:80%}.stats{gap:18px}.stats b{font-size:24px}}
 .cta{display:flex;flex-wrap:wrap;gap:10px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;font-weight:700;text-decoration:none;border:0}
-.btn.y{background:var(--brand);color:var(--brand-ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:12px;transition:.15s;font-weight:700;text-decoration:none;border:0}
+.btn.y{background:var(--brand);color:var(--brand-ink);box-shadow:0 8px 24px rgba(245,184,0,.25)}
+.btn:hover{transform:translateY(-2px)}
 .btn.g{background:var(--ok);color:#062b14}
 .btn.o{background:rgba(0,0,0,.5);color:var(--ink);border:1px solid #555}
 .btn svg{width:18px;height:18px}
@@ -167,6 +219,8 @@ footer a{color:var(--brand);text-decoration:none}
 }
 @media (max-width:560px){
   .hide-sm{display:none}
+  .brand{font-size:18px}
+  .top .wrap{gap:8px}
   .sec-b{padding:6px 12px 10px}
   .sec-h{padding:0 14px;min-height:68px}
   .sec-h img{height:76px;bottom:-8px}
@@ -174,7 +228,7 @@ footer a{color:var(--brand);text-decoration:none}
   .chip{padding:5px 7px;font-size:14px}
   .chip i{display:none}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -195,19 +249,34 @@ footer a{color:var(--brand);text-decoration:none}
 </header>
 
 <section class="hero">
-  <div class="bg" role="img" aria-label="Hamburguesa, patatas y chawarma"></div>
   <div class="wrap">
-    <h1 data-i="heroT">Sabor de verdad,<br><span>a tu puerta.</span></h1>
-    <p data-i="heroP">Bocadillos, camperos, chawarmas, tacos, pizzas y raciones. Recoge en el local o pide a domicilio.</p>
-    <div class="cta">
-      <a class="btn y" href="#carta" data-i="seeMenu">Ver la carta</a>
-      <a class="btn g" href="https://wa.me/34657580340" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
-        WhatsApp</a>
-      <a class="btn o" href="tel:+34657580340">657 580 340</a>
+    <div class="hero-txt">
+      <div class="logo" aria-label="Hamburguesería Dunia"><span class="a">HAMBURGUESERÍA</span><span class="b">DUNIA</span></div>
+      <div class="eyebrow" data-i="eyebrow">Para llevar · A domicilio</div>
+      <h1 data-i="heroT">Hecho al<br>momento.<span>Directo a tu puerta.</span></h1>
+      <p data-i="heroP">Chawarma al corte, tacos gratinados, pizzas en tres tamaños y bocadillos recién hechos. Pide por teléfono o por WhatsApp.</p>
+      <div class="cta">
+        <a class="btn y" href="#carta" data-i="seeMenu">Ver la carta</a>
+        <a class="btn g" href="https://wa.me/34657580340" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+          WhatsApp</a>
+      </div>
+      <div class="stats">
+        <div><b>150+</b><small data-i="stDishes">platos en carta</small></div>
+        <div><b>16</b><small data-i="stPizzas">pizzas, 3 tamaños</small></div>
+        <div><b>2,00 €</b><small data-i="stDel">envío a domicilio</small></div>
+      </div>
+    </div>
+    <div class="art" aria-hidden="true">
+      <div class="disc"></div>
+      <img class="i3" src="img/platos.webp" alt="">
+      <img class="i1" src="img/chawarma.webp" alt="">
+      <img class="i2" src="img/pizza.webp" alt="">
+      <div class="badge"><div><b>7 €</b><small data-i="badge">Menú kebab<br>con bebida</small></div></div>
     </div>
   </div>
 </section>
+<div class="ticker" aria-hidden="true"><div id="tick"></div></div>
 
 <div class="wrap">
   <div class="info">
@@ -219,6 +288,8 @@ footer a{color:var(--brand);text-decoration:none}
       <span><small data-i="combos">Menús</small><strong data-i="combosT">Incluyen bebida y patatas</strong></span></div>
   </div>
 </div>
+
+<div class="wrap"><h2 class="h2x" data-i="explore">Explora la <span>carta</span></h2><div class="tiles" id="tiles"></div></div>
 
 <nav class="cats" id="carta" aria-label="Categorías"><div class="wrap" id="catNav"></div></nav>
 
@@ -306,8 +377,8 @@ const MENU = [
 const DELIVERY = 2, WA = "34657580340";
 
 const T = {
- es:{heroT:'Sabor de verdad,<br><span>a tu puerta.</span>',heroP:"Bocadillos, camperos, chawarmas, tacos, pizzas y raciones. Recoge en el local o pide a domicilio.",seeMenu:"Ver la carta",callUs:"Llámanos",delivery:"Servicio a domicilio",deliveryU:"SERVICIO A DOMICILIO",combos:"Menús",combosT:"Incluyen bebida y patatas",search:"Buscar en la carta… (pollo, gambas, pizza)",noRes:"No hay resultados.",pricesNote:"Precios en euros, IVA incluido.",yourOrder:"Tu pedido",homeDel:"Entrega a domicilio (+2,00 €)",name:"Nombre",addr:"Dirección y notas",subtotal:"Subtotal",sendWa:"Enviar pedido por WhatsApp",orCall:"o llama al 956 508 548",lang:"العربية",empty:"Tu pedido está vacío.<br>Pulsa <b>+</b> junto a un plato para añadirlo.",added:"Añadido",viewOrder:"Ver pedido",variety:"Variedad",items:"art.",pickup:"Recoger en el local",waHi:"Hola, quiero hacer un pedido:"},
- ar:{heroT:'طعم حقيقي،<br><span>حتى باب بيتك.</span>',heroP:"ساندويتشات، كامبيروس، شاورما، تاكوس، بيتزا وحصص. استلم من المحل أو اطلب توصيل للمنزل.",seeMenu:"عرض القائمة",callUs:"اتصل بنا",delivery:"خدمة التوصيل",deliveryU:"خدمة التوصيل للمنازل",combos:"الوجبات",combosT:"تشمل مشروب وبطاطس",search:"ابحث في القائمة… (pollo، pizza)",noRes:"لا توجد نتائج.",pricesNote:"الأسعار باليورو شاملة الضريبة.",yourOrder:"طلبك",homeDel:"توصيل للمنزل (+2,00 €)",name:"الاسم",addr:"العنوان والملاحظات",subtotal:"المجموع الفرعي",sendWa:"أرسل الطلب عبر واتساب",orCall:"أو اتصل على 956 508 548",lang:"Español",empty:"طلبك فارغ.<br>اضغط <b>+</b> بجانب أي طبق لإضافته.",added:"تمت الإضافة",viewOrder:"عرض الطلب",variety:"الصنف",items:"عنصر",pickup:"استلام من المحل",waHi:"مرحبا، أريد أن أطلب:"}
+ es:{heroT:'Hecho al<br>momento.<span>Directo a tu puerta.</span>',heroP:"Chawarma al corte, tacos gratinados, pizzas en tres tamaños y bocadillos recién hechos. Pide por teléfono o por WhatsApp.",eyebrow:"Para llevar · A domicilio",stDishes:"platos en carta",stPizzas:"pizzas, 3 tamaños",stDel:"envío a domicilio",badge:"Menú kebab<br>con bebida",explore:'Explora la <span>carta</span>',from:"desde",seeMenu:"Ver la carta",callUs:"Llámanos",delivery:"Servicio a domicilio",deliveryU:"SERVICIO A DOMICILIO",combos:"Menús",combosT:"Incluyen bebida y patatas",search:"Buscar en la carta… (pollo, gambas, pizza)",noRes:"No hay resultados.",pricesNote:"Precios en euros, IVA incluido.",yourOrder:"Tu pedido",homeDel:"Entrega a domicilio (+2,00 €)",name:"Nombre",addr:"Dirección y notas",subtotal:"Subtotal",sendWa:"Enviar pedido por WhatsApp",orCall:"o llama al 956 508 548",lang:"العربية",empty:"Tu pedido está vacío.<br>Pulsa <b>+</b> junto a un plato para añadirlo.",added:"Añadido",viewOrder:"Ver pedido",variety:"Variedad",items:"art.",pickup:"Recoger en el local",waHi:"Hola, quiero hacer un pedido:"},
+ ar:{heroT:'طازج<br>في لحظته.<span>حتى باب بيتك.</span>',heroP:"شاورما على السيخ، تاكوس، بيتزا بثلاثة أحجام وساندويتشات طازجة. اطلب بالهاتف أو عبر واتساب.",eyebrow:"سفري · توصيل للمنازل",stDishes:"طبق في القائمة",stPizzas:"بيتزا، 3 أحجام",stDel:"رسوم التوصيل",badge:"وجبة كباب<br>مع مشروب",explore:'تصفّح <span>القائمة</span>',from:"ابتداءً من",seeMenu:"عرض القائمة",callUs:"اتصل بنا",delivery:"خدمة التوصيل",deliveryU:"خدمة التوصيل للمنازل",combos:"الوجبات",combosT:"تشمل مشروب وبطاطس",search:"ابحث في القائمة… (pollo، pizza)",noRes:"لا توجد نتائج.",pricesNote:"الأسعار باليورو شاملة الضريبة.",yourOrder:"طلبك",homeDel:"توصيل للمنزل (+2,00 €)",name:"الاسم",addr:"العنوان والملاحظات",subtotal:"المجموع الفرعي",sendWa:"أرسل الطلب عبر واتساب",orCall:"أو اتصل على 956 508 548",lang:"Español",empty:"طلبك فارغ.<br>اضغط <b>+</b> بجانب أي طبق لإضافته.",added:"تمت الإضافة",viewOrder:"عرض الطلب",variety:"الصنف",items:"عنصر",pickup:"استلام من المحل",waHi:"مرحبا، أريد أن أطلب:"}
 };
 
 let L = "es";
@@ -334,6 +405,10 @@ function render(){
   document.querySelectorAll("[data-ip]").forEach(el=>{ el.placeholder = T[L][el.dataset.ip]; });
   $("#lang").textContent = T[L].lang;
 
+  const minP = c => Math.min(...(c.items||c.subs.flatMap(x=>x.items)).flatMap(([n,...ps])=>ps.filter(p=>typeof p==="number")));
+  $("#tiles").innerHTML = MENU.map(c=>`<a class="tile${c.id==="bocadillos"?" sm":""}" href="#${c.id}"><img src="img/${c.img}.webp" alt="" loading="lazy"><b>${c[L]}</b><small>${T[L].from} <span class="price">${eur(minP(c))}</span></small></a>`).join("");
+  const tk = MENU.map(c=>`<span>${c[L]}</span>`).join("");
+  $("#tick").innerHTML = tk+tk+tk+tk;
   $("#catNav").innerHTML = MENU.map(c=>`<a href="#${c.id}" data-c="${c.id}">${c[L]}</a>`).join("");
   $("#menu").innerHTML = MENU.map(c=>{
     let body = "";
@@ -376,7 +451,7 @@ function spy(){
   spyObs = new IntersectionObserver(es=>{
     es.forEach(e=>{ if(e.isIntersecting){
       document.querySelectorAll("#catNav a").forEach(a=>a.classList.toggle("on", a.dataset.c===e.target.id));
-      const on = document.querySelector("#catNav a.on"); if(on) on.scrollIntoView({block:"nearest",inline:"center"});
+      const on = document.querySelector("#catNav a.on"); if(on){ const w=on.parentElement; w.scrollTo({left:on.offsetLeft-(w.clientWidth-on.offsetWidth)/2,behavior:"smooth"}); }
     }});
   },{rootMargin:"-130px 0px -65% 0px"});
   document.querySelectorAll(".sec").forEach(s=>spyObs.observe(s));
