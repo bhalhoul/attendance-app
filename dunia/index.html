@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="es" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hamburguesería Dunia</title>
+<meta name="description" content="Hamburguesería Dunia — bocadillos, camperos, chawarmas, tacos, pizzas y más. Servicio a domicilio. Pide por teléfono o WhatsApp.">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cairo:wght@400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0e0e; --bg2:#171717; --card:#1c1c1c; --line:#2c2c2c;
+  --ink:#f4f1ea; --muted:#a9a59c; --brand:#f5b800; --brand-ink:#141100;
+  --olive:#3a3d1f; --ok:#25d366;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}
+[dir=rtl] body{font-family:Cairo,Inter,sans-serif}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:30;background:rgba(14,14,14,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:60px}
+.brand{font-family:Anton,sans-serif;font-size:22px;letter-spacing:.5px;text-decoration:none;white-space:nowrap}
+.brand b{color:var(--brand);font-weight:400}
+.top .sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);padding:8px 12px;border-radius:999px;font-size:14px;text-decoration:none}
+.pill:hover{border-color:var(--brand)}
+.cartbtn{background:var(--brand);color:var(--brand-ink);border:0;font-weight:700}
+.cartbtn .n{background:var(--brand-ink);color:var(--brand);border-radius:999px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:12px;padding:0 6px}
+.hide-sm{display:inline-flex}
+
+/* hero */
+.hero{position:relative;border-bottom:1px solid var(--line);background:#0b0b0b}
+.hero .bg{width:100%;aspect-ratio:849/258;max-height:420px;background:url(img/hero.webp) center/cover no-repeat;position:relative}
+.hero .bg::after{content:"";position:absolute;inset:auto 0 0 0;height:30%;background:linear-gradient(180deg,transparent,#0b0b0b)}
+.hero .wrap{position:relative;padding-top:20px;padding-bottom:28px}
+.hero h1{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(32px,5vw,56px);line-height:1.05;margin:0}
+[dir=rtl] .hero h1{font-family:Cairo,sans-serif;font-weight:800}
+.hero h1 span{color:var(--brand)}
+.hero p{margin:10px 0 18px;color:#d8d4cb;max-width:620px}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;font-weight:700;text-decoration:none;border:0}
+.btn.y{background:var(--brand);color:var(--brand-ink)}
+.btn.g{background:var(--ok);color:#062b14}
+.btn.o{background:rgba(0,0,0,.5);color:var(--ink);border:1px solid #555}
+.btn svg{width:18px;height:18px}
+
+/* info strip */
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px auto}
+.info div{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;gap:12px;align-items:center}
+.info .ic{width:40px;height:40px;border-radius:10px;background:var(--olive);display:grid;place-items:center;color:var(--brand);flex:none}
+.info small{display:block;color:var(--muted);font-size:12px}
+.info strong{font-size:15px}
+
+/* category nav */
+.cats{position:sticky;top:60px;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.cats .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+.cats .wrap::-webkit-scrollbar{display:none}
+.cats a{flex:none;text-decoration:none;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.cats a.on{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:700}
+.search{position:relative;margin:18px 0 6px}
+.search input{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:13px 14px 13px 42px;font:inherit;font-size:16px}
+[dir=rtl] .search input{padding:13px 42px 13px 14px}
+.search input:focus{outline:2px solid var(--brand);outline-offset:1px}
+.search svg{position:absolute;top:50%;left:14px;transform:translateY(-50%);width:18px;color:var(--muted)}
+[dir=rtl] .search svg{left:auto;right:14px}
+.empty{display:none;text-align:center;color:var(--muted);padding:40px 0}
+
+/* sections */
+.sec{margin:28px 0 36px}
+.sec-h{display:flex;align-items:center;gap:16px;background:linear-gradient(90deg,var(--olive),#23250f 70%,transparent);border-radius:var(--r) var(--r) 0 0;padding:0 18px;min-height:76px;position:relative;overflow:visible;border:1px solid #4b4d22;border-bottom:0}
+[dir=rtl] .sec-h{background:linear-gradient(270deg,var(--olive),#23250f 70%,transparent)}
+.sec-h h2{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(24px,3.2vw,32px);letter-spacing:.5px;margin:0;line-height:1.1}
+[dir=rtl] .sec-h h2{font-family:Cairo,sans-serif;font-weight:800}
+.sec-h .note{font-size:13px;color:#d9d3a8}
+.sec-h img{position:absolute;right:8px;bottom:-14px;height:118px;width:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.6));pointer-events:none}
+[dir=rtl] .sec-h img{right:auto;left:8px}
+.sec-b{background:var(--card);border:1px solid var(--line);border-top:2px solid var(--brand);border-radius:0 0 var(--r) var(--r);padding:8px 18px 14px}
+.sub{font-family:Anton,sans-serif;font-weight:400;color:var(--brand);font-size:20px;letter-spacing:.4px;margin:18px 0 4px}
+[dir=rtl] .sub{font-family:Cairo,sans-serif;font-weight:800}
+.sub small{font-family:Inter,sans-serif;color:var(--muted);font-size:12px;margin-inline-start:8px;letter-spacing:0}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;column-gap:36px}
+.row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed #333}
+.row:last-child{border-bottom:0}
+.row .nm{flex:1;min-width:0}
+.row .nm span{display:block}
+.row .lead{flex:1;border-bottom:1px dotted #444;margin:0 4px;transform:translateY(-4px);min-width:10px}
+.price,.chip,#tSub,#tDel,#tTot,.deliv .p{direction:ltr;unicode-bidi:isolate}
+.price{font-weight:700;color:var(--brand);white-space:nowrap;font-variant-numeric:tabular-nums}
+.add{flex:none;width:32px;height:32px;border-radius:9px;border:1px solid #4a4a4a;background:#232323;color:var(--brand);display:grid;place-items:center;font-size:20px;line-height:1;transition:.15s}
+.add:hover{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.add:active{transform:scale(.92)}
+
+/* multi price table */
+.mt{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.mt th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;text-align:center;padding:10px 4px;border-bottom:1px solid var(--line)}
+.mt th:first-child{text-align:start}
+.mt td{padding:7px 4px;border-bottom:1px dashed #333;text-align:center}
+.mt td:first-child{text-align:start}
+.mt tr:last-child td{border-bottom:0}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #4a4a4a;background:#232323;color:var(--brand);font-weight:700;border-radius:9px;padding:6px 10px;transition:.15s;font-variant-numeric:tabular-nums}
+.chip:hover{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.chip i{font-style:normal;opacity:.7;font-weight:400}
+.na{color:#555}
+
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;align-items:start}
+.layout .full{grid-column:1/-1}
+
+/* delivery band */
+.deliv{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:10px 0 40px;padding:22px;border-radius:var(--r);background:repeating-linear-gradient(135deg,#1a1a1a 0 14px,#161616 14px 28px);border:1px solid var(--line);text-align:center}
+.deliv svg{width:54px;height:54px;color:var(--brand)}
+.deliv strong{font-family:Anton,sans-serif;font-weight:400;font-size:26px;letter-spacing:.5px}
+[dir=rtl] .deliv strong{font-family:Cairo,sans-serif;font-weight:800}
+.deliv .p{color:var(--brand);font-family:Anton,sans-serif;font-size:34px}
+
+footer{border-top:1px solid var(--line);padding:30px 0 110px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+footer a{color:var(--brand);text-decoration:none}
+
+/* cart */
+.fab{position:fixed;inset-inline-end:16px;bottom:16px;z-index:40;display:none;box-shadow:0 10px 30px rgba(0,0,0,.6);padding:14px 18px;font-size:15px}
+.fab.show{display:inline-flex}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;opacity:0;pointer-events:none;transition:.2s}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(420px,100%);background:var(--bg2);z-index:60;transform:translateX(105%);transition:transform .25s ease;display:flex;flex-direction:column;border-inline-start:1px solid var(--line)}
+[dir=rtl] .drawer{transform:translateX(-105%)}
+.drawer.open{transform:none!important}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--line)}
+.dh h3{margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:24px}
+[dir=rtl] .dh h3{font-family:Cairo,sans-serif;font-weight:800}
+.x{background:none;border:1px solid var(--line);color:var(--ink);width:36px;height:36px;border-radius:10px;font-size:18px}
+.dl{flex:1;overflow:auto;padding:8px 16px}
+.ci{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.ci .t{flex:1;min-width:0}
+.ci .t small{display:block;color:var(--muted)}
+.q{display:flex;align-items:center;gap:6px}
+.q button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:#222;color:var(--ink)}
+.q span{min-width:18px;text-align:center;font-weight:700}
+.df{padding:16px;border-top:1px solid var(--line);display:grid;gap:10px}
+.df label{display:flex;gap:8px;align-items:center;font-size:14px}
+.df input[type=text],.df textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit;font-size:16px}
+.df textarea{resize:vertical;min-height:44px}
+.tot{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.tot.big{font-size:20px;color:var(--ink);font-weight:700}
+.tot.big b{color:var(--brand)}
+.dempty{color:var(--muted);text-align:center;padding:40px 10px}
+.toast{position:fixed;left:50%;top:76px;transform:translateX(-50%) translateY(20px);background:var(--brand);color:var(--brand-ink);padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.2s;z-index:70;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.toast{transform:translateX(-50%) translateY(-10px)}
+
+@media (max-width:860px){
+  .layout,.grid2{grid-template-columns:1fr}
+  .info{grid-template-columns:1fr}
+  .sec-h img{height:92px}
+}
+@media (max-width:560px){
+  .hide-sm{display:none}
+  .sec-b{padding:6px 12px 10px}
+  .sec-h{padding:0 14px;min-height:68px}
+  .sec-h img{height:76px;bottom:-8px}
+  .mt th{font-size:10px;padding:8px 2px}
+  .chip{padding:5px 7px;font-size:14px}
+  .chip i{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">HAMBURGUESERÍA <b>DUNIA</b></a>
+    <span class="sp"></span>
+    <a class="pill hide-sm" href="tel:+34956508548" aria-label="Llamar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+      956 508 548</a>
+    <button class="pill" id="lang" type="button">العربية</button>
+    <button class="pill cartbtn" id="openCart" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM5.2 4l.94 2H21l-3.6 7H8.1l-.9 1.6V15h12v2H5v-2.4L6.6 12 3.6 4H1V2h3.4z"/></svg>
+      <span class="n" id="cartN">0</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="bg" role="img" aria-label="Hamburguesa, patatas y chawarma"></div>
+  <div class="wrap">
+    <h1 data-i="heroT">Sabor de verdad,<br><span>a tu puerta.</span></h1>
+    <p data-i="heroP">Bocadillos, camperos, chawarmas, tacos, pizzas y raciones. Recoge en el local o pide a domicilio.</p>
+    <div class="cta">
+      <a class="btn y" href="#carta" data-i="seeMenu">Ver la carta</a>
+      <a class="btn g" href="https://wa.me/34657580340" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg>
+        WhatsApp</a>
+      <a class="btn o" href="tel:+34657580340">657 580 340</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="info">
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
+      <span><small data-i="callUs">Llámanos</small><strong><a href="tel:+34956508548">956 508 548</a> · <a href="tel:+34657580340">657 580 340</a></strong></span></div>
+    <div><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 7a3 3 0 0 0-3-3h-3v2h3a1 1 0 0 1 1 1v2.6L13.5 14H10V9H6a4 4 0 0 0-4 4v3h2a3 3 0 0 0 6 0h4.5L19 10.4zM7 17a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm12-4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM5 5h5v2H5z"/></svg></span>
+      <span><small data-i="delivery">Servicio a domicilio</small><strong>2,00 €</strong></span></div>
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.1 1.7 3.8 3.8 4V22h2.5v-9c2.1-.2 3.7-1.9 3.7-4V2h-2zm5-3v8h2.5v8H21V2c-2.8 0-5 2.2-5 4z"/></svg></span>
+      <span><small data-i="combos">Menús</small><strong data-i="combosT">Incluyen bebida y patatas</strong></span></div>
+  </div>
+</div>
+
+<nav class="cats" id="carta" aria-label="Categorías"><div class="wrap" id="catNav"></div></nav>
+
+<main class="wrap">
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Buscar en la carta… (pollo, gambas, pizza)" data-ip="search" autocomplete="off">
+  </div>
+  <p class="empty" id="empty" data-i="noRes">No hay resultados.</p>
+  <div id="menu" class="layout"></div>
+
+  <div class="deliv">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 7a3 3 0 0 0-3-3h-3v2h3a1 1 0 0 1 1 1v2.6L13.5 14H10V9H6a4 4 0 0 0-4 4v3h2a3 3 0 0 0 6 0h4.5L19 10.4zM7 17a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm12-4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM5 5h5v2H5z"/></svg>
+    <strong data-i="deliveryU">SERVICIO A DOMICILIO</strong>
+    <span class="p">2,00 €</span>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong style="color:var(--ink)">Hamburguesería Dunia</strong><br>
+      <a href="tel:+34956508548">956 508 548</a> · <a href="tel:+34657580340">657 580 340</a></div>
+    <div data-i="pricesNote">Precios en euros, IVA incluido.</div>
+  </div>
+</footer>
+
+<button class="btn y fab" id="fab" type="button"></button>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Pedido" aria-hidden="true">
+  <div class="dh"><h3 data-i="yourOrder">Tu pedido</h3><button class="x" id="closeCart" type="button" aria-label="Cerrar">✕</button></div>
+  <div class="dl" id="cartList"></div>
+  <div class="df">
+    <label><input type="checkbox" id="deliv" checked> <span data-i="homeDel">Entrega a domicilio (+2,00 €)</span></label>
+    <input type="text" id="cName" placeholder="Nombre" data-ip="name" autocomplete="name">
+    <textarea id="cAddr" placeholder="Dirección y notas" data-ip="addr" rows="2"></textarea>
+    <div class="tot"><span data-i="subtotal">Subtotal</span><span id="tSub">0,00 €</span></div>
+    <div class="tot"><span data-i="delivery">Servicio a domicilio</span><span id="tDel">2,00 €</span></div>
+    <div class="tot big"><span>Total</span><b id="tTot">0,00 €</b></div>
+    <button class="btn g" id="send" type="button" style="justify-content:center">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>
+      <span data-i="sendWa">Enviar pedido por WhatsApp</span></button>
+    <a class="btn o" href="tel:+34956508548" style="justify-content:center" data-i="orCall">o llama al 956 508 548</a>
+  </div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== DATOS DE LA CARTA (editar aquí precios y platos) ===== */
+const MENU = [
+ {id:"bocadillos", es:"Bocadillos y Camperos", ar:"ساندويتشات وكامبيروس", img:"bocadillo",
+  cols:{es:["Bocadillo","Campero"],ar:["ساندويتش","كامبيرو"]}, full:true,
+  items:[["Chawarma",5,6],["Corazones",3.5,4.5],["Empanado",4,5],["Empanado con gambas",4.5,6],["Filete aliñado",4,5],["Filete al limón",4,5],["Filete de pollo",3.5,4.5],["Hamburguesa",4,5],["Marinero",5,6],["Pinchito de pollo",3.5,4.5],["Pinchito de ternera",4.5,5],["Tortilla de patatas",3,5],["Vegetal",3,4.5],["Crispi",5,null],["Mixto",4,6],["Tortilla francesa",2.5,4],["Tortilla con gambas",null,6]],
+  subs:[
+   {es:"Menús",ar:"وجبات",note:{es:"Incluye bebida y patatas fritas",ar:"تشمل مشروب وبطاطس مقلية"},
+    items:[["Menú bocadillo",6],["Menú bocadillo empanado",6.5],["Menú bocadillo empanado con gambas",7],["Menú campero",7.5],["Menú campero empanado con gambas",8]]},
+   {es:"Extras",ar:"إضافات",items:[["Queso",.5],["Huevo",.5]]}
+  ]},
+ {id:"pizzas", es:"Pizzas", ar:"بيتزا", img:"pizza", full:true,
+  cols:{es:["Pequeña","Mediana","Grande"],ar:["صغيرة","وسط","كبيرة"]},
+  items:[["Caprichosa",8,10,15],["Chawarma",8,12,16],["Margarita",7,9,15],["Marinera",8,12,16],["Pollo",8,11,16],["Especial",8,12,16],["Góndola",8,11,16],["Hawaiana",8,11,16],["Libanesa",8,12,16],["Vegetal",7,10,15],["4 quesos",7,10,15],["Real",8,12,16],["Atún",7,10,15],["Barbacoa",8,11,16],["Boloñesa",8,11,16],["Al gusto",8,12,17]]},
+ {id:"chawarmas", es:"Chawarmas", ar:"شاورما", img:"chawarma",
+  items:[["Menú kebab",7,{es:"Incluye bebida y patatas fritas",ar:"يشمل مشروب وبطاطس"}],["Chawarma mixto",5.5],["Chawarma de pollo",5],["Chawarma de ternera",6],["Medio plato de shawarma",6],["Plato de shawarma",8],["Plato especial de shawarma",8],["Extra shawarma",1]]},
+ {id:"tacos", es:"Tacos", ar:"تاكوس", img:"tacos",
+  items:[["Taco de corazones",5],["Taco crispi",6],["Taco empanado con gambas",6],["Taco empanado",5.5],["Taco de filete de pollo",5],["Taco kebab",6],["Taco mixto",6],["Taco de nuggets",6],["Taco de pinchito de pollo",5],["Taco de pinchito de ternera",6],["Taco de carne picada",6]],
+  subs:[
+   {es:"Súper tacos",ar:"سوبر تاكوس",items:[["Súper taco de carne picada",8.5],["Súper taco de chawarma",9],["Súper taco empanado con gambas",9],["Súper taco empanado",8.5],["Súper taco de filete de pollo",8],["Súper taco marinero",9],["Súper taco mixto",8.5],["Súper taco de nuggets",8],["Súper taco de pinchito de pollo",8]]},
+   {es:"Menús de tacos",ar:"وجبات التاكوس",note:{es:"Incluye bebida y patatas fritas",ar:"تشمل مشروب وبطاطس مقلية"},
+    items:[["Menú súper taco empanado",11.5],["Menú súper taco",11.5],["Menú súper taco chawarma",12],["Menú taco marinero",7.5],["Menú taco",7],["Menú taco chawarma",7],["Menú taco empanado",7]]}
+  ]},
+ {id:"platos", es:"Platos y Raciones", ar:"أطباق وحصص", img:"platos",
+  subs:[
+   {es:"Platos",ar:"أطباق",items:[["Alasquito",.8],["Especial carne picada",8],["Nuggets",2.5],["Colita",2.5],["Delicia",6],["Plato combinado",8],["Plato empanado",8],["Plato empanado con gambas",9]]},
+   {es:"Raciones",ar:"حصص",items:[["Ración de alasquitos",8],["Ración de corazones",7],["Ración de carne picada",8],["Ración de filete de pollo",7],["Ración de nuggets",8],["Ración de patatas",2.5],["Ración de pinchito de ternera",9],["Ración de empanado con gambas",9]]},
+   {es:"Medias raciones",ar:"أنصاف الحصص",items:[["Media de alasquitos",5],["Media de carne picada",5],["Media de corazones",5],["Media de empanado",4.5],["Media de nuggets",5],["Media de pinchito de pollo",5],["Media de patatas",1.5]]}
+  ]},
+ {id:"patatas", es:"Patatas", ar:"بطاطس", img:"patatas",
+  items:[["Patata con carne picada",8],["Patata marinera",8],["Patata de pollo",8],["Patata vegetal",7],["Patatas shawarma",8]]},
+ {id:"ensaladas", es:"Ensaladas", ar:"سلطات", img:"ensalada",
+  items:[["Ensalada de pasta",5],["Ensalada de pulpo",8],["Ensalada rusa",5],["Ensalada tropical",5],["Ensalada variada",6],["Media de pasta",2.5],["Media de pulpo",4],["Media rusa",2.5],["Media tropical",2.5]]},
+ {id:"postres", es:"Postres", ar:"حلويات", img:"postres",
+  items:[["Tarta de 3 chocolates",3.5],["Tarta de Oreo",3.5],["Tarta Kinder",3.5],["Tarta Lotus",3.5],["Tarta de pistacho",3.5],["Tarta de queso",3.5],["Zah Zah",3.5]]},
+ {id:"bebidas", es:"Bebidas", ar:"مشروبات", img:"bebidas", full:true, two:true,
+  items:[["Agua grande",1],["Agua pequeña",.5],["Aquarius",1.5],["Bio tropical",1.2],["Coca-Cola",1.2],["Coca-Cola Zero",1.2],["Energy",1],["Fanta limón",1.2],["Fanta naranja",1.2],["Hawai (botella)",1.8],["Nestea maracuyá",1.5],["Poms (botella)",1.8],["Red Bull",2],["Rostoy",1.2],["Sprite",1.2]]}
+];
+const DELIVERY = 2, WA = "34657580340";
+
+const T = {
+ es:{heroT:'Sabor de verdad,<br><span>a tu puerta.</span>',heroP:"Bocadillos, camperos, chawarmas, tacos, pizzas y raciones. Recoge en el local o pide a domicilio.",seeMenu:"Ver la carta",callUs:"Llámanos",delivery:"Servicio a domicilio",deliveryU:"SERVICIO A DOMICILIO",combos:"Menús",combosT:"Incluyen bebida y patatas",search:"Buscar en la carta… (pollo, gambas, pizza)",noRes:"No hay resultados.",pricesNote:"Precios en euros, IVA incluido.",yourOrder:"Tu pedido",homeDel:"Entrega a domicilio (+2,00 €)",name:"Nombre",addr:"Dirección y notas",subtotal:"Subtotal",sendWa:"Enviar pedido por WhatsApp",orCall:"o llama al 956 508 548",lang:"العربية",empty:"Tu pedido está vacío.<br>Pulsa <b>+</b> junto a un plato para añadirlo.",added:"Añadido",viewOrder:"Ver pedido",variety:"Variedad",items:"art.",pickup:"Recoger en el local",waHi:"Hola, quiero hacer un pedido:"},
+ ar:{heroT:'طعم حقيقي،<br><span>حتى باب بيتك.</span>',heroP:"ساندويتشات، كامبيروس، شاورما، تاكوس، بيتزا وحصص. استلم من المحل أو اطلب توصيل للمنزل.",seeMenu:"عرض القائمة",callUs:"اتصل بنا",delivery:"خدمة التوصيل",deliveryU:"خدمة التوصيل للمنازل",combos:"الوجبات",combosT:"تشمل مشروب وبطاطس",search:"ابحث في القائمة… (pollo، pizza)",noRes:"لا توجد نتائج.",pricesNote:"الأسعار باليورو شاملة الضريبة.",yourOrder:"طلبك",homeDel:"توصيل للمنزل (+2,00 €)",name:"الاسم",addr:"العنوان والملاحظات",subtotal:"المجموع الفرعي",sendWa:"أرسل الطلب عبر واتساب",orCall:"أو اتصل على 956 508 548",lang:"Español",empty:"طلبك فارغ.<br>اضغط <b>+</b> بجانب أي طبق لإضافته.",added:"تمت الإضافة",viewOrder:"عرض الطلب",variety:"الصنف",items:"عنصر",pickup:"استلام من المحل",waHi:"مرحبا، أريد أن أطلب:"}
+};
+
+let L = "es";
+try{ L = localStorage.getItem("dunia-lang") || (navigator.language||"").startsWith("ar") && "ar" || "es"; }catch(e){}
+let cart = [];
+try{ cart = JSON.parse(localStorage.getItem("dunia-cart")||"[]"); }catch(e){}
+
+const $ = s => document.querySelector(s);
+const eur = n => n.toFixed(2).replace(".",",")+" €";
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+
+function addBtn(name, price, variant){
+  const d = `data-n="${esc(name)}" data-p="${price}" data-v="${variant?esc(variant):""}"`;
+  return `<button class="add" type="button" ${d} aria-label="+ ${esc(name)}">+</button>`;
+}
+function rowsHTML(items){
+  return items.map(([n,p,note])=>`<div class="row" data-s="${esc(norm(n))}"><span class="nm"><span>${esc(n)}</span>${note?`<small style="color:var(--muted)">${esc(note[L])}</small>`:""}</span><span class="price">${eur(p)}</span>${addBtn(n,p)}</div>`).join("");
+}
+function render(){
+  document.documentElement.lang = L;
+  document.documentElement.dir = L==="ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-i]").forEach(el=>{ el.innerHTML = T[L][el.dataset.i]; });
+  document.querySelectorAll("[data-ip]").forEach(el=>{ el.placeholder = T[L][el.dataset.ip]; });
+  $("#lang").textContent = T[L].lang;
+
+  $("#catNav").innerHTML = MENU.map(c=>`<a href="#${c.id}" data-c="${c.id}">${c[L]}</a>`).join("");
+  $("#menu").innerHTML = MENU.map(c=>{
+    let body = "";
+    if(c.cols){
+      const cols = c.cols[L];
+      body += `<table class="mt"><thead><tr><th>${T[L].variety}</th>${cols.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>`+
+        c.items.map(([n,...ps])=>`<tr data-s="${esc(norm(n))}"><td>${esc(n)}</td>${ps.map((p,i)=>`<td>${p==null?'<span class="na">—</span>':`<button class="chip" type="button" data-n="${esc(n)}" data-p="${p}" data-v="${esc(c.cols.es[i])}">${eur(p)} <i>+</i></button>`}</td>`).join("")}</tr>`).join("")+
+        `</tbody></table>`;
+    } else if(c.items){
+      body += c.two ? (()=>{const h=Math.ceil(c.items.length/2);return `<div class="grid2"><div>${rowsHTML(c.items.slice(0,h))}</div><div>${rowsHTML(c.items.slice(h))}</div></div>`})() : rowsHTML(c.items);
+    }
+    (c.subs||[]).forEach(s=>{
+      body += `<div class="subw"><h3 class="sub">${s[L]}${s.note?`<small>${s.note[L]}</small>`:""}</h3>${rowsHTML(s.items)}</div>`;
+    });
+    return `<section class="sec${c.full?" full":""}" id="${c.id}"><div class="sec-h"><h2>${c[L]}</h2><img src="img/${c.img}.webp" alt="" loading="lazy"></div><div class="sec-b">${body}</div></section>`;
+  }).join("");
+  filter();
+  renderCart();
+  spy();
+}
+
+/* search */
+function filter(){
+  const q = norm($("#q").value.trim());
+  let any = false;
+  document.querySelectorAll(".sec").forEach(sec=>{
+    let vis = 0;
+    sec.querySelectorAll("[data-s]").forEach(r=>{ const ok = !q || r.dataset.s.includes(q); r.style.display = ok?"":"none"; if(ok) vis++; });
+    sec.querySelectorAll(".subw").forEach(w=>{ w.style.display = [...w.querySelectorAll("[data-s]")].some(r=>r.style.display!=="none")?"":"none"; });
+    sec.style.display = vis?"":"none"; if(vis) any = true;
+  });
+  $("#empty").style.display = any?"none":"block";
+}
+$("#q").addEventListener("input", filter);
+
+/* scroll spy */
+let spyObs;
+function spy(){
+  if(spyObs) spyObs.disconnect();
+  spyObs = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      document.querySelectorAll("#catNav a").forEach(a=>a.classList.toggle("on", a.dataset.c===e.target.id));
+      const on = document.querySelector("#catNav a.on"); if(on) on.scrollIntoView({block:"nearest",inline:"center"});
+    }});
+  },{rootMargin:"-130px 0px -65% 0px"});
+  document.querySelectorAll(".sec").forEach(s=>spyObs.observe(s));
+}
+
+/* cart */
+const key = i => i.n+"|"+i.v;
+function save(){ try{ localStorage.setItem("dunia-cart", JSON.stringify(cart)); }catch(e){} }
+function add(n,p,v){
+  const it = cart.find(x=>key(x)===n+"|"+v);
+  it ? it.q++ : cart.push({n,p,v,q:1});
+  save(); renderCart();
+  toast(`${T[L].added}: ${n}${v?" ("+v+")":""}`);
+}
+function totals(){
+  const sub = cart.reduce((s,i)=>s+i.p*i.q,0);
+  const del = $("#deliv").checked && cart.length ? DELIVERY : 0;
+  return {sub,del,tot:sub+del,count:cart.reduce((s,i)=>s+i.q,0)};
+}
+function renderCart(){
+  const t = totals();
+  $("#cartN").textContent = t.count;
+  const fab = $("#fab");
+  fab.classList.toggle("show", t.count>0 && !$("#drawer").classList.contains("open"));
+  fab.textContent = `${T[L].viewOrder} · ${t.count} ${T[L].items} · ${eur(t.tot)}`;
+  $("#cartList").innerHTML = cart.length ? cart.map((i,ix)=>`<div class="ci"><div class="t">${esc(i.n)}${i.v?`<small>${esc(i.v)}</small>`:""}<small>${eur(i.p)}</small></div><div class="q"><button type="button" data-d="${ix}" aria-label="-">−</button><span>${i.q}</span><button type="button" data-u="${ix}" aria-label="+">+</button></div><strong class="price">${eur(i.p*i.q)}</strong></div>`).join("") : `<p class="dempty">${T[L].empty}</p>`;
+  $("#tSub").textContent = eur(t.sub);
+  $("#tDel").textContent = eur(t.del);
+  $("#tTot").textContent = eur(t.tot);
+  $("#send").disabled = !cart.length; $("#send").style.opacity = cart.length?1:.5;
+}
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-n]");
+  if(b){ add(b.dataset.n, +b.dataset.p, b.dataset.v); return; }
+  const u = e.target.closest("[data-u]"), d = e.target.closest("[data-d]");
+  if(u){ cart[+u.dataset.u].q++; save(); renderCart(); }
+  if(d){ const i=+d.dataset.d; if(--cart[i].q<=0) cart.splice(i,1); save(); renderCart(); }
+});
+$("#deliv").addEventListener("change", renderCart);
+function openCart(o){
+  $("#drawer").classList.toggle("open",o); $("#scrim").classList.toggle("open",o);
+  $("#drawer").setAttribute("aria-hidden", !o); renderCart();
+}
+$("#openCart").onclick = ()=>openCart(true);
+$("#fab").onclick = ()=>openCart(true);
+$("#closeCart").onclick = ()=>openCart(false);
+$("#scrim").onclick = ()=>openCart(false);
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") openCart(false); });
+$("#send").onclick = ()=>{
+  if(!cart.length) return;
+  const t = totals();
+  const lines = cart.map(i=>`• ${i.q} x ${i.n}${i.v?" ("+i.v+")":""} — ${eur(i.p*i.q)}`);
+  const msg = [T[L].waHi,"",...lines,"",
+    `${T[L].subtotal}: ${eur(t.sub)}`,
+    t.del ? `${T[L].delivery}: ${eur(t.del)}` : T[L].pickup,
+    `TOTAL: ${eur(t.tot)}`,"",
+    $("#cName").value.trim() ? `${T[L].name}: ${$("#cName").value.trim()}` : null,
+    $("#cAddr").value.trim() ? `${T[L].addr}: ${$("#cAddr").value.trim()}` : null
+  ].filter(x=>x!==null).join("\n").trim();
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,"_blank","noopener");
+};
+
+let tt;
+function toast(m){ const el=$("#toast"); el.textContent=m; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),1400); }
+
+$("#lang").onclick = ()=>{ L = L==="es"?"ar":"es"; try{localStorage.setItem("dunia-lang",L);}catch(e){} render(); };
+render();
+</script>
+</body>
+</html>
