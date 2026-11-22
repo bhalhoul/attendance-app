@@ -91,6 +91,32 @@ export const RenderBlock: React.FC<{ b: Block; color: string; partEnd: number }>
           </div>
         </At>);
     }
+    case 'score': {
+      // بطاقة نتيجة: المستضيف على اليمين (RTL) — ألوان الفريق بلا شعارات (حقوق)
+      const showAt = b.scoreAt ?? b.at + 0.5;
+      const sc = sp(showAt, 9, 200);
+      const team = (tm: any, x: number, d: number, win: boolean) => (
+        <At at={b.at + d} x={x} y={225}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+            <div style={{ width: 160, height: 160, borderRadius: '50%', background: `linear-gradient(135deg, ${tm.c} 0 50%, ${tm.c2 ?? tm.c} 50% 100%)`,
+              boxShadow: `0 0 0 6px ${win && t >= showAt ? '#ffd23f' : '#ffffff33'}, 0 20px 50px #0009`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 64, color: '#fff', textShadow: '0 3px 10px #000a', direction: 'ltr' }}>{tm.abbr}</div>
+            </div>
+            <T size={fit(tm.name, 40, 10)}>{tm.name}</T>
+          </div>
+        </At>);
+      return (<>
+        {b.comp && <At at={b.at} x={CX} y={50}><T size={30} color="#ffffffb0">{b.comp}</T></At>}
+        {team(b.home, 665, 0, b.hs > b.as)}{team(b.away, 155, 0.15, b.as > b.hs)}
+        {t >= showAt - 0.02 && (
+          <div style={{ position: 'absolute', left: CX, top: 200, transform: `translate(-50%,-50%) scale(${0.4 + 0.6 * sc})`, opacity: Math.min(1, sc * 1.5),
+            fontFamily: FONT, fontWeight: 900, fontSize: 100, color: '#fff', direction: 'ltr', whiteSpace: 'nowrap', textShadow: `0 0 40px ${color}, 0 8px 0 #0007` }}>
+            {b.as}<span style={{ color: '#ffffff66', margin: '0 10px' }}>-</span>{b.hs}
+          </div>
+        )}
+        {b.note && <At at={showAt + 0.3} x={CX} y={300}><T size={28} color="#ffd23f">{b.note}</T></At>}
+      </>);
+    }
     case 'question':
       return <At at={b.at} x={CX} y={H / 2}><div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 330, lineHeight: 1, color: '#ffd23f', transform: `scale(${1 + 0.04 * Math.sin(t * 6)})`, textShadow: '0 0 70px #ffd23f88' }}>؟</div></At>;
     case 'recap':

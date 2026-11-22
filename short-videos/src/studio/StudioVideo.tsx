@@ -47,7 +47,7 @@ const Kicker: React.FC<{ tl: StudioTimeline; p: SPart }> = ({ tl, p }) => {
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, opacity: s, transform: `translateX(${(1 - s) * -120}px)` }}>
-        {p.tag && tl.format === 'minute' ? (
+        {p.tag && (tl.format === 'minute' || tl.format === 'results') ? (
           <>
             <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 28, color: '#fff', background: p.color, padding: '2px 16px', borderRadius: 10, whiteSpace: 'nowrap' }}>{p.tag}</div>
             <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 32, color: '#fff', direction: 'ltr' }}>{idx + 1}<span style={{ color: '#ffffff55', fontSize: 22 }}>/{stories.length}</span></div>
