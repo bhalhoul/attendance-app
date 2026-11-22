@@ -17,7 +17,7 @@ for (const [i, part] of cfg.parts.entries()) {
   const body = {
     text: part.text,
     model_id: cfg.model,
-    voice_settings: { stability: 0.45, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true },
+    voice_settings: { stability: 0.55, similarity_boost: 0.8, style: 0.15, use_speaker_boost: true, speed: 1.1 },
     previous_text: cfg.parts[i - 1]?.text, next_text: cfg.parts[i + 1]?.text, // باش النبرة تكون متصلة بين المقاطع
   };
   // curl (ماشي fetch) باش الطلب يدوز من البروكسي ديال البيئة

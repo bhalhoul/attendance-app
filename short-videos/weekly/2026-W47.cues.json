@@ -1,9 +1,9 @@
 {
-  "intro": { "summit": "قمة", "iran": "إيران", "market": "البورصة", "ceuta": "سبتة", "dates": "سطاش", "clock": "فثلاث" },
-  "summit": { "trump": "دونالد", "xi": "شي جين", "putin": "فلاديمير", "city": "شنزن", "first": "فأول", "table": "على الطاولة", "nuclear": "النووية", "iran": "إيران", "oil": "والبترول", "un": "الأمم", "weak": "التوافق", "question": "فالسؤال" },
-  "mideast": { "month": "التاسع", "ships": "حركة السفن", "stat": "خمسة وستين", "tanker": "ناقلة", "washington": "وفواشنطن", "vote": "بواحد", "question": "والسؤال" },
-  "ai": { "pressure": "ضغط", "anthropic": "أنثروبيك", "nasdaq": "ناسداك", "record": "فأكبر", "amount": "واحد وثمانين", "price": "السهم", "open": "فتح", "close": "وسد", "question": "فواش" },
-  "ceuta": { "funding": "تمويل", "amount": "خمسة وأربعين", "migrants": "المهاجرين", "files": "مية وسبعين", "families": "العائلات", "noreply": "ما توصلاتش", "open": "ملف الهجرة" },
-  "cop": { "turkey": "وفتركيا", "deadline": "وفاتت", "fossil": "الوقود", "unnamed": "ما ذكروش", "eu": "والاتحاد" },
-  "outro": { "recap": "بين قمة", "question": "فنظرك", "comment": "كتب لينا", "follow": "وتابع" }
+  "intro": { "summit": "قمة", "iran": "إيران", "market": "الأسواق", "ceuta": "سبتة", "dates": "السادس عشر", "clock": "في ثلاث" },
+  "summit": { "trump": "دونالد", "xi": "شي جين", "putin": "فلاديمير", "city": "شنتشن", "first": "في أول", "table": "على الطاولة", "nuclear": "النووية", "iran": "إيران", "oil": "والنفط", "un": "وتحدث", "weak": "كان التوافق", "question": "والسؤال" },
+  "mideast": { "month": "التاسع", "ships": "حركة السفن", "stat": "خمسة وستين", "tanker": "اشتعلت", "washington": "وفي واشنطن", "vote": "بأغلبية", "question": "فما هي" },
+  "ai": { "pressure": "لضغوط", "anthropic": "أنثروبيك", "nasdaq": "ناسداك", "record": "أكبر طرح", "amount": "واحدا وثمانين", "price": "طرح السهم", "open": "وافتتح", "close": "ثم أغلق", "question": "فهل بلغ" },
+  "ceuta": { "funding": "تمويل", "amount": "خمسة وأربعين", "migrants": "للمهاجرين", "files": "مئة وسبعين", "families": "وافقت العائلات", "noreply": "لم تتلق", "open": "ويبقى" },
+  "cop": { "turkey": "وفي تركيا", "deadline": "وتجاوزت", "fossil": "الوقود", "unnamed": "لم يذكره", "eu": "الاتحاد الأوروبي" },
+  "outro": { "recap": "بين قمة", "question": "برأيكم", "comment": "اكتبوا", "follow": "وتابعوا" }
 }

@@ -5,6 +5,7 @@ import { SAFE_AREA } from '../../shared/safe-zones.js';
 import { SafeZoneOverlay } from '../components/SafeZoneOverlay';
 import { FONT } from '../theme';
 import { clampX, FPS, useTime } from './kit';
+import { ZC } from './layout';
 import { AiScene, CeutaScene, CopScene, IntroScene, MideastScene, OutroScene, SummitScene, type Part } from './scenes';
 
 type Word = { w: string; start: number; end: number };
@@ -17,7 +18,7 @@ const META: Record<string, { color: string; tag: string; n?: string }> = {
   intro: { color: '#ff4f8b', tag: '' },
   summit: { color: '#1e88e5', tag: 'العالم', n: '01' },
   mideast: { color: '#e53935', tag: 'الشرق الأوسط', n: '02' },
-  ai: { color: '#8e24aa', tag: 'البورصة', n: '03' },
+  ai: { color: '#8e24aa', tag: 'الاقتصاد', n: '03' },
   ceuta: { color: '#ef6c00', tag: 'سبتة', n: '04' },
   cop: { color: '#2e7d32', tag: 'المناخ', n: '05' },
   outro: { color: '#ffb300', tag: '' },
@@ -52,7 +53,7 @@ const SceneWrap: React.FC<{ p: TPart; children: React.ReactNode }> = ({ p, child
   const blur = (1 - inK) * 18 + outK * 22;
   return (
     <AbsoluteFill style={{ opacity: Math.min(inK * 1.4, 1 - outK), filter: blur > 0.3 ? `blur(${blur}px)` : undefined,
-      transform: `scale(${1.14 - 0.14 * inK - outK * 0.05}) translateX(${-outK * 260}px)` }}>
+      transform: `scale(${1.08 - 0.08 * inK}) translateX(${-outK * 200}px)` }}>
       {children}
     </AbsoluteFill>
   );
@@ -74,8 +75,8 @@ const Kicker: React.FC<{ p: TPart; brand: string; range: string }> = ({ p, brand
     <div style={{ position: 'absolute', left: SAFE_AREA.left, width: SAFE_AREA.width, top: 268, display: 'flex', justifyContent: 'space-between', alignItems: 'center', direction: 'rtl' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ width: 16, height: 16, borderRadius: 8, background: '#ff1744', boxShadow: `0 0 ${10 + 8 * Math.abs(Math.sin(t * 4))}px #ff1744` }} />
-        <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 32, color: '#fff', letterSpacing: 0.5 }}>{brand}</div>
-        {p.key === 'intro' || p.key === 'outro' ? <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: 26, color: '#ffffffaa', whiteSpace: 'nowrap' }}>{range}</div> : null}
+        <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 32, color: '#fff', whiteSpace: 'nowrap' }}>{brand}</div>
+
       </div>
       {m.n && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, transform: `translateX(${(1 - s) * -200}px)`, opacity: s }}>
@@ -97,16 +98,16 @@ const Captions: React.FC<{ parts: TPart[] }> = ({ parts }) => {
   const k = interpolate(t, [ph.start - 0.08, ph.start + 0.1], [0, 1], clampX);
   const o = interpolate(t, [ph.end + 0.1, ph.end + 0.25], [1, 0], clampX);
   return (
-    <div style={{ position: 'absolute', left: SAFE_AREA.left + 10, width: SAFE_AREA.width - 20, top: 1185, height: 250, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', direction: 'rtl', columnGap: 16, rowGap: 6,
+    <div style={{ position: 'absolute', left: ZC.left, width: ZC.w, top: ZC.top, height: ZC.h, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', direction: 'rtl', columnGap: 10, rowGap: 8, maxWidth: ZC.w,
         opacity: k * o, transform: `translateY(${(1 - k) * 30}px) scale(${0.94 + 0.06 * k})` }}>
         {ph.words.map((w, i) => {
           const active = t >= w.start - 0.02 && t < w.end + 0.05;
           const said = t >= w.end;
           return (
-            <span key={i} style={{ fontFamily: FONT, fontWeight: 900, fontSize: 66, lineHeight: 1.25, padding: '0 12px', borderRadius: 14,
+            <span key={i} style={{ fontFamily: FONT, fontWeight: 900, fontSize: 56, lineHeight: 1.3, padding: '0 10px', borderRadius: 12, whiteSpace: 'nowrap',
               color: active ? '#fff' : said ? '#fff' : '#ffffff88', background: active ? color : 'transparent',
-              transform: `scale(${active ? 1.08 : 1})`, boxShadow: active ? `0 8px 30px ${color}88` : 'none',
+              transform: `scale(${active ? 1.05 : 1})`, boxShadow: active ? `0 8px 30px ${color}88` : 'none',
               textShadow: active ? 'none' : '0 4px 18px #000, 0 2px 0 #000' }}>{w.w}</span>
           );
         })}
@@ -127,15 +128,15 @@ export const WeeklyPro: React.FC<WeeklyProProps> = ({ timeline, rangeLabel, bran
       {withAudio && parts.map((p) => (
         <Sequence key={p.key} from={Math.round(p.start * FPS)}><Audio src={staticFile(p.audio)} /></Sequence>
       ))}
-      <SceneWrap p={byKey.intro}><IntroScene p={byKey.intro} range={rangeLabel} /></SceneWrap>
-      <SceneWrap p={byKey.summit}><SummitScene p={byKey.summit} /></SceneWrap>
-      <SceneWrap p={byKey.mideast}><MideastScene p={byKey.mideast} /></SceneWrap>
-      <SceneWrap p={byKey.ai}><AiScene p={byKey.ai} /></SceneWrap>
-      <SceneWrap p={byKey.ceuta}><CeutaScene p={byKey.ceuta} /></SceneWrap>
-      <SceneWrap p={byKey.cop}><CopScene p={byKey.cop} /></SceneWrap>
-      <SceneWrap p={byKey.outro}><OutroScene p={byKey.outro} colors={colors} /></SceneWrap>
+      <SceneWrap p={byKey.intro}><IntroScene p={byKey.intro} range={rangeLabel} color={META.intro.color} /></SceneWrap>
+      <SceneWrap p={byKey.summit}><SummitScene p={byKey.summit} color={META.summit.color} /></SceneWrap>
+      <SceneWrap p={byKey.mideast}><MideastScene p={byKey.mideast} color={META.mideast.color} /></SceneWrap>
+      <SceneWrap p={byKey.ai}><AiScene p={byKey.ai} color={META.ai.color} /></SceneWrap>
+      <SceneWrap p={byKey.ceuta}><CeutaScene p={byKey.ceuta} color={META.ceuta.color} /></SceneWrap>
+      <SceneWrap p={byKey.cop}><CopScene p={byKey.cop} color={META.cop.color} /></SceneWrap>
+      <SceneWrap p={byKey.outro}><OutroScene p={byKey.outro} color={META.outro.color} colors={colors} /></SceneWrap>
       {parts.slice(1).map((p) => <LightSweep key={p.key} at={p.sceneStart} />)}
-      {cur.key !== 'intro' && <Kicker p={cur} brand={brand} range={rangeLabel} />}
+      <Kicker p={cur} brand={brand} range={rangeLabel} />
       <Captions parts={parts} />
       {showSafeZones && <SafeZoneOverlay />}
     </AbsoluteFill>

@@ -2,12 +2,15 @@
 // node scripts/build-weekly-timeline.mjs 2026-W47
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const week = process.argv[2];
 const narr = JSON.parse(fs.readFileSync(`weekly/${week}.narration.json`, 'utf8'));
 const cuesCfg = JSON.parse(fs.readFileSync(`weekly/${week}.cues.json`, 'utf8'));
 const dir = path.join('public', 'voice', narr.id);
-const LEAD = 0.5, GAP = 0.7, TAIL = 1.2;
+const LEAD = 0.4, GAP = 0.55, TAIL = 1.2;
+// تسريع خفيف للصوت بلا ما يتبدل الطبقة (atempo)، والتوقيتات كتتقسم بنفس المعامل
+const TEMPO = Number(process.argv[3] ?? narr.tempo ?? 1.07);
 
 // الكلمات: نجمعو الحروف حتى الفراغ
 function words(al) {
@@ -35,7 +38,10 @@ function phrases(ws) {
 let t = LEAD;
 const parts = [];
 for (const p of narr.parts) {
-  const al = JSON.parse(fs.readFileSync(path.join(dir, `${p.key}.align.json`), 'utf8'));
+  const al0 = JSON.parse(fs.readFileSync(path.join(dir, `${p.key}.align.json`), 'utf8'));
+  const al = { ...al0, start: al0.start.map((x) => x / TEMPO), end: al0.end.map((x) => x / TEMPO) };
+  const fast = path.join(dir, `${p.key}.final.mp3`);
+  execFileSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', path.join(dir, `${p.key}.mp3`), '-filter:a', `atempo=${TEMPO}`, '-b:a', '192k', fast]);
   const dur = al.end.at(-1);
   const ws = words(al).map((w) => ({ ...w, start: +(w.start + t).toFixed(3), end: +(w.end + t).toFixed(3) }));
   // cues: أول ظهور ديال الكلمة/العبارة ف النص
@@ -45,7 +51,7 @@ for (const p of narr.parts) {
     if (idx < 0) { console.error(`✘ cue "${name}" (${needle}) ما لقيتوش ف ${p.key}`); process.exit(1); }
     cues[name] = +(al.start[idx] + t).toFixed(3);
   }
-  parts.push({ key: p.key, audio: `voice/${narr.id}/${p.key}.mp3`, start: +t.toFixed(3), end: +(t + dur).toFixed(3),
+  parts.push({ key: p.key, audio: `voice/${narr.id}/${p.key}.final.mp3`, start: +t.toFixed(3), end: +(t + dur).toFixed(3),
     sceneStart: +(t - (parts.length ? GAP / 2 : LEAD)).toFixed(3), words: ws, phrases: phrases(ws), cues });
   t += dur + GAP;
 }

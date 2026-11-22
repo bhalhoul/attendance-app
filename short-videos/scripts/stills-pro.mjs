@@ -9,5 +9,5 @@ const inputProps = { timeline, rangeLabel: '16 – 22 نونبر 2026', brand: '
 const browserExecutable = process.env.REMOTION_BROWSER || null;
 const composition = await selectComposition({ serveUrl, id: 'weekly-pro-2026-w47', inputProps, browserExecutable });
 fs.mkdirSync(out, { recursive: true });
-for (const s of secs.split(',').map(Number)) await renderStill({ composition, serveUrl, frame: Math.round(s * 30), output: path.join(out, `${String(Math.round(s * 10)).padStart(5, '0')}.png`), inputProps, browserExecutable, scale: 0.5 });
+for (const s of secs.split(',').map(Number)) await renderStill({ composition, serveUrl, frame: Math.round(s * 30), output: path.join(out, `${String(Math.round(s * 10)).padStart(5, '0')}.png`), inputProps, browserExecutable, scale: Number(process.env.SCALE || 0.5) });
 console.log('done');
