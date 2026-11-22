@@ -6,6 +6,10 @@ export const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as 
 export const pop = (frame: number, start: number, damping = 11, stiffness = 180) =>
   spring({ frame: frame - start, fps: FPS, config: { damping, stiffness, mass: 0.6 } });
 
+// تصغير الخط تلقائياً إلا كان النص طويل (maxChars = عدد الحروف اللي كيدخلو بالحجم الكامل)
+export const fit = (text: string, base: number, maxChars: number) =>
+  Math.round(base * Math.min(1, maxChars / Math.max(1, [...text].length)));
+
 export const fadeOut = (frame: number, end: number, len = 6) =>
   interpolate(frame, [end - len, end], [1, 0], clamp);
 

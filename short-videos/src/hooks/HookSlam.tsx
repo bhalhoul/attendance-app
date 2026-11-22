@@ -2,7 +2,7 @@ import React from 'react';
 import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
 import { SAFE_AREA } from '../../shared/safe-zones.js';
 import { HOOK_CUES, beat } from '../../shared/timing.js';
-import { clamp, pop, shake } from '../anim';
+import { clamp, fit, pop, shake } from '../anim';
 import { COLORS, FONT } from '../theme';
 import type { Challenge } from '../types';
 
@@ -20,7 +20,7 @@ export const HookSlam: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
     return { opacity: frame < start ? 0 : Math.min(1, s * 2), transform: `scale(${2.4 - 1.4 * s})` };
   };
   const badge = pop(frame, beat(cue.badge) - 5, 10, 160); // ظاهر من أول فريم
-  const eye = pop(frame, beat(4), 8, 200);
+  const eye = pop(frame, beat(cue.eye), 8, 200);
   return (
     <AbsoluteFill
       style={{
@@ -34,13 +34,13 @@ export const HookSlam: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
           background: COLORS.accent, padding: '10px 34px', borderRadius: 999, transform: `rotate(${-3 * badge}deg)` }}>
           {challenge.series}
         </div>
-        <div style={{ marginTop: 150, fontSize: 190, fontWeight: 900, color: '#fff', lineHeight: 1.1, ...slam(beat(cue.word1)),
+        <div style={{ marginTop: 150, fontSize: fit(w1, 190, 6), whiteSpace: 'nowrap', fontWeight: 900, color: '#fff', lineHeight: 1.1, ...slam(beat(cue.word1)),
           textShadow: '0 10px 0 rgba(0,0,0,0.35)' }}>{w1}</div>
-        <div style={{ marginTop: 10, fontSize: 130, fontWeight: 900, color: COLORS.accent3, lineHeight: 1.2, ...slam(beat(cue.word2)),
+        <div style={{ marginTop: 10, fontSize: fit(w2, 130, 9), whiteSpace: 'nowrap', fontWeight: 900, color: COLORS.accent3, lineHeight: 1.2, ...slam(beat(cue.word2)),
           textShadow: '0 8px 0 rgba(0,0,0,0.35)' }}>{w2}</div>
-        <div style={{ marginTop: 30, fontSize: 92, fontWeight: 900, color: COLORS.accent, lineHeight: 1.3, ...slam(beat(cue.word3)),
+        <div style={{ marginTop: 30, fontSize: fit(w3, 92, 16), fontWeight: 900, color: COLORS.accent, lineHeight: 1.3, ...slam(beat(cue.word3)),
           textShadow: '0 8px 0 rgba(0,0,0,0.35)', textAlign: 'center' }}>{w3}</div>
-        <div style={{ marginTop: 40, fontSize: 140, opacity: eye, transform: `scale(${eye}) rotate(${Math.sin(frame / 4) * 8}deg)` }}>👀</div>
+        <div style={{ marginTop: 40, fontSize: 140, opacity: eye, transform: `scale(${eye}) rotate(${Math.sin(frame / 4) * 8}deg)` }}>{challenge.texts.hookEmoji ?? '👀'}</div>
       </div>
     </AbsoluteFill>
   );

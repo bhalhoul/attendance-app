@@ -1,0 +1,42 @@
+{
+  "id": "ep002",
+  "series": "معلومة غبية… ولكن حقيقية!",
+  "type": "color",
+  "variant": "C",
+  "seed": 108,
+  "difficulty": "medium",
+  "music": {
+    "scale": "ajam",
+    "root": "C"
+  },
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "baseColor": "#e46d25",
+  "oddColor": "#b85112",
+  "deltaE": 12.14,
+  "answer": 11,
+  "texts": {
+    "title": "عينيك ولا عين النسر؟ 🦅",
+    "hookA": [
+      "عينيك",
+      "ولا عين النسر؟",
+      "شكون يربح؟ 🦅"
+    ],
+    "hookB": "عندك 10 ثواني… واش عندك عين النسر؟ 🦅",
+    "hookEmoji": "🦅",
+    "hookCRight": "نتا 👀",
+    "hookCLeft": "النسر 🦅",
+    "hookCQuestion": "شكون عينو أقوى؟ 🦅",
+    "instruction": "مربع واحد لونو مختلف… لقاه! 👀",
+    "midHint": "النسر لقاه… ونتا؟ ركّز 😏",
+    "revealSub": "🦅 النسر كيشوف تقريباً 4 حتى 8 مرات أحسن من الإنسان!",
+    "shareLine1": "صيفطها لصاحبك اللي كيقول عينيا قويين 😎",
+    "shareLine2": "ونشوفو واش عندو عين النسر 🦅",
+    "countdownLabel": "ثواني",
+    "commentPrompt": "كتب الرقم ف الكومنتير 👇",
+    "commentSub": "قبل ما يبان الجواب ⏳",
+    "revealLabel": "الجواب هو"
+  }
+}

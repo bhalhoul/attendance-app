@@ -1,25 +1,39 @@
 {
   "id": "ep001",
   "series": "معلومة غبية… ولكن حقيقية!",
+  "type": "color",
+  "variant": "A",
   "seed": 7,
   "difficulty": "medium",
-  "grid": { "rows": 5, "cols": 5 },
+  "music": {
+    "scale": "hijaz",
+    "root": "A"
+  },
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
   "baseColor": "#29ae89",
   "oddColor": "#5edebb",
   "deltaE": 12.92,
   "answer": 19,
   "texts": {
     "title": "نتا ولا مراتك… شكون عينو أقوى؟ 😂",
-    "hookA": ["نتا", "ولا مراتك…", "شكون عينو أقوى؟ 😂"],
-    "hookB": "عندك 5 ثواني… واش عينك قدّها؟ 👀",
-    "hookCYou": "نتا 👨",
-    "hookCPartner": "مراتك 👩",
+    "hookA": [
+      "نتا",
+      "ولا مراتك…",
+      "شكون عينو أقوى؟ 😂"
+    ],
+    "hookB": "عندك 10 ثواني… واش عينك قدّها؟ 👀",
+    "hookCRight": "نتا 👨",
+    "hookCLeft": "مراتك 👩",
     "hookCQuestion": "شكون عينو أقوى؟ 😂",
     "instruction": "مربع واحد لونو مختلف… لقاه! 👀",
     "countdownLabel": "ثواني",
     "commentPrompt": "كتب الرقم ف الكومنتير 👇",
     "commentSub": "قبل ما يبان الجواب ⏳",
     "revealLabel": "الجواب هو",
+    "midHint": "مازال؟ ركّز مزيان 👀",
     "revealSub": "🧠 العين ديال الإنسان كتفرّق بين حوالي مليون لون!",
     "shareLine1": "صيفطها لمراتك ولا لراجلك 💌",
     "shareLine2": "ولا لصاحبك… ونشوفو شكون عينو أقوى 😏"

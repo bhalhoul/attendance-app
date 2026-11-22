@@ -5,8 +5,8 @@ export const FPS = 30;
 export const WIDTH = 1080;
 export const HEIGHT = 1920;
 export const BPM = 120; // ضربة كل 0.5 ثانية = 15 فريم
-export const DURATION_SECONDS = 18;
-export const DURATION_FRAMES = FPS * DURATION_SECONDS; // 540
+export const DURATION_SECONDS = 30;
+export const DURATION_FRAMES = FPS * DURATION_SECONDS; // 900
 
 export const FRAMES_PER_BEAT = (FPS * 60) / BPM; // 15
 export const beat = (n) => Math.round(n * FRAMES_PER_BEAT);
@@ -14,17 +14,19 @@ export const beatSec = (n) => (n * 60) / BPM;
 
 // المقاطع (بالفريم). كل حد = ضربة كاملة.
 export const SECTIONS = {
-  hook: { from: 0, to: beat(6) }, //        0.0s → 3.0s  جذب الانتباه (يختلف حسب النسخة)
-  intro: { from: beat(6), to: beat(8) }, // 3.0s → 4.0s  ظهور الشبكة + التعليمة
-  countdown: { from: beat(8), to: beat(18) }, // 4.0s → 9.0s  العد 5 → 1
-  comment: { from: beat(18), to: beat(24) }, // 9.0s → 12.0s دعوة لكتابة الرقم
-  reveal: { from: beat(24), to: beat(30) }, // 12.0s → 15.0s كشف الجواب
-  outro: { from: beat(30), to: beat(36) }, // 15.0s → 18.0s دعوة للمشاركة
+  hook: { from: 0, to: beat(8) }, //          0 → 4s   جذب الانتباه (يختلف حسب النسخة)
+  intro: { from: beat(8), to: beat(12) }, //  4 → 6s   ظهور الشبكة + قراءة التعليمة
+  countdown: { from: beat(12), to: beat(32) }, // 6 → 16s  عد تنازلي 10 → 1
+  comment: { from: beat(32), to: beat(40) }, // 16 → 20s دعوة لكتابة الرقم
+  reveal: { from: beat(40), to: beat(50) }, //  20 → 25s كشف الجواب + معلومة
+  outro: { from: beat(50), to: beat(60) }, //   25 → 30s دعوة للمشاركة
 };
 
-export const COUNTDOWN_FROM = 5;
-// فريم ظهور كل رقم: 5 عند 4.0s، 4 عند 5.0s ... 1 عند 8.0s
+export const COUNTDOWN_FROM = 10;
+// فريم ظهور كل رقم: كل ثانية (ضربتين) رقم جديد
 export const countdownFrame = (i) => SECTIONS.countdown.from + i * beat(2);
+// نص التشجيع ف النص الثاني ديال العد
+export const MID_HINT_AT = countdownFrame(5);
 
 export const VARIANTS = ['A', 'B', 'C'];
 export const VARIANT_INFO = {
@@ -35,7 +37,7 @@ export const VARIANT_INFO = {
 
 // لحظات الحركة فـ"الهوك" لكل نسخة (بالضربات) — الصوت والصورة كيقراو من نفس المكان.
 export const HOOK_CUES = {
-  A: { badge: 0, word1: 1, word2: 2, word3: 3, exit: 5 },
-  B: { text: 0, focus: 2, title: 2, exit: 5 },
-  C: { you: 0, partner: 1, vs: 2, question: 4, exit: 5 },
+  A: { badge: 0, word1: 2, word2: 3, word3: 4, eye: 5, exit: 7 },
+  B: { text: 0, focus: 3, title: 3, exit: 7 },
+  C: { right: 0, left: 2, vs: 3, question: 5, exit: 7 },
 };

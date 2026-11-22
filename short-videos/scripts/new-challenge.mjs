@@ -2,7 +2,8 @@
 // مثال: npm run new-challenge -- --id ep002 --seed 42 --difficulty medium --title "..."
 import fs from 'node:fs';
 import path from 'node:path';
-import { generateColors, pickAnswer, validateChallenge } from '../shared/challenge.js';
+import { generateColors, pickAnswer, symbolCellColor, validateChallenge } from '../shared/challenge.js';
+import { execFileSync } from 'node:child_process';
 
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, a, i, arr) => {
@@ -15,16 +16,26 @@ const id = args.id;
 if (!id) { console.error('خاص --id (مثلاً ep002)'); process.exit(1); }
 const seed = Number(args.seed ?? Math.floor(Math.random() * 1e6));
 const difficulty = args.difficulty ?? 'medium';
-const template = JSON.parse(fs.readFileSync(path.join(dir, args.template ?? 'ep001.json'), 'utf8'));
+const { symbols: _ignored, ...template } = JSON.parse(fs.readFileSync(path.join(dir, args.template ?? 'ep001.json'), 'utf8'));
 
 // ما نعاودوش نفس رقم الجواب ديال الحلقات اللي فاتو مباشرة
 const previous = fs.readdirSync(dir).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).answer);
 
-const colors = generateColors({ seed, difficulty });
+const type = args.type ?? 'color'; // color | symbol
+let colors;
+if (type === 'symbol') {
+  if (!args.base || !args.odd) { console.error('تحدي الرموز خاصو --base 😂 --odd 🤣 (و --font arabic للحروف)'); process.exit(1); }
+  const cell = symbolCellColor(seed);
+  colors = { baseColor: cell, oddColor: cell, deltaE: 0, symbols: { base: args.base, odd: args.odd, font: args.font ?? 'emoji' } };
+} else {
+  colors = generateColors({ seed, difficulty });
+}
 const challenge = {
   ...template,
   id,
+  type,
+  variant: args.variant ?? template.variant ?? 'A',
   seed,
   difficulty,
   ...colors,
@@ -36,4 +47,5 @@ if (!v.ok) { console.error(v.errors.join('\n')); process.exit(1); }
 const out = path.join(dir, `${id}.json`);
 if (fs.existsSync(out) && !('force' in args)) { console.error(`${out} موجود. زيد --force 1 باش تكتب فوقو.`); process.exit(1); }
 fs.writeFileSync(out, JSON.stringify(challenge, null, 2) + '\n');
+execFileSync('node', ['scripts/index-challenges.mjs'], { stdio: 'inherit' });
 console.log(`✔ ${out}\n  base ${challenge.baseColor}  odd ${challenge.oddColor}  ΔE=${challenge.deltaE}  الجواب: ${challenge.answer}`);

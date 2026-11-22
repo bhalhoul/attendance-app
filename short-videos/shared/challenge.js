@@ -20,6 +20,13 @@ const PALETTE = [
  * الفرق كيكون فالإضاءة (Lightness) أساساً، ماشي غير فالدرجة،
  * باش يبقى التحدي عادل حتى للناس اللي عندهم عمى الألوان.
  */
+// لون خلفية محايد لتحدي الرموز
+export function symbolCellColor(seed) {
+  const rand = mulberry32(seed);
+  const [h] = PALETTE[Math.floor(rand() * PALETTE.length)];
+  return hslToHex(h, 28, 30);
+}
+
 export function generateColors({ seed, difficulty = 'medium' }) {
   const rand = mulberry32(seed);
   const [h, s, l] = PALETTE[Math.floor(rand() * PALETTE.length)];
@@ -51,6 +58,14 @@ export function validateChallenge(c) {
   const total = c.grid.rows * c.grid.cols;
   if (!Number.isInteger(c.answer) || c.answer < 1 || c.answer > total)
     errors.push(`answer خاصو يكون بين 1 و ${total}`);
+  if (!['A', 'B', 'C', undefined].includes(c.variant)) errors.push('variant خاصو يكون A ولا B ولا C');
+  if (c.type === 'symbol') {
+    // تحدي الرموز: نفس لون الخلفية لكل المربعات، والفرق غير فالرمز
+    if (!c.symbols?.base || !c.symbols?.odd) errors.push('symbols.base و symbols.odd ضروريين');
+    else if (c.symbols.base === c.symbols.odd) errors.push('الرمز المختلف خاصو يكون مختلف على الرمز الأساسي');
+    if (c.baseColor !== c.oddColor) errors.push('ف تحدي الرموز خاص baseColor = oddColor (ما نخلطوش جوج فروقات)');
+    return { ok: errors.length === 0, errors, deltaE: 0 };
+  }
   const d = deltaE2000(c.baseColor, c.oddColor);
   if (d < MIN_FAIR_DELTA) errors.push(`الفرق ΔE=${d.toFixed(2)} صغير بزاف (الحد الأدنى ${MIN_FAIR_DELTA}) → التحدي غادي يكون شبه مستحيل`);
   if (d > MAX_DELTA) errors.push(`الفرق ΔE=${d.toFixed(2)} كبير بزاف (> ${MAX_DELTA}) → التحدي ساهل بزاف`);

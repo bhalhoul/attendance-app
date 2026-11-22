@@ -20,10 +20,10 @@ export const HookZoom: React.FC<{ challenge: Challenge }> = ({ challenge }) => {
   const frame = useCurrentFrame();
   const cue = HOOK_CUES.B;
   const exitFrom = beat(cue.exit);
-  const shade = interpolate(frame, [beat(cue.focus), beat(cue.focus) + 6, exitFrom + 4, exitFrom + 14], [0.35, 0.82, 0.82, 0], clamp);
+  const shade = interpolate(frame, [beat(cue.focus), beat(cue.focus) + 6, exitFrom + 4, exitFrom + 14], [0.6, 0.82, 0.82, 0], clamp);
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ background: `rgba(8,6,20,${frame < beat(cue.focus) ? 0.35 : shade})` }} />
+      <AbsoluteFill style={{ background: `rgba(8,6,20,${frame < beat(cue.focus) ? 0.6 : shade})` }} />
       <div style={{ position: 'absolute', left: SAFE_AREA.left, width: SAFE_AREA.width, top: 820 }}>
         <AnimatedText text={challenge.texts.hookB} start={beat(cue.text) - 10} end={beat(cue.focus)} size={82}
           highlight={['5']} stagger={2} />

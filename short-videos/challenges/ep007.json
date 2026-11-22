@@ -1,0 +1,47 @@
+{
+  "id": "ep007",
+  "series": "معلومة غبية… ولكن حقيقية!",
+  "type": "symbol",
+  "variant": "B",
+  "seed": 6,
+  "difficulty": "medium",
+  "music": {
+    "scale": "kurd",
+    "root": "C"
+  },
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "baseColor": "#376245",
+  "oddColor": "#376245",
+  "deltaE": 0,
+  "symbols": {
+    "base": "🙈",
+    "odd": "🙉",
+    "font": "emoji"
+  },
+  "answer": 12,
+  "texts": {
+    "title": "قرد واحد ماشي بحال صحابو 🙈",
+    "hookA": [
+      "قرد",
+      "واحد فيهم…",
+      "ماشي بحال صحابو 🙈"
+    ],
+    "hookB": "عندك 10 ثواني… لقا القرد المختلف 🙉",
+    "hookEmoji": "🙈",
+    "hookCRight": "نتا 👀",
+    "hookCLeft": "القرود 🙈",
+    "hookCQuestion": "شكون يلقاه الأول؟ 🙉",
+    "instruction": "قرد واحد مختلف… لقاه! 👀",
+    "midHint": "مازال؟ شوف فين حاط يديه 😏",
+    "revealSub": "🐒 الشمبانزي كيعرف راسو ف المراية… ماشي كل الحيوانات كيقدرو!",
+    "shareLine1": "صيفطها لصاحبك اللي كيدير راسو ما شافش 🙈",
+    "shareLine2": "ونشوفو شكون يلقاه الأول 👀",
+    "countdownLabel": "ثواني",
+    "commentPrompt": "كتب الرقم ف الكومنتير 👇",
+    "commentSub": "قبل ما يبان الجواب ⏳",
+    "revealLabel": "الجواب هو"
+  }
+}

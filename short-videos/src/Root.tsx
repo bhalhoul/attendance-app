@@ -3,11 +3,9 @@ import { Composition } from 'remotion';
 import { DURATION_FRAMES, FPS, HEIGHT, VARIANTS, VARIANT_INFO, WIDTH } from '../shared/timing.js';
 import { ChallengeVideo } from './ChallengeVideo';
 import './theme';
-import type { Challenge, Variant, VideoProps } from './types';
-import ep001 from '../challenges/ep001.json';
-
-// زيد هنا أي حلقة جديدة بعد `npm run new-challenge`
-export const CHALLENGES: Challenge[] = [ep001 as Challenge];
+import type { Variant, VideoProps } from './types';
+// القائمة كتتولد تلقائياً (npm run new-challenge / npm run render)
+import { CHALLENGES } from './challenges.generated';
 
 export const RemotionRoot: React.FC = () => (
   <>

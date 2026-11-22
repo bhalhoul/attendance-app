@@ -21,6 +21,7 @@ export const Grid: React.FC<Props> = ({ challenge, enterAt, instant }) => {
   const size = LAYOUT.grid.size;
   const cell = (size - PAD * 2 - GAP * (cols - 1)) / cols;
   const revealAt = SECTIONS.reveal.from;
+  const symbolMode = challenge.type === 'symbol' && !!challenge.symbols;
   const outroAt = SECTIONS.outro.from;
 
   // كشف الجواب
@@ -69,14 +70,29 @@ export const Grid: React.FC<Props> = ({ challenge, enterAt, instant }) => {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <span
-              style={{
-                fontFamily: FONT, fontWeight: 800, fontSize: 46, color: '#fff',
-                textShadow: '0 3px 6px rgba(0,0,0,0.45)', direction: 'ltr',
-              }}
-            >
-              {n}
-            </span>
+            {symbolMode ? (
+              <>
+                {/* الرمز فالوسط والرقم صغير فالزاوية */}
+                <span style={{
+                  fontFamily: challenge.symbols!.font === 'arabic' ? FONT : "'Noto Color Emoji', sans-serif",
+                  fontWeight: 900, fontSize: challenge.symbols!.font === 'arabic' ? 84 : 72, lineHeight: 1,
+                  color: '#fff', marginTop: challenge.symbols!.font === 'arabic' ? 26 : 8,
+                }}>
+                  {isAnswer ? challenge.symbols!.odd : challenge.symbols!.base}
+                </span>
+                <span style={{ position: 'absolute', left: 10, top: 4, fontFamily: FONT, fontWeight: 800, fontSize: 26,
+                  color: 'rgba(255,255,255,0.85)', direction: 'ltr' }}>{n}</span>
+              </>
+            ) : (
+              <span
+                style={{
+                  fontFamily: FONT, fontWeight: 800, fontSize: 46, color: '#fff',
+                  textShadow: '0 3px 6px rgba(0,0,0,0.45)', direction: 'ltr',
+                }}
+              >
+                {n}
+              </span>
+            )}
             {isAnswer && frame >= revealAt && (
               <div
                 style={{

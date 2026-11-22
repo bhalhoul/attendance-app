@@ -18,7 +18,7 @@ type Props = {
 
 // نص عربي (RTL) كيدخل كلمة بكلمة بحركة spring وكيخرج بانزلاق للفوق.
 export const AnimatedText: React.FC<Props> = ({
-  text, start, end, size = 64, weight = 900, color = '#fff', stagger = 3,
+  text, start, end, size = 64, weight = 900, color = '#fff', stagger = 4,
   highlight = [], highlightColor = '#ffd23f', style,
 }) => {
   const frame = useCurrentFrame();
@@ -29,8 +29,8 @@ export const AnimatedText: React.FC<Props> = ({
     else acc.push(w);
     return acc;
   }, []);
-  const out = end === undefined ? 1 : interpolate(frame, [end - 6, end], [1, 0], clamp);
-  const outY = end === undefined ? 0 : interpolate(frame, [end - 6, end], [0, -36], clamp);
+  const out = end === undefined ? 1 : interpolate(frame, [end - 9, end], [1, 0], clamp);
+  const outY = end === undefined ? 0 : interpolate(frame, [end - 9, end], [0, -36], clamp);
   return (
     <div
       style={{

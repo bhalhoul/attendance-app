@@ -14,7 +14,7 @@ export const Countdown: React.FC<{ label: string }> = ({ label }) => {
   const s = pop(frame, countdownFrame(idx), 8, 260);
   const progress = interpolate(frame, [from, to], [0, 1], clamp);
   const R = 52, C = 2 * Math.PI * R;
-  const urgent = n <= 2;
+  const urgent = n <= 3;
   const color = urgent ? COLORS.accent2 : COLORS.accent;
   const exit = interpolate(frame, [to, to + 4], [1, 0], clamp);
   return (

@@ -1,0 +1,47 @@
+{
+  "id": "ep003",
+  "series": "معلومة غبية… ولكن حقيقية!",
+  "type": "symbol",
+  "variant": "A",
+  "seed": 12,
+  "difficulty": "medium",
+  "music": {
+    "scale": "nahawand",
+    "root": "D"
+  },
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "baseColor": "#493762",
+  "oddColor": "#493762",
+  "deltaE": 0,
+  "symbols": {
+    "base": "😂",
+    "odd": "🤣",
+    "font": "emoji"
+  },
+  "answer": 15,
+  "texts": {
+    "title": "واحد فيهم كيضحك بطريقة مختلفة 🤣",
+    "hookA": [
+      "واحد",
+      "فيهم كيضحك…",
+      "بطريقة مختلفة! 🤣"
+    ],
+    "hookB": "عندك 10 ثواني… لقا الضحكة المختلفة 🤣",
+    "hookEmoji": "😂",
+    "hookCRight": "نتا 😎",
+    "hookCLeft": "الإيموجي 😂",
+    "hookCQuestion": "شكون يلقاه الأول؟ 🤣",
+    "instruction": "إيموجي واحد مختلف… لقاه! 👀",
+    "midHint": "مازال؟ شوف مزيان فالراس 😏",
+    "revealSub": "😂 هاد الإيموجي تختار «كلمة العام» ف قاموس أوكسفورد سنة 2015!",
+    "shareLine1": "صيفطها لصاحبك اللي ديما كيضحك 😂",
+    "shareLine2": "ونشوفو شكون يلقاه أسرع ⚡",
+    "countdownLabel": "ثواني",
+    "commentPrompt": "كتب الرقم ف الكومنتير 👇",
+    "commentSub": "قبل ما يبان الجواب ⏳",
+    "revealLabel": "الجواب هو"
+  }
+}

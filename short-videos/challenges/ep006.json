@@ -1,0 +1,42 @@
+{
+  "id": "ep006",
+  "series": "معلومة غبية… ولكن حقيقية!",
+  "type": "color",
+  "variant": "A",
+  "seed": 115,
+  "difficulty": "hard",
+  "music": {
+    "scale": "nahawand",
+    "root": "A"
+  },
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "baseColor": "#8c4dcb",
+  "oddColor": "#6e2eb0",
+  "deltaE": 9.83,
+  "answer": 10,
+  "texts": {
+    "title": "مستوى صعيب… واش قدّها؟ 🔥",
+    "hookA": [
+      "مستوى",
+      "صعيب بزاف…",
+      "واش قدّها؟ 🔥"
+    ],
+    "hookB": "المستوى الصعيب 🔥 عندك 10 ثواني",
+    "hookEmoji": "🔥",
+    "hookCRight": "نتا 💪",
+    "hookCLeft": "المستوى الصعيب 🔥",
+    "hookCQuestion": "شكون يربح؟ 🔥",
+    "instruction": "مربع واحد لونو مختلف شوية… لقاه! 👀",
+    "midHint": "صعيب؟ شوف الشبكة كاملة 👀",
+    "revealSub": "👁️ الإنسان كيغمّض عينيه تقريباً 15 حتى 20 مرة ف الدقيقة!",
+    "shareLine1": "صيفطها لأقوى واحد ف العائلة 💪",
+    "shareLine2": "ونشوفو واش يقدّ على المستوى الصعيب 🔥",
+    "countdownLabel": "ثواني",
+    "commentPrompt": "كتب الرقم ف الكومنتير 👇",
+    "commentSub": "قبل ما يبان الجواب ⏳",
+    "revealLabel": "الجواب هو"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "ep005",
+  "series": "معلومة غبية… ولكن حقيقية!",
+  "type": "symbol",
+  "variant": "B",
+  "seed": 14,
+  "difficulty": "medium",
+  "music": {
+    "scale": "hijaz",
+    "root": "G"
+  },
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "baseColor": "#624837",
+  "oddColor": "#624837",
+  "deltaE": 0,
+  "symbols": {
+    "base": "ت",
+    "odd": "ث",
+    "font": "arabic"
+  },
+  "answer": 25,
+  "texts": {
+    "title": "حرف واحد فيه نقطة زايدة… فين هو؟ 🔍",
+    "hookA": [
+      "حرف",
+      "واحد فيه…",
+      "نقطة زايدة! 🔍"
+    ],
+    "hookB": "ركّز مزيان… حرف واحد ماشي بحال لاخرين 🔍",
+    "hookEmoji": "🔍",
+    "hookCRight": "عينيك 👀",
+    "hookCLeft": "النقطة 🔍",
+    "hookCQuestion": "واش غتلقاها؟ 🔍",
+    "instruction": "حرف واحد فيه 3 نقط… لقاه! 🔍",
+    "midHint": "مازال؟ عدّ النقط مزيان 😅",
+    "revealSub": "📜 الكتابة العربية القديمة كانت بلا نقط… النقط تزادو من بعد!",
+    "shareLine1": "صيفطها لشي واحد كيقرا بالزربة 📖",
+    "shareLine2": "ونشوفو واش غينتابه للنقطة 😅",
+    "countdownLabel": "ثواني",
+    "commentPrompt": "كتب الرقم ف الكومنتير 👇",
+    "commentSub": "قبل ما يبان الجواب ⏳",
+    "revealLabel": "الجواب هو"
+  }
+}

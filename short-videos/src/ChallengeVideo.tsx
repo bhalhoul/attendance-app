@@ -1,8 +1,8 @@
 import React from 'react';
 import { AbsoluteFill, Audio, interpolate, staticFile, useCurrentFrame } from 'remotion';
 import { LAYOUT, SAFE_AREA } from '../shared/safe-zones.js';
-import { SECTIONS, beat } from '../shared/timing.js';
-import { beatPulse, clamp, pop } from './anim';
+import { MID_HINT_AT, SECTIONS, beat } from '../shared/timing.js';
+import { beatPulse, clamp, fit, pop } from './anim';
 import { AnimatedText } from './components/AnimatedText';
 import { Background } from './components/Background';
 import { Countdown } from './components/Countdown';
@@ -54,8 +54,12 @@ export const ChallengeVideo: React.FC<VideoProps> = ({ challenge, variant, showS
         <Pill text={challenge.series} start={S.intro.from} end={S.outro.from} size={30} bg={COLORS.accent} color="#111" />
         <div style={{ position: 'relative', width: '100%', height: 220 }}>
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <AnimatedText text={t.instruction} start={S.intro.from + 2} end={S.comment.from} size={64}
+            <AnimatedText text={t.instruction} start={S.intro.from + 2} end={t.midHint ? MID_HINT_AT : S.comment.from} size={64}
               highlight={['مختلف…']} highlightColor={COLORS.accent3} />
+          </div>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {t.midHint && <AnimatedText text={t.midHint} start={MID_HINT_AT} end={S.comment.from} size={64}
+              highlight={['ركّز']} highlightColor={COLORS.accent2} />}
           </div>
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
             transform: `scale(${1 + 0.035 * p * (frame >= S.comment.from && frame < S.reveal.from ? 1 : 0)})` }}>
@@ -74,8 +78,8 @@ export const ChallengeVideo: React.FC<VideoProps> = ({ challenge, variant, showS
             </div>
           )}
           <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-            <AnimatedText text={t.shareLine1} start={S.outro.from + 2} size={56} highlight={['لمراتك', 'لراجلك']} highlightColor={COLORS.accent2} />
-            <AnimatedText text={t.shareLine2} start={S.outro.from + beat(1)} size={40} weight={800} highlight={['لصاحبك…']} highlightColor={COLORS.accent3} />
+            <AnimatedText text={t.shareLine1} start={S.outro.from + 2} size={fit(t.shareLine1, 56, 26)} highlight={['لمراتك', 'لراجلك']} highlightColor={COLORS.accent2} />
+            <AnimatedText text={t.shareLine2} start={S.outro.from + beat(2)} size={fit(t.shareLine2, 40, 34)} weight={800} highlight={['لصاحبك…']} highlightColor={COLORS.accent3} />
           </div>
         </div>
       </Block>
@@ -83,10 +87,10 @@ export const ChallengeVideo: React.FC<VideoProps> = ({ challenge, variant, showS
       {/* ===== الكتلة السفلى ===== */}
       <Block top={LAYOUT.bottomBlock.top} height={LAYOUT.bottomBlock.height}>
         <div style={{ position: 'absolute' }}><Countdown label={t.countdownLabel} /></div>
-        <div style={{ position: 'absolute' }}><Pill text={t.commentSub} start={S.comment.from + beat(1)} end={S.reveal.from} size={40} /></div>
-        <div style={{ position: 'absolute' }}><Pill text={t.revealSub} start={S.reveal.from + beat(2)} end={S.outro.from} size={32} /></div>
+        <div style={{ position: 'absolute' }}><Pill text={t.commentSub} start={S.comment.from + beat(2)} end={S.reveal.from} size={40} /></div>
+        <div style={{ position: 'absolute' }}><Pill text={t.revealSub} start={S.reveal.from + beat(3)} end={S.outro.from} size={32} /></div>
         <div style={{ position: 'absolute' }}>
-          <Pill text={challenge.series} start={S.outro.from + beat(2)} end={S.outro.to + 10} size={40} bg={COLORS.accent} color="#111" />
+          <Pill text={challenge.series} start={S.outro.from + beat(4)} end={S.outro.to + 10} size={40} bg={COLORS.accent} color="#111" />
         </div>
       </Block>
 
