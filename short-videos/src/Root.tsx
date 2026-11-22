@@ -6,6 +6,10 @@ import './theme';
 import type { Variant, VideoProps } from './types';
 // القائمة كتتولد تلقائياً (npm run new-challenge / npm run render)
 import { CHALLENGES } from './challenges.generated';
+import { NEWS } from './news.generated';
+import { NewsVideo } from './news/NewsVideo';
+import type { NewsProps } from './news/types';
+import { NEWS_DURATION_FRAMES } from '../shared/news-timing.js';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -23,5 +27,17 @@ export const RemotionRoot: React.FC = () => (
         />
       )),
     )}
+    {NEWS.map((n) => (
+      <Composition<any, NewsProps>
+        key={n.id}
+        id={n.id}
+        component={NewsVideo}
+        durationInFrames={NEWS_DURATION_FRAMES}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+        defaultProps={{ news: n, showSafeZones: false }}
+      />
+    ))}
   </>
 );

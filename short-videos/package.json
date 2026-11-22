@@ -12,7 +12,8 @@
     "audio": "node scripts/generate-audio.mjs",
     "render": "node scripts/render.mjs",
     "render:main": "node scripts/render.mjs --variant A",
-    "stills": "node scripts/stills.mjs"
+    "stills": "node scripts/stills.mjs",
+    "render:news": "node scripts/render-news.mjs"
   },
   "dependencies": {
     "@fontsource/cairo": "5.1.0",

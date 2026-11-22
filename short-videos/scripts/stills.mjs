@@ -12,13 +12,16 @@ const variant = args.variant ?? 'A';
 const frames = (args.frames ?? '0,45,100,200,300,380,500').split(',').map(Number);
 const out = path.resolve(args.out ?? 'out/stills');
 fs.mkdirSync(out, { recursive: true });
-const challenge = JSON.parse(fs.readFileSync(`challenges/${id}.json`, 'utf8'));
+const isNews = 'news' in args; // --news 2026-11-22
+const challenge = isNews ? null : JSON.parse(fs.readFileSync(`challenges/${id}.json`, 'utf8'));
+const news = isNews ? JSON.parse(fs.readFileSync(`news/${args.news}.json`, 'utf8')) : null;
 const browserExecutable = process.env.REMOTION_BROWSER && fs.existsSync(process.env.REMOTION_BROWSER) ? process.env.REMOTION_BROWSER : null;
 const serveUrl = await bundle({ entryPoint: path.resolve('src/index.ts') });
-const inputProps = { challenge, variant, showSafeZones: 'safe' in args };
-const composition = await selectComposition({ serveUrl, id: `${id}-${variant}-${VARIANT_INFO[variant].slug}`, inputProps, browserExecutable });
+const inputProps = isNews ? { news, showSafeZones: 'safe' in args } : { challenge, variant, showSafeZones: 'safe' in args };
+const compId = isNews ? news.id : `${id}-${variant}-${VARIANT_INFO[variant].slug}`;
+const composition = await selectComposition({ serveUrl, id: compId, inputProps, browserExecutable });
 for (const f of frames) {
-  const file = path.join(out, `${id}-${variant}-${String(f).padStart(3, '0')}${'safe' in args ? '-safe' : ''}.png`);
+  const file = path.join(out, `${compId}-${String(f).padStart(4, '0')}${'safe' in args ? '-safe' : ''}.png`);
   await renderStill({ composition, serveUrl, frame: f, output: file, inputProps, browserExecutable, scale: Number(args.scale ?? 0.5) });
   console.log('✔', file);
 }
