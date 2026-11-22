@@ -3,3 +3,5 @@ out/.tmp/
 out/stills/
 .remotion/
 public/audio/*.wav
+out/studio/stills/
+out/.studio-*/

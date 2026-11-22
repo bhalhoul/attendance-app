@@ -25,7 +25,7 @@ const META: Record<string, { color: string; tag: string; n?: string }> = {
 };
 
 // خلفية سينمائية: تدرج + توهج بلون الخبر + شبكة خفيفة + vignette + grain
-const Cinematic: React.FC<{ color: string; seed: number }> = ({ color, seed }) => {
+export const Cinematic: React.FC<{ color: string; seed: number }> = ({ color, seed }) => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ background: 'radial-gradient(120% 80% at 50% 35%, #1b1640 0%, #0a0a18 60%, #050509 100%)' }}>
@@ -45,7 +45,7 @@ const Cinematic: React.FC<{ color: string; seed: number }> = ({ color, seed }) =
 };
 
 // انتقال: دخول بزوم + blur، خروج بسحبة جانبية + blur، وخط ضوء
-const SceneWrap: React.FC<{ p: TPart; children: React.ReactNode }> = ({ p, children }) => {
+export const SceneWrap: React.FC<{ p: TPart; children: React.ReactNode }> = ({ p, children }) => {
   const { t } = useTime();
   if (t < p.sceneStart - 0.05 || t > p.sceneEnd + 0.4) return null;
   const inK = interpolate(t, [p.sceneStart, p.sceneStart + 0.45], [0, 1], clampX);
@@ -59,7 +59,7 @@ const SceneWrap: React.FC<{ p: TPart; children: React.ReactNode }> = ({ p, child
   );
 };
 
-const LightSweep: React.FC<{ at: number }> = ({ at }) => {
+export const LightSweep: React.FC<{ at: number }> = ({ at }) => {
   const { t } = useTime();
   const k = interpolate(t, [at - 0.25, at + 0.25], [0, 1], clampX);
   if (k <= 0 || k >= 1) return null;

@@ -16,7 +16,8 @@
     "render:news": "node scripts/render-news.mjs",
     "voice:news": "node scripts/voiceover-news.mjs",
     "render:weekly": "node scripts/render-weekly.mjs",
-    "render:weekly-pro": "node scripts/render-weekly-pro.mjs"
+    "render:weekly-pro": "node scripts/render-weekly-pro.mjs",
+    "studio:make": "node scripts/studio.mjs"
   },
   "dependencies": {
     "@fontsource/cairo": "5.1.0",

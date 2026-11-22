@@ -139,3 +139,18 @@ npm run render:weekly-pro -- --week 2026-W47 --tts 1  # يعاود يصاوب ا
 - `src/weeklypro/`: المشاهد (رسوم: أعلام، خريطة هرمز، مبيانات البورصة، عدّادات…)، انتقالات بزوم/blur وخط ضوء، ترجمة متزامنة.
   بلا شريط أخبار وبلا مصادر ف الفيديو — المصادر ف `weekly/<week>.description.md` (وصف المنشور).
 - الصوت: الموسيقى كتنقص أوتوماتيكياً تحت صوت المذيع (sidechain) ومن بعد −14 LUFS.
+
+## 🎬 استوديو الأخبار «بالمختصر» (الأشكال اليومية)
+
+- الهوية والمعلق: `studio/brand.json` (الاسم، @الحساب، الألوان، صوت ElevenLabs، السرعة).
+- كل فيديو = ملف واحد ف `studio/episodes/`: `format` (`top` | `minute` | `quick`) و `parts` (نص المذيع + `visuals` للمنطقة A + `heads` للمنطقة B).
+  كل `"at"` هو كلمة من نص الجزء: الرسم كيبان ملي المذيع كينطقها (`"start"` = بداية الجزء).
+- أنواع الرسوم: `title` `hero` `flags` `versus` `counter` `doc` `question` `recap` `clock` `flash` `text` `tiles` `bars` `chart` (`src/studio/blocks.tsx`).
+- العلامة المائية: اللوغو + الاسم + @الحساب ف الشارة الفوقانية طول الفيديو + بطاقة النهاية.
+
+```bash
+npm run studio:make -- studio/episodes/2026-11-22-quick.json            # فيديو واحد
+npm run studio:make -- studio/episodes/2026-11-22-*.json                # الثلاثة
+npm run studio:make -- studio/episodes/2026-11-22-top.json --stills 0.25 --safe   # لقطات مراجعة
+```
+الخرج: `out/studio/<id>.mp4` + `-cover.jpg` + `.txt` (وصف المنشور بالمصادر). الاستراتيجية: `STRATEGY.md`.

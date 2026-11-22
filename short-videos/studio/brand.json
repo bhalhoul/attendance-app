@@ -1,0 +1,20 @@
+{
+  "name": "بالمختصر",
+  "latin": "Bilmukhtasar",
+  "handle": "@bilmukhtasar",
+  "tagline": "الأخبار المهمة… بالمختصر",
+  "colors": { "primary": "#E53935", "accent": "#FFD23F", "dark": "#0a0a18" },
+  "voice": {
+    "id": "rPNcQ53R703tTmtue1AT",
+    "name": "Mazen Lawand",
+    "model": "eleven_multilingual_v2",
+    "settings": { "stability": 0.55, "similarity_boost": 0.8, "style": 0.15, "use_speaker_boost": true },
+    "tempo": 1.07
+  },
+  "formats": {
+    "top": { "label": "الخبر الأهم", "icon": "🔴", "color": "#E53935" },
+    "minute": { "label": "اليوم في دقيقة", "icon": "⏱️", "color": "#1E88E5" },
+    "quick": { "label": "خبر سريع", "icon": "⚡", "color": "#FFB300" },
+    "weekly": { "label": "أخبار الأسبوع", "icon": "🗓️", "color": "#8E24AA" }
+  }
+}

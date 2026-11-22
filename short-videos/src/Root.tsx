@@ -14,6 +14,8 @@ import { WEEKLY } from './weekly.generated';
 import { WeeklyVideo, type WeeklyProps } from './weekly/WeeklyVideo';
 import { WeeklyPro, type WeeklyProProps } from './weeklypro/WeeklyPro';
 import w47Timeline from '../weekly/2026-W47.timeline.json';
+import { STUDIO } from './studio.generated';
+import { StudioVideo, type StudioProps } from './studio/StudioVideo';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -64,5 +66,17 @@ export const RemotionRoot: React.FC = () => (
       height={HEIGHT}
       defaultProps={{ timeline: w47Timeline as any, rangeLabel: '16 – 22 نونبر 2026', brand: 'أخبار الأسبوع', withAudio: true, showSafeZones: false }}
     />
+    {STUDIO.map((tl) => (
+      <Composition<any, StudioProps>
+        key={tl.id}
+        id={`studio-${tl.id}`}
+        component={StudioVideo}
+        durationInFrames={Math.round(tl.durationSec * FPS)}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+        defaultProps={{ tl, withAudio: true, showSafeZones: false }}
+      />
+    ))}
   </>
 );

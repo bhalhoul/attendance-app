@@ -37,3 +37,15 @@ fs.writeFileSync(path.join('src', 'weekly.generated.ts'), [
   '',
 ].join('\n'));
 console.log(`✔ src/weekly.generated.ts (${weeklyFiles.length})`);
+
+// استوديو الأخبار: studio/build/*.timeline.json → src/studio.generated.ts
+const studioFiles = fs.existsSync('studio/build') ? fs.readdirSync('studio/build').filter((f) => f.endsWith('.timeline.json')).sort() : [];
+fs.writeFileSync(path.join('src', 'studio.generated.ts'), [
+  '// ⚠️ ملف مولّد تلقائياً بـ scripts/index-challenges.mjs — ما تعدلوش بيدك',
+  "import type { StudioTimeline } from './studio/StudioVideo';",
+  ...studioFiles.map((f, i) => `import s${i} from '../studio/build/${f}';`),
+  '',
+  `export const STUDIO = [${studioFiles.map((_, i) => `s${i}`).join(', ')}] as unknown as StudioTimeline[];`,
+  '',
+].join('\n'));
+console.log(`✔ src/studio.generated.ts (${studioFiles.length})`);
