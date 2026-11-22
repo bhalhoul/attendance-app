@@ -10,6 +10,8 @@ import { NEWS } from './news.generated';
 import { NewsVideo } from './news/NewsVideo';
 import type { NewsProps } from './news/types';
 import { NEWS_DURATION_FRAMES } from '../shared/news-timing.js';
+import { WEEKLY } from './weekly.generated';
+import { WeeklyVideo, type WeeklyProps } from './weekly/WeeklyVideo';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -37,6 +39,18 @@ export const RemotionRoot: React.FC = () => (
         width={WIDTH}
         height={HEIGHT}
         defaultProps={{ news: n, showSafeZones: false }}
+      />
+    ))}
+    {WEEKLY.map((w) => (
+      <Composition<any, WeeklyProps>
+        key={w.id}
+        id={w.id}
+        component={WeeklyVideo}
+        durationInFrames={w.durationSec * FPS}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+        defaultProps={{ weekly: w, showSafeZones: false }}
       />
     ))}
   </>
