@@ -92,7 +92,7 @@ for (const f of files) {
   execFileSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-ss', '2', '-i', final, '-frames:v', '1', '-q:v', '2', final.replace('.mp4', '-cover.jpg')]);
   // وصف المنشور مع المصادر
   const desc = [`${tl.brand.formats[tl.format].icon} ${tl.brand.formats[tl.format].label} | ${tl.dateLabel}`, '',
-    ...tl.parts.flatMap((p) => p.heads.slice(0, 1).map((h) => `• ${h.chip ?? `${h.stat} ${h.label}`}`)), '',
+    ...tl.parts.filter((p) => p.tag).map((p) => `• ${p.heads.find((h) => h.chip)?.chip ?? p.text.split(/[.،]/)[0]}`), '',
     '👇 شاركنا رأيك في التعليقات', `تابع ${tl.brand.name} ${tl.brand.handle}`, '',
     `📰 المصادر: ${(ep.sources ?? []).join('، ')}`, '🎙️ تعليق صوتي مولّد بالذكاء الاصطناعي (ElevenLabs)', '',
     '#أخبار #بالمختصر #المغرب #أخبار_اليوم'].join('\n');
