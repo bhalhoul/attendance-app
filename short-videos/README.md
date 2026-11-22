@@ -123,3 +123,19 @@ npm run render:weekly -- --week 2026-W47   # → out/weekly-2026-w47.mp4
 ```
 
 كل مقطع خاصو `source`، وإلا السكريبت كيرفض.
+
+## أخبار الأسبوع — مونتاج احترافي بصوت مذيع (ElevenLabs)
+
+```bash
+npm run render:weekly-pro -- --week 2026-W47          # → out/weekly-pro-2026-w47.mp4
+npm run render:weekly-pro -- --week 2026-W47 --tts 1  # يعاود يصاوب الصوت (كيستهلك حروف ElevenLabs)
+```
+
+- `weekly/<week>.narration.json`: نص المذيع بالدارجة (الأرقام بالحروف)، الصوت (voiceId) والموديل.
+- `scripts/tts-elevenlabs.mjs`: كيصاوب الصوت مقطع بمقطع **مع توقيت كل حرف** → `public/voice/<id>/`.
+  المفتاح كيتزاد من بروكسي البيئة (ولا `ELEVENLABS_API_KEY` محلياً). الخطة المجانية كتسمح غير بالأصوات الأساسية (premade).
+- `weekly/<week>.cues.json`: كل رسم متحرك مربوط بكلمة كينطقها المذيع (مثلاً `"trump": "دونالد"`).
+- `scripts/build-weekly-timeline.mjs` → `weekly/<week>.timeline.json`: المقاطع، الكلمات (للترجمة كلمة بكلمة) ولحظات الرسوم.
+- `src/weeklypro/`: المشاهد (رسوم: أعلام، خريطة هرمز، مبيانات البورصة، عدّادات…)، انتقالات بزوم/blur وخط ضوء، ترجمة متزامنة.
+  بلا شريط أخبار وبلا مصادر ف الفيديو — المصادر ف `weekly/<week>.description.md` (وصف المنشور).
+- الصوت: الموسيقى كتنقص أوتوماتيكياً تحت صوت المذيع (sidechain) ومن بعد −14 LUFS.

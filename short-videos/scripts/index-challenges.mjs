@@ -27,7 +27,7 @@ fs.writeFileSync(path.join('src', 'news.generated.ts'), [
 console.log(`✔ src/news.generated.ts (${newsFiles.length} نشرات)`);
 
 // أخبار الأسبوع: weekly/*.json → src/weekly.generated.ts
-const weeklyFiles = fs.existsSync('weekly') ? fs.readdirSync('weekly').filter((f) => f.endsWith('.json')).sort() : [];
+const weeklyFiles = fs.existsSync('weekly') ? fs.readdirSync('weekly').filter((f) => /^\d{4}-W\d+\.json$/.test(f)).sort() : [];
 fs.writeFileSync(path.join('src', 'weekly.generated.ts'), [
   '// ⚠️ ملف مولّد تلقائياً بـ scripts/index-challenges.mjs — ما تعدلوش بيدك',
   "import type { Weekly } from './weekly/WeeklyVideo';",

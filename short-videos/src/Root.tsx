@@ -12,6 +12,8 @@ import type { NewsProps } from './news/types';
 import { NEWS_DURATION_FRAMES } from '../shared/news-timing.js';
 import { WEEKLY } from './weekly.generated';
 import { WeeklyVideo, type WeeklyProps } from './weekly/WeeklyVideo';
+import { WeeklyPro, type WeeklyProProps } from './weeklypro/WeeklyPro';
+import w47Timeline from '../weekly/2026-W47.timeline.json';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -53,5 +55,14 @@ export const RemotionRoot: React.FC = () => (
         defaultProps={{ weekly: w, showSafeZones: false }}
       />
     ))}
+    <Composition<any, WeeklyProProps>
+      id="weekly-pro-2026-w47"
+      component={WeeklyPro}
+      durationInFrames={Math.round((w47Timeline as any).durationSec * FPS)}
+      fps={FPS}
+      width={WIDTH}
+      height={HEIGHT}
+      defaultProps={{ timeline: w47Timeline as any, rangeLabel: '16 – 22 نونبر 2026', brand: 'أخبار الأسبوع', withAudio: true, showSafeZones: false }}
+    />
   </>
 );
