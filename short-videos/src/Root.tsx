@@ -16,6 +16,7 @@ import { WeeklyPro, type WeeklyProProps } from './weeklypro/WeeklyPro';
 import w47Timeline from '../weekly/2026-W47.timeline.json';
 import { STUDIO } from './studio.generated';
 import { StudioVideo, type StudioProps, Logo } from './studio/StudioVideo';
+import { Cover, type CoverProps } from './studio/Cover';
 import brandJson from '../studio/brand.json';
 import { AbsoluteFill } from 'remotion';
 
@@ -68,6 +69,8 @@ export const RemotionRoot: React.FC = () => (
       height={HEIGHT}
       defaultProps={{ timeline: w47Timeline as any, rangeLabel: '16 – 22 نونبر 2026', brand: 'أخبار الأسبوع', withAudio: true, showSafeZones: false }}
     />
+    <Composition<any, CoverProps> id="studio-cover" component={Cover} width={1080} height={1920} fps={30} durationInFrames={1}
+      defaultProps={{ brand: brandJson as any, spec: { style: 'hero', kicker: '🔥 ترند', lines: ['عنوان'], cta: 'الجواب في الفيديو 👀' } }} />
     <Composition id="brand-avatar" width={1080} height={1080} fps={30} durationInFrames={1}
       component={() => (
         <AbsoluteFill style={{ background: 'radial-gradient(circle at 50% 40%, #2a1530, #0a0a18 70%)', alignItems: 'center', justifyContent: 'center' }}>

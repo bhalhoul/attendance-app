@@ -29,6 +29,16 @@ for (const f of files) {
   const tl = JSON.parse(fs.readFileSync(`studio/build/${ep.id}.timeline.json`, 'utf8'));
   const inputProps = { tl, withAudio: false, showSafeZones: safe };
   const composition = await selectComposition({ serveUrl, id: `studio-${tl.id}`, inputProps, browserExecutable });
+  if (argv.includes('--covers')) {
+    for (const [ci, spec] of (ep.covers ?? []).entries()) {
+      const cp = { spec, brand: tl.brand };
+      const cc = await selectComposition({ serveUrl, id: 'studio-cover', inputProps: cp, browserExecutable });
+      const out = path.resolve('out', 'studio', `${tl.id}-cover${ep.covers.length > 1 ? '-' + 'ABCD'[ci] : ''}.jpg`);
+      await renderStill({ composition: cc, serveUrl, frame: 0, inputProps: cp, browserExecutable, imageFormat: 'jpeg', jpegQuality: 92, output: out });
+      console.log('✔ cover', out);
+    }
+    continue;
+  }
   if (stills) {
     const dir = path.join('out', 'studio', 'stills', tl.id); fs.mkdirSync(dir, { recursive: true });
     for (let s = 0.6; s < tl.durationSec; s += 1.5)
@@ -92,7 +102,14 @@ for (const f of files) {
     '[duck][v2]amix=inputs=2:normalize=0:weights=1 1.6,loudnorm=I=-14:TP=-2:LRA=9,aresample=48000,alimiter=limit=0.7:level=false[a]',
     '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart',
     '-metadata', `title=${tl.brand.name} — ${tl.brand.formats[tl.format].label} — ${tl.dateLabel}`, '-metadata', `artist=${tl.brand.name} ${tl.brand.handle}`, final]);
-  execFileSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-ss', '2', '-i', final, '-frames:v', '1', '-q:v', '2', final.replace('.mp4', '-cover.jpg')]);
+  if (ep.covers?.length) {
+    for (const [ci, spec] of ep.covers.entries()) {
+      const cp = { spec, brand: tl.brand };
+      const cc = await selectComposition({ serveUrl, id: 'studio-cover', inputProps: cp, browserExecutable });
+      await renderStill({ composition: cc, serveUrl, frame: 0, inputProps: cp, browserExecutable, imageFormat: 'jpeg', jpegQuality: 92,
+        output: path.resolve(final.replace('.mp4', `-cover${ep.covers.length > 1 ? '-' + 'ABCD'[ci] : ''}.jpg`)) });
+    }
+  } else execFileSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-ss', '2', '-i', final, '-frames:v', '1', '-q:v', '2', final.replace('.mp4', '-cover.jpg')]);
   // وصف المنشور مع المصادر
   const desc = [`${tl.brand.formats[tl.format].icon} ${tl.brand.formats[tl.format].label} | ${tl.dateLabel}`, '',
     ...tl.parts.filter((p) => p.tag).map((p) => `• ${p.heads.find((h) => h.chip)?.chip ?? p.text.split(/[.،]/)[0]}`), '',
