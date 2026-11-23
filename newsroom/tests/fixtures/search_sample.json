@@ -1,0 +1,16 @@
+{
+  "_note": "TEST FIXTURE shaped like a Parallel Search web_search response. Invented entries, .test domains. Not real news.",
+  "search_id": "search_fixture0001",
+  "results": [
+    {"url": "https://www.ma-news.test/politique/2026/11/23/sample-article-1?utm_source=search", "title": "[عينة اختبار] الحكومة تعلن برنامجًا تجريبيًا جديدًا", "publish_date": "2026-11-23",
+     "excerpts": ["<p>نص تجريبي للاختبار فقط.</p>", "مقتطف ثانٍ."]},
+    {"url": "https://ma-news.test/politique/2026/11/23/sample-article-1", "title": "[عينة اختبار] الحكومة تعلن برنامجًا تجريبيًا جديدًا", "publish_date": "2026-11-23", "excerpts": ["نفس الرابط"]},
+    {"url": "https://other-outlet.test/maroc/12345", "title": "[عينة اختبار] الحكومة تُعلن برنامجًا تجريبيًا جديدًا", "publish_date": "2026-11-23", "excerpts": ["منقول"]},
+    {"url": "https://ma-news.test/", "title": "الصفحة الرئيسية", "publish_date": "2026-11-23", "excerpts": ["فهرس"]},
+    {"url": "https://ma-news.test/economie", "title": "قسم الاقتصاد", "publish_date": null, "excerpts": []},
+    {"url": "https://es-news.test/ceuta/2026/noticia-de-prueba-del-puerto", "title": "[Muestra] El puerto de la ciudad amplía el horario para los viajeros", "publish_date": "2026-11-22", "excerpts": ["Texto de prueba en español para el test."]},
+    {"url": "https://fr-news.test/article/2026-11-20-ancien", "title": "[Échantillon] Le marché et les prix au port", "publish_date": "2026-11-18", "excerpts": ["Ancien article de test."]},
+    {"url": "https://en-news.test/story/77", "title": "[Test sample] Undated story", "excerpts": ["No date."]},
+    {"url": "https://en-news.test/story/78", "title": "", "publish_date": "2026-11-23"}
+  ]
+}

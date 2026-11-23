@@ -1,0 +1,44 @@
+# Search plan per desk. News is gathered through the connected Parallel Search tool (web_search),
+# not through RSS: Claude runs one web_search call per desk with these queries, saves the raw
+# response to data/inbox/<desk>.json, then runs `python -m intake.from_search`.
+# Queries are short (3-6 words) as the tool asks; up to 3 per call.
+desks:
+  morocco:
+    country: [MA]
+    max_age_hours: 36
+    objective: "أهم أخبار المغرب خلال آخر 24 ساعة: السياسة والاقتصاد والمجتمع، من مصادر إخبارية مغربية ودولية"
+    queries:
+      - "أخبار المغرب اليوم"
+      - "Maroc actualité aujourd'hui"
+      - "Morocco news today"
+  spain_ceuta:
+    country: [ES]
+    max_age_hours: 36
+    objective: "Noticias de las últimas 24 horas sobre Ceuta, Melilla y decisiones importantes en España"
+    queries:
+      - "Ceuta noticias hoy"
+      - "Melilla noticias hoy"
+      - "España noticias hoy gobierno"
+  world:
+    country: []
+    max_age_hours: 24
+    objective: "أهم الأحداث العالمية خلال آخر 24 ساعة ذات التأثير الواسع"
+    queries:
+      - "أهم الأخبار العالمية اليوم"
+      - "world news today"
+  sports:
+    country: []
+    max_age_hours: 36
+    objective: "نتائج ومواعيد كرة القدم المغربية والإسبانية والدولية خلال آخر 24 ساعة من مصادر رياضية معتمدة"
+    queries:
+      - "نتائج البطولة المغربية اليوم"
+      - "LaLiga resultados jornada hoy"
+      - "football results today"
+  economy:
+    country: []
+    max_age_hours: 36
+    objective: "أخبار الاقتصاد المغربي والإسباني والأسواق العالمية خلال آخر 24 ساعة مع الأرقام وتواريخها"
+    queries:
+      - "اقتصاد المغرب اليوم"
+      - "economía España hoy"
+      - "global markets today"
