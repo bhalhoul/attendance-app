@@ -36,7 +36,7 @@ const Kicker: React.FC<{ tl: StudioTimeline; p: SPart }> = ({ tl, p }) => {
   const f = tl.brand.formats[tl.format];
   const stories = tl.parts.filter((x) => x.tag);
   const idx = stories.findIndex((x) => x.key === p.key);
-  const s = sp(p.sceneStart + 0.2, 13, 170);
+  const s = p.sceneStart <= 0.01 ? 1 : sp(p.sceneStart + 0.2, 13, 170);
   return (
     <div style={{ position: 'absolute', left: SAFE_AREA.left, width: SAFE_AREA.width, top: 258, height: 64, display: 'flex', justifyContent: 'space-between', alignItems: 'center', direction: 'rtl' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -47,7 +47,16 @@ const Kicker: React.FC<{ tl: StudioTimeline; p: SPart }> = ({ tl, p }) => {
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, opacity: s, transform: `translateX(${(1 - s) * -120}px)` }}>
-        {p.tag && (tl.format === 'minute' || tl.format === 'results') ? (
+        {tl.format === 'trend' ? (() => {
+          const rv = tl.parts.find((x) => x.key === 'reveal');
+          const left = rv ? Math.ceil(rv.start - t) : 0;
+          const done = !rv || left <= 0;
+          return (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: FONT, fontWeight: 900, fontSize: 28, color: done ? '#111' : '#fff', whiteSpace: 'nowrap',
+              background: done ? '#ffd23f' : f.color, padding: '4px 18px', borderRadius: 12, boxShadow: `0 0 ${10 + 10 * Math.abs(Math.sin(t * 4))}px ${done ? '#ffd23f' : f.color}` }}>
+              {done ? '✅ الجواب' : <>⏳ الجواب بعد <span style={{ direction: 'ltr', display: 'inline-block', minWidth: 44, textAlign: 'center' }}>{left}ث</span></>}
+            </div>);
+        })() : p.tag && (tl.format === 'minute' || tl.format === 'results') ? (
           <>
             <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 28, color: '#fff', background: p.color, padding: '2px 16px', borderRadius: 10, whiteSpace: 'nowrap' }}>{p.tag}</div>
             <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 32, color: '#fff', direction: 'ltr' }}>{idx + 1}<span style={{ color: '#ffffff55', fontSize: 22 }}>/{stories.length}</span></div>

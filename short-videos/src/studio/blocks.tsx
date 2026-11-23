@@ -7,6 +7,7 @@ import { Badge, Counter, Emoji, useTime } from '../weeklypro/kit';
 
 const W = 820, H = 500, CX = W / 2;
 export type Block = { type: string; at: number; [k: string]: any };
+const interpolateFlash = (t: number, at: number) => (t < at || t > at + 0.35 ? 0 : 0.8 * (1 - (t - at) / 0.35));
 
 const At: React.FC<{ x: number; y: number; at?: number; children: React.ReactNode }> = ({ x, y, at, children }) => {
   const { t, sp } = useTime();
@@ -115,6 +116,46 @@ export const RenderBlock: React.FC<{ b: Block; color: string; partEnd: number }>
           </div>
         )}
         {b.note && <At at={showAt + 0.3} x={CX} y={300}><T size={28} color="#ffd23f">{b.note}</T></At>}
+      </>);
+    }
+    case 'hook': {
+      // الهوك: ظاهر من أول فريم، زوم + اهتزاز + فلاش — كيشد المشاهد ف أول ثانية
+      const k = sp(b.at - 0.75, 9, 230); // ف الفريم 0 النص ديجا ظاهر
+      const shake = t < b.at + 0.6 ? Math.sin(t * 60) * 8 * Math.max(0, 1 - (t - b.at + 0.35) / 0.95) : 0;
+      return (<>
+        {b.e && <div style={{ position: 'absolute', left: CX, top: H / 2, transform: `translate(-50%,-50%) scale(${1.1 + 0.05 * Math.sin(t * 5)})`, opacity: 0.35, filter: 'blur(2px)' }}>
+          <Emoji e={b.e} size={420} /></div>}
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 22,
+          transform: `translateX(${shake}px) scale(${1.25 - 0.25 * k})` }}>
+          {b.lines.map((l: any, i: number) => (
+            <div key={i} style={{ fontFamily: FONT, fontWeight: 900, fontSize: fit(l.text, l.size ?? 96, 11), lineHeight: 1.3, direction: 'rtl', whiteSpace: 'nowrap',
+              color: l.color ?? '#fff', textShadow: '0 6px 0 #000a, 0 0 40px #000', opacity: Math.min(1, k * 2) }}>
+              {l.mark ? <span style={{ display: 'inline-block', lineHeight: 1.25, background: color, padding: '0 20px 6px', borderRadius: 16, boxShadow: `0 0 40px ${color}aa` }}>{l.text}</span> : l.text}
+            </div>
+          ))}
+        </div>
+      </>);
+    }
+    case 'reveal': {
+      // الكشف: علامة استفهام ضبابية كتتحول للجواب مع فلاش
+      const r = b.revealAt ?? b.at + 1;
+      const before = t < r;
+      const s2 = sp(r, 9, 190);
+      const flash = interpolateFlash(t, r);
+      return (<>
+        {before ? (
+          <At at={b.at} x={CX} y={H / 2}>
+            <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 300, color: '#ffd23f', filter: `blur(${4 + 3 * Math.abs(Math.sin(t * 4))}px)`, transform: `scale(${1 + 0.06 * Math.sin(t * 8)})` }}>؟</div>
+          </At>
+        ) : (
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18,
+            transform: `scale(${0.6 + 0.4 * s2})`, opacity: Math.min(1, s2 * 1.6) }}>
+            {b.e && <Emoji e={b.e} size={150} />}
+            <T size={fit(b.label, 64, 16)} weight={900} color="#fff">{b.label}</T>
+            {b.sub && <T size={fit(b.sub, 40, 26)} color="#ffd23f">{b.sub}</T>}
+          </div>
+        )}
+        {flash > 0 && <div style={{ position: 'absolute', inset: 0, background: '#fff', opacity: flash }} />}
       </>);
     }
     case 'question':

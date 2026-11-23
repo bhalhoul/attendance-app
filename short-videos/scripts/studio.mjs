@@ -63,6 +63,9 @@ for (const f of files) {
     for (const h of p.heads) if (h.stat) { mix.add(impact(), h.at, 0.2); mix.add(pop(), h.at, 0.3); }
   }
   mix.add(ding(), D - 2.2, 0.35);
+  const rv = tl.parts.find((p) => p.key === 'reveal');
+  if (rv) { mix.add(riser(2.2), rv.sceneStart - 2.2, 0.45); mix.add(impact(), rv.start, 0.5); mix.add(ding(), rv.start + 0.1, 0.4); }
+  if (tl.format === 'trend') { mix.add(impact(), 0.02, 0.9); mix.add(whoosh(0.4, false), 0, 0.5); }
   if (tl.parts[1]) mix.add(riser(1.2), tl.parts[1].sceneStart - 1.2, 0.25);
   master(mix);
   const musicWav = path.join(tmp, 'music.wav'); writeWav(musicWav, mix);

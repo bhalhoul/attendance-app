@@ -26,7 +26,7 @@ export const ZoneA: React.FC<{ color: string; children: React.ReactNode }> = ({ 
 export const Group: React.FC<{ from: number; to: number; children: React.ReactNode }> = ({ from, to, children }) => {
   const { t } = useTime();
   if (t < from - 0.02 || t > to + 0.02) return null;
-  const i = interpolate(t, [from, from + 0.35], [0, 1], clampX);
+  const i = from <= 0.01 ? 1 : interpolate(t, [from, from + 0.35], [0, 1], clampX);
   const o = interpolate(t, [to - 0.25, to], [1, 0], clampX);
   const k = Math.min(i, o);
   return (
@@ -43,7 +43,7 @@ export const ZoneB: React.FC<{ items: BItem[]; until: number }> = ({ items, unti
   if (t > until) return null;
   const sorted = [...items].sort((a, b) => a.at - b.at);
   let idx = -1;
-  for (let i = 0; i < sorted.length; i++) if (t >= sorted[i].at) idx = i;
+  for (let i = 0; i < sorted.length; i++) if (t >= sorted[i].at || (i === 0 && sorted[0].at <= 0.5)) idx = i;
   const prevIdx = idx >= 0 && t < sorted[idx].at + 0.15 ? idx - 1 : -1;
   const render = (i: number, mode: 'in' | 'out') => {
     const it = sorted[i];
@@ -51,7 +51,7 @@ export const ZoneB: React.FC<{ items: BItem[]; until: number }> = ({ items, unti
       const k = interpolate(t, [sorted[i + 1].at, sorted[i + 1].at + 0.15], [1, 0], clampX);
       return <div key={`o${i}`} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: k, transform: `translateY(${(1 - k) * -40}px)` }}>{it.node}</div>;
     }
-    const s = sp(it.at + 0.15, 13, 190);
+    const s = it.at <= 0.5 && i === 0 ? 1 : sp(it.at + 0.15, 13, 190);
     const endFade = interpolate(t, [until - 0.3, until], [1, 0], clampX);
     return <div key={`i${i}`} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
       opacity: Math.min(1, s * 1.6) * endFade, transform: `translateY(${(1 - s) * 60}px) scale(${0.9 + 0.1 * s})` }}>{it.node}</div>;
@@ -59,7 +59,7 @@ export const ZoneB: React.FC<{ items: BItem[]; until: number }> = ({ items, unti
   return (
     <div style={{ position: 'absolute', left: ZB.left, top: ZB.top, width: ZB.w, height: ZB.h }}>
       {prevIdx >= 0 && render(prevIdx, 'out')}
-      {idx >= 0 && t >= sorted[idx].at + 0.15 && render(idx, 'in')}
+      {idx >= 0 && (t >= sorted[idx].at + 0.15 || (idx === 0 && sorted[0].at <= 0.5)) && render(idx, 'in')}
     </div>
   );
 };

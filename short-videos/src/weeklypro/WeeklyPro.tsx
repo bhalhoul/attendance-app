@@ -48,7 +48,7 @@ export const Cinematic: React.FC<{ color: string; seed: number }> = ({ color, se
 export const SceneWrap: React.FC<{ p: TPart; children: React.ReactNode }> = ({ p, children }) => {
   const { t } = useTime();
   if (t < p.sceneStart - 0.05 || t > p.sceneEnd + 0.4) return null;
-  const inK = interpolate(t, [p.sceneStart, p.sceneStart + 0.45], [0, 1], clampX);
+  const inK = p.sceneStart <= 0.01 ? 1 : interpolate(t, [p.sceneStart, p.sceneStart + 0.45], [0, 1], clampX); // أول مشهد: ظاهر من الفريم 0
   const outK = interpolate(t, [p.sceneEnd - 0.35, p.sceneEnd + 0.1], [0, 1], clampX);
   const blur = (1 - inK) * 18 + outK * 22;
   return (
