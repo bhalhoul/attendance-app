@@ -121,7 +121,7 @@ for (const f of files) {
   const desc = [`${tl.brand.formats[tl.format].icon} ${tl.brand.formats[tl.format].label} | ${tl.dateLabel}`, '',
     ...tl.parts.filter((p) => p.tag).map((p) => `• ${p.heads.find((h) => h.chip)?.chip ?? p.text.split(/[.،]/)[0]}`), '',
     '👇 شاركنا رأيك في التعليقات', `تابع ${tl.brand.name} ${tl.brand.handle}`, '',
-    `📰 المصادر: ${(ep.sources ?? []).join('، ')}`, '🎙️ تعليق صوتي مولّد بالذكاء الاصطناعي (ElevenLabs)', '',
+    `📰 المصادر: ${(ep.sources ?? []).join('، ')}`, ...(tl.brand.captionAiLine ? ['🎙️ تعليق صوتي مولّد بالذكاء الاصطناعي'] : []), '',
     '#أخبار #بالمختصر #المغرب #أخبار_اليوم'].join('\n');
   fs.writeFileSync(final.replace('.mp4', '.txt'), desc);
   fs.rmSync(tmp, { recursive: true, force: true });

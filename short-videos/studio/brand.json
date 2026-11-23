@@ -56,5 +56,6 @@
       "icon": "🔥",
       "color": "#FF3D00"
     }
-  }
+  },
+  "captionAiLine": false
 }
