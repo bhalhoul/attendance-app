@@ -1,0 +1,148 @@
+{
+  "id": "2026-11-23-gta-trailer",
+  "format": "trend",
+  "dateLabel": "GTA VI",
+  "sources": [
+    "Guinness World Records",
+    "TechCrunch",
+    "Push Square",
+    "Dexerto"
+  ],
+  "covers": [
+    {
+      "style": "hero",
+      "kicker": "🎮 GTA VI",
+      "e": "📺",
+      "lines": [
+        "فيديو واحد",
+        "هزم MrBeast؟"
+      ],
+      "highlight": 1,
+      "badge": "🏆 3 أرقام قياسية",
+      "cta": "الرقم في الفيديو 👀"
+    }
+  ],
+  "parts": [
+    {
+      "key": "hook",
+      "color": "#FF2E88",
+      "text": "مقطع فيديو واحد هزم مستر بيست؟",
+      "visuals": [
+        {
+          "type": "hook",
+          "at": "start",
+          "e": "📺",
+          "lines": [
+            {
+              "text": "فيديو واحد",
+              "size": 110
+            },
+            {
+              "text": "هزم MrBeast؟",
+              "size": 100,
+              "mark": true
+            }
+          ]
+        }
+      ],
+      "heads": [
+        {
+          "at": "start",
+          "chip": "📺 أقوى تريلر في التاريخ؟",
+          "color": "#FF2E88"
+        }
+      ]
+    },
+    {
+      "key": "context",
+      "color": "#7C4DFF",
+      "tag": "القصة",
+      "text": "في ديسمبر ألفين وثلاثة وعشرين، نشرت روكستار أول تريلر للعبة جي تي إيه سكس. وخلال يوم واحد فقط، حطم ثلاثة أرقام قياسية في موسوعة غينيس.",
+      "visuals": [
+        {
+          "type": "hero",
+          "at": "start",
+          "e": "🎬",
+          "label": "أول تريلر · ديسمبر 2023"
+        },
+        {
+          "type": "counter",
+          "at": "ثلاثة أرقام",
+          "to": 3,
+          "label": "أرقام قياسية في غينيس"
+        }
+      ],
+      "heads": [
+        {
+          "at": "start",
+          "chip": "🎬 ديسمبر 2023",
+          "color": "#7C4DFF"
+        },
+        {
+          "at": "ثلاثة أرقام",
+          "chip": "🏆 3 أرقام قياسية في غينيس",
+          "color": "#FFB300",
+          "textColor": "#111"
+        }
+      ]
+    },
+    {
+      "key": "reveal",
+      "color": "#FF9100",
+      "tag": "الجواب",
+      "text": "تسعون مليون مشاهدة في أربع وعشرين ساعة، كأكثر فيديو غير موسيقي مشاهدة على يوتيوب في يومه الأول، متجاوزا رقم مستر بيست.",
+      "visuals": [
+        {
+          "type": "reveal",
+          "at": "start",
+          "revealAt": "تسعون",
+          "e": "▶️",
+          "label": "90 مليون مشاهدة",
+          "sub": "في 24 ساعة فقط"
+        }
+      ],
+      "heads": [
+        {
+          "at": "start",
+          "chip": "✅ والرقم",
+          "color": "#FF9100"
+        },
+        {
+          "at": "تسعون",
+          "stat": "90M",
+          "label": "مشاهدة في 24 ساعة",
+          "color": "#E53935"
+        },
+        {
+          "at": "متجاوزا",
+          "chip": "تجاوز رقم MrBeast",
+          "color": "#1E88E5"
+        }
+      ]
+    },
+    {
+      "key": "outro",
+      "color": "#FFB300",
+      "text": "شارك الفيديو مع صديق من محبي جي تي إيه.",
+      "visuals": [
+        {
+          "type": "hero",
+          "at": "start",
+          "e": "📲",
+          "label": "شاركه مع صديق"
+        }
+      ],
+      "heads": [
+        {
+          "at": "start",
+          "chip": "📲 شاركه مع صديق من محبي GTA",
+          "color": "#1E88E5"
+        }
+      ]
+    }
+  ],
+  "tempo": 1.15,
+  "gap": 0.25,
+  "lead": 0.2,
+  "tail": 1.0
+}

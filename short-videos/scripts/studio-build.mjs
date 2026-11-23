@@ -8,10 +8,10 @@ import path from 'node:path';
 
 const brand = JSON.parse(fs.readFileSync('studio/brand.json', 'utf8'));
 const ep = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-const V = brand.voice;
+const V = { ...brand.voice, tempo: ep.tempo ?? brand.voice.tempo }; // سرعة خاصة بالحلقة (اختياري)
 const cacheDir = path.join('public', 'voice', 'studio');
 fs.mkdirSync(cacheDir, { recursive: true });
-const LEAD = 0.35, GAP = ep.format === 'quick' ? 0.35 : 0.5, TAIL = 1.3;
+const LEAD = ep.lead ?? 0.35, GAP = ep.gap ?? (ep.format === 'quick' ? 0.35 : 0.5), TAIL = ep.tail ?? 1.3;
 
 function tts(text, prev, next) {
   const h = crypto.createHash('sha1').update(JSON.stringify([V.id, V.model, V.settings, text])).digest('hex').slice(0, 16);
