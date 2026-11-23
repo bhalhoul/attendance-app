@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://global-newsroom.local/schemas/raw_item.schema.json",
+  "title": "RawItem",
+  "description": "One entry exactly as received from a source feed, normalised. Intake output; never edited by later stages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "source_id", "source_name", "feed_url", "url", "canonical_url", "title", "summary",
+               "language", "desk", "country", "published_at", "published_at_raw", "fetched_at",
+               "flags", "duplicate_of", "same_title_as"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^raw_[0-9a-f]{16}$", "description": "Stable id derived from the canonical URL."},
+    "source_id": {"type": "string", "minLength": 1},
+    "source_name": {"type": "string", "minLength": 1},
+    "feed_url": {"type": "string", "minLength": 1},
+    "url": {"type": "string", "minLength": 1, "description": "Link as published by the source."},
+    "canonical_url": {"type": "string", "minLength": 1, "description": "Link with tracking parameters, fragment and trailing slash removed."},
+    "title": {"type": "string", "minLength": 1},
+    "summary": {"type": "string", "description": "Plain-text summary from the feed (HTML stripped). May be empty."},
+    "language": {"type": "string", "pattern": "^[a-z]{2}$"},
+    "desk": {"enum": ["morocco", "spain_ceuta", "world", "sports", "economy"]},
+    "country": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z]{2}$"}},
+    "published_at": {"type": ["string", "null"], "format": "date-time", "description": "Publication time in UTC (ISO 8601, Z). Null when the feed gave no usable date."},
+    "published_at_raw": {"type": ["string", "null"], "description": "Date string exactly as the feed wrote it."},
+    "fetched_at": {"type": "string", "format": "date-time"},
+    "flags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["no_date", "future_date", "stale", "no_summary"]},
+      "description": "no_date: feed gave no date. future_date: date more than 1h ahead of fetch time. stale: older than the source's max_age_hours."
+    },
+    "duplicate_of": {"type": ["string", "null"], "description": "Set when this entry is the same article (same canonical URL, or same title from the same source) as an earlier item."},
+    "same_title_as": {"type": "array", "items": {"type": "string"},
+      "description": "Items from OTHER sources with a near-identical title. A hint that outlets copy one origin: NOT independent confirmation."}
+  }
+}

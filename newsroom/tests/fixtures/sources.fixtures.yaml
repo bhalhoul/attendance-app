@@ -1,0 +1,10 @@
+# Test configuration: every feed is a local fixture file. Used by the test suite and for offline demos.
+sources:
+  - {id: ma_sample,  name: "عينة مغربية",  feed_url: morocco_sample.xml,  language: ar, desk: morocco,     country: [MA], owner: "Sample Group MA", max_age_hours: 48}
+  - {id: ceuta_a,    name: "Muestra Ceuta A", feed_url: ceuta_sample.xml,  language: es, desk: spain_ceuta, country: [ES], owner: "Sample Group A"}
+  - {id: ceuta_b,    name: "Muestra Ceuta B", feed_url: ceuta_sample_b.xml, language: es, desk: spain_ceuta, country: [ES], owner: "Sample Group B"}
+  - {id: sports_s,   name: "Sample Sports", feed_url: sports_sample.atom, language: en, desk: sports,      country: [],   owner: null}
+  - {id: broken_s,   name: "Broken feed",   feed_url: broken.xml,         language: ar, desk: world,       country: [],   owner: null}
+  - {id: empty_s,    name: "Empty feed",    feed_url: empty.xml,          language: ar, desk: world,       country: [],   owner: null}
+  - {id: missing_s,  name: "Missing file",  feed_url: does_not_exist.xml, language: ar, desk: world,       country: [],   owner: null}
+  - {id: disabled_s, name: "Disabled",      feed_url: morocco_sample.xml, language: ar, desk: morocco,     country: [MA], owner: null, enabled: false}

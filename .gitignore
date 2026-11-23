@@ -1,0 +1,6 @@
+newsroom/.venv/
+__pycache__/
+.pytest_cache/
+# Intake output stays local until the storage step is approved.
+data/raw/
+data/logs/

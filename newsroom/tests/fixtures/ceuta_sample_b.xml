@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST FIXTURE: a second outlet repeating the same wire copy. Not real news. -->
+<rss version="2.0"><channel>
+<title>Muestra de prueba — Ceuta B</title><link>https://ceuta-b.test/</link><description>Fixture</description>
+<item>
+  <title>[Muestra de prueba] Reunión bilateral entre dos delegaciones ficticias</title>
+  <link>https://ceuta-b.test/n/77</link>
+  <pubDate>Mon, 23 Nov 2026 09:40:00 +0100</pubDate>
+  <description>Mismo teletipo de agencia (prueba).</description>
+</item>
+</channel></rss>

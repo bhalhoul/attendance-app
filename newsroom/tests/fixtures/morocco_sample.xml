@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST FIXTURE: invented sample entries for unit tests. Not real news. Domains use the reserved .test TLD. -->
+<rss version="2.0"><channel>
+<title>عينة اختبار — مصدر مغربي</title><link>https://ma-sample.test/</link><description>Fixture</description>
+<item>
+  <title>[عينة اختبار] افتتاح خط حافلات جديد في مدينة تجريبية</title>
+  <link>https://www.ma-sample.test/news/101/?utm_source=rss&amp;utm_medium=feed</link>
+  <pubDate>Mon, 23 Nov 2026 10:30:00 +0100</pubDate>
+  <description>&lt;p&gt;نص تجريبي &lt;b&gt;للاختبار&lt;/b&gt; فقط &amp;amp; لا يمثل خبرًا حقيقيًا.&lt;/p&gt;</description>
+</item>
+<item>
+  <title>[عينة اختبار] افتتاح خط حافلات جديد في مدينة تجريبية</title>
+  <link>https://ma-sample.test/news/101</link>
+  <pubDate>Mon, 23 Nov 2026 10:31:00 +0100</pubDate>
+  <description>نسخة مكررة من نفس الرابط بدون معاملات التتبع.</description>
+</item>
+<item>
+  <title>[عينة اختبار] افتتاحُ خطِّ حافلاتٍ جديدٍ في مدينةٍ تجريبية</title>
+  <link>https://ma-sample.test/news/101-republished</link>
+  <pubDate>Mon, 23 Nov 2026 11:00:00 +0100</pubDate>
+  <description>نفس الخبر أعيد نشره برابط جديد وبتشكيل مختلف.</description>
+</item>
+<item>
+  <title>[عينة اختبار] خبر بدون تاريخ نشر</title>
+  <link>https://ma-sample.test/news/102</link>
+  <description>هذا العنصر لا يحتوي على تاريخ.</description>
+</item>
+<item>
+  <title>[عينة اختبار] خبر قديم أعيد ظهوره في الخلاصة</title>
+  <link>https://ma-sample.test/news/50</link>
+  <pubDate>Sun, 15 Nov 2026 09:00:00 +0100</pubDate>
+  <description>تاريخه أقدم من الحد المسموح.</description>
+</item>
+<item>
+  <title>[عينة اختبار] خبر بتاريخ في المستقبل</title>
+  <link>https://ma-sample.test/news/103</link>
+  <pubDate>Wed, 25 Nov 2026 09:00:00 +0100</pubDate>
+  <description>تاريخ غير منطقي.</description>
+</item>
+<item>
+  <title>[عينة اختبار] عنصر بلا رابط</title>
+  <pubDate>Mon, 23 Nov 2026 09:00:00 +0100</pubDate>
+</item>
+</channel></rss>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TEST FIXTURE (Atom): invented sample entries for unit tests. Not real results. -->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sample Sports Feed</title><id>urn:sample:sports</id><updated>2026-11-23T11:00:00Z</updated>
+  <entry>
+    <title>[Test sample] Club A 2-1 Club B in friendly match</title>
+    <link href="https://sports-sample.test/match/9001"/>
+    <id>urn:sample:9001</id>
+    <updated>2026-11-23T10:45:00Z</updated>
+    <summary>Invented score for testing only.</summary>
+  </entry>
+</feed>

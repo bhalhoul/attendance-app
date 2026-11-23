@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TEST FIXTURE: invented sample entries for unit tests. Not real news. -->
+<rss version="2.0"><channel>
+<title>Muestra de prueba — Ceuta A</title><link>https://ceuta-a.test/</link><description>Fixture</description>
+<item>
+  <title>[Muestra de prueba] El puerto amplía su horario de atención</title>
+  <link>https://ceuta-a.test/local/2001.html#comentarios</link>
+  <pubDate>Mon, 23 Nov 2026 08:00:00 +0100</pubDate>
+  <description>Texto de prueba. No es una noticia real.</description>
+</item>
+<item>
+  <title>[Muestra de prueba] Reunión bilateral entre dos delegaciones ficticias</title>
+  <link>https://ceuta-a.test/politica/2002.html?fbclid=abc123</link>
+  <pubDate>Mon, 23 Nov 2026 09:15:00 +0100</pubDate>
+  <description>Teletipo de agencia (prueba).</description>
+</item>
+</channel></rss>
