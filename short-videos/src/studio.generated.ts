@@ -10,7 +10,8 @@ import s6 from '../studio/build/2026-11-23-gta-money.timeline.json';
 import s7 from '../studio/build/2026-11-23-gta-pc.timeline.json';
 import s8 from '../studio/build/2026-11-23-gta-price.timeline.json';
 import s9 from '../studio/build/2026-11-23-gta-trailer.timeline.json';
-import s10 from '../studio/build/2026-11-23-trend-afcon.timeline.json';
-import s11 from '../studio/build/intro-bilmukhtasar.timeline.json';
+import s10 from '../studio/build/2026-11-23-spain-elections.timeline.json';
+import s11 from '../studio/build/2026-11-23-trend-afcon.timeline.json';
+import s12 from '../studio/build/intro-bilmukhtasar.timeline.json';
 
-export const STUDIO = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11] as unknown as StudioTimeline[];
+export const STUDIO = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12] as unknown as StudioTimeline[];

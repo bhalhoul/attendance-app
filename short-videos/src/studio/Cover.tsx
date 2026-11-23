@@ -1,12 +1,14 @@
 // كوفر ملفت (1080×1920) — كل ما هو مهم داخل 1080×1440 ف الوسط (قصّ شبكة Instagram)
 import React from 'react';
-import { AbsoluteFill } from 'remotion';
+import { AbsoluteFill, Img, staticFile } from 'remotion';
 import { FONT } from '../theme';
 import { Emoji } from '../weeklypro/kit';
 import { Logo, type Brand } from './StudioVideo';
 
 export type CoverSpec = {
-  style: 'versus' | 'hero';
+  style: 'versus' | 'hero' | 'photo';
+  photo?: string;            // photo: صورة من public/
+  labels?: { t: string; c: string }[]; // أسماء تحت الصورة
   kicker: string;            // شارة فوق (مثلاً «🔥 ترند»)
   lines: string[];           // العنوان (2–3 سطور قصار)
   highlight?: number;        // رقم السطر اللي كيتلوّن
@@ -48,7 +50,16 @@ export const Cover: React.FC<CoverProps> = ({ spec, brand }) => {
           transform: 'rotate(-3deg)', boxShadow: `0 0 40px ${pri}, 0 10px 0 #0008`, border: '4px solid #fff' }}>{spec.kicker}</div>
       </div>
 
-      {spec.style === 'versus' && spec.a && spec.b ? (
+      {spec.style === 'photo' && spec.photo ? (
+        <div style={{ position: 'absolute', left: 30, right: 30, top: 360, height: 560, borderRadius: 36, overflow: 'hidden', border: '8px solid #fff', boxShadow: '0 30px 80px #000c' }}>
+          <Img src={staticFile(spec.photo)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, #000c 100%)' }} />
+          <div style={{ position: 'absolute', left: 0, right: 0, bottom: 18, display: 'flex' }}>
+            {(spec.labels ?? []).map((l, i) => <div key={i} style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+              <div style={{ background: l.c, padding: '4px 18px', borderRadius: 12, fontWeight: 900, fontSize: 40, color: '#fff', direction: 'rtl' }}>{l.t}</div></div>)}
+          </div>
+        </div>
+      ) : spec.style === 'versus' && spec.a && spec.b ? (
         <>
           {[{ x: 270, it: spec.b }, { x: 810, it: spec.a }].map(({ x, it }, i) => (
             <div key={i} style={{ position: 'absolute', left: x, top: 560, transform: 'translate(-50%,-50%)', width: 330, height: 330, borderRadius: '50%',
@@ -69,7 +80,7 @@ export const Cover: React.FC<CoverProps> = ({ spec, brand }) => {
       )}
 
       {/* العنوان */}
-      <div style={{ position: 'absolute', left: 40, right: 40, top: spec.style === 'versus' ? 940 : 960, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+      <div style={{ position: 'absolute', left: 40, right: 40, top: spec.style === 'versus' ? 940 : spec.style === 'photo' ? 950 : 960, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
         {spec.lines.map((l, i) => {
           const hl = i === spec.highlight;
           const size = Math.min(hl ? 150 : 120, Math.round(1000 / Math.max(4, [...l].length) * 1.7));

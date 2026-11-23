@@ -1,7 +1,7 @@
 // مكتبة الرسوم القابلة لإعادة الاستعمال (المنطقة A، إحداثيات محلية 820×500)
 // كل نوع كيتختار من ملف الحلقة: { "type": "hero", "at": "كلمة", ... }
 import React from 'react';
-import { Easing } from 'remotion';
+import { Easing, Img, staticFile } from 'remotion';
 import { FONT } from '../theme';
 import { Badge, Counter, Emoji, useTime } from '../weeklypro/kit';
 
@@ -158,6 +158,30 @@ export const RenderBlock: React.FC<{ b: Block; color: string; partEnd: number }>
         {flash > 0 && <div style={{ position: 'absolute', inset: 0, background: '#fff', opacity: flash }} />}
       </>);
     }
+    case 'photo': {
+      // صورة (من public/) بزوم بطيء + أسماء تحت كل جزء + نص هوك اختياري — ظاهرة من أول فريم
+      const z = 1.04 + 0.08 * Math.min(1, Math.max(0, (t - b.at) / Math.max(1, partEnd - b.at)));
+      return (<>
+        <Img src={staticFile(b.src)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${z})`, transformOrigin: b.origin ?? '50% 35%' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 45%, #000d 100%)' }} />
+        {(b.labels ?? []).map((l: any, i: number) => {
+          const n = b.labels.length, s2 = sp((l.at ?? b.at) + i * 0.15, 12, 200);
+          return <div key={i} style={{ position: 'absolute', left: (W / n) * i + W / n / 2, bottom: b.lines ? 150 : 22, transform: `translate(-50%,0) scale(${s2})`, opacity: Math.min(1, s2 * 1.5),
+            background: l.c, padding: '4px 16px', borderRadius: 12, fontFamily: FONT, fontWeight: 900, fontSize: 30, color: '#fff', direction: 'rtl', whiteSpace: 'nowrap',
+            boxShadow: '0 6px 20px #0008' }}>{l.t}</div>;
+        })}
+        {b.lines && (
+          <div style={{ position: 'absolute', left: 0, right: 0, bottom: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+            {b.lines.map((l: any, i: number) => {
+              const k = sp(b.at - 0.75 + i * 0.1, 9, 230);
+              return <div key={i} style={{ fontFamily: FONT, fontWeight: 900, fontSize: fit(l.text, l.size ?? 70, 14), lineHeight: 1.25, direction: 'rtl', whiteSpace: 'nowrap', color: l.color ?? '#fff',
+                textShadow: '0 5px 0 #000a, 0 0 30px #000', transform: `scale(${1.2 - 0.2 * k})`, opacity: Math.min(1, k * 2) }}>
+                {l.mark ? <span style={{ display: 'inline-block', background: color, padding: '0 16px 4px', borderRadius: 12 }}>{l.text}</span> : l.text}</div>;
+            })}
+          </div>
+        )}
+      </>);
+    }
     case 'question':
       return <At at={b.at} x={CX} y={H / 2}><div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 330, lineHeight: 1, color: '#ffd23f', transform: `scale(${1 + 0.04 * Math.sin(t * 6)})`, textShadow: '0 0 70px #ffd23f88' }}>؟</div></At>;
     case 'recap':
@@ -209,7 +233,7 @@ export const RenderBlock: React.FC<{ b: Block; color: string; partEnd: number }>
       const max = b.max ?? Math.max(...b.items.map((x: any) => x.v));
       const hgt = Math.min(110, 400 / b.items.length);
       return <>{b.items.map((it: any, i: number) => { const w = lin((it.at ?? b.at) + i * 0.25, (it.at ?? b.at) + 1 + i * 0.25);
-        return <div key={i} style={{ position: 'absolute', left: 50, top: 50 + i * (hgt + 20), width: 720, height: hgt, direction: 'rtl' }}>
+        return <div key={i} style={{ position: 'absolute', left: 50, top: (H - b.items.length * (hgt + 20) + 20) / 2 + i * (hgt + 20), width: 720, height: hgt, direction: 'rtl' }}>
           <div style={{ position: 'absolute', right: 0, top: 0, height: hgt, width: 560 * (it.v / max) * w, borderRadius: 16, background: it.c ?? color }} />
           <T size={Math.min(40, hgt * 0.45)} style={{ position: 'absolute', right: 20, top: hgt / 2 - 24 }}>{it.l}</T>
           <div style={{ position: 'absolute', left: 0, top: hgt / 2 - 34, fontFamily: FONT, fontWeight: 900, fontSize: 56, color: '#fff', direction: 'ltr' }}>{(it.v * w).toFixed(it.d ?? 0)}{it.u ?? ''}</div>
