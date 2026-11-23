@@ -109,6 +109,13 @@ for (const f of files) {
       await renderStill({ composition: cc, serveUrl, frame: 0, inputProps: cp, browserExecutable, imageFormat: 'jpeg', jpegQuality: 92,
         output: path.resolve(final.replace('.mp4', `-cover${ep.covers.length > 1 ? '-' + 'ABCD'[ci] : ''}.jpg`)) });
     }
+    // نسخة Instagram: الكوفر الأول مزاد ف آخر الفيديو (1.2 ث) باش يتختار من «Edit cover»
+    const cov = path.resolve(final.replace('.mp4', `-cover${ep.covers.length > 1 ? '-A' : ''}.jpg`));
+    execFileSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', final, '-loop', '1', '-t', '1.2', '-framerate', '30', '-i', cov,
+      '-f', 'lavfi', '-t', '1.2', '-i', 'anullsrc=r=48000:cl=stereo', '-filter_complex',
+      '[1:v]scale=1080:1920,format=yuv420p,setsar=1,fps=30[c];[0:v]setsar=1[m];[m][0:a][c][2:a]concat=n=2:v=1:a=1[v][a]',
+      '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k',
+      '-movflags', '+faststart', final.replace('.mp4', '-ig.mp4')]);
   } else execFileSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-ss', '2', '-i', final, '-frames:v', '1', '-q:v', '2', final.replace('.mp4', '-cover.jpg')]);
   // وصف المنشور مع المصادر
   const desc = [`${tl.brand.formats[tl.format].icon} ${tl.brand.formats[tl.format].label} | ${tl.dateLabel}`, '',
