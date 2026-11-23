@@ -1,0 +1,12 @@
+# Client & business data: local only, never in Git
+clients/
+data/
+logs/
+outputs/
+*.db
+*.sqlite
+*.xlsx
+*.csv
+.env
+.claude/settings.local.json
+__pycache__/
