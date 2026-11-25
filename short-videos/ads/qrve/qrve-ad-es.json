@@ -40,11 +40,13 @@
     {
       "key": "google",
       "color": "#4285F4",
-      "text": "Con QR ve es facilísimo: una tarjeta pequeña en tu mostrador. El cliente escanea el código con la cámara del móvil y llega directo a tus reseñas.",
+      "text": "Con QR ve es facilísimo: una tarjeta pequeña en tu mostrador, con tecnología NFC. El cliente solo acerca el móvil a la tarjeta, o escanea el código, y se abren tus reseñas al instante.",
       "cues": {
         "cardAt": "tarjeta",
+        "nfcAt": "NFC",
+        "tapAt": "acerca",
         "scanAt": "escanea",
-        "openAt": "llega"
+        "openAt": "y se abren"
       }
     },
     {
@@ -70,10 +72,10 @@
     {
       "key": "cta",
       "color": "#25D366",
-      "text": "Entra en qrve punto click o escríbenos por WhatsApp. Un escaneo… un cliente más.",
+      "text": "Entra en qrve punto click o escríbenos por WhatsApp. Acerca, escanea… y un cliente más.",
       "cues": {
         "waAt": "escríbenos",
-        "sloganAt": "Un escaneo"
+        "sloganAt": "Acerca,"
       }
     }
   ],

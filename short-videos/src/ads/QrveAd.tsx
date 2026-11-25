@@ -18,7 +18,7 @@ const L = {
     cardG: 'قيّمنا فـ Google', cardGsub: 'سكاني الكود ⭐', cardI: 'تبعنا فـ Instagram', cardM: 'المينيو', scan: 'سكان بالكاميرا 📷',
     write: 'اكتب التقييم ديالك', post: 'نشر', follow: 'تبع', following: 'كتبعو ✓', menu: [['قهوة نص نص', '1,50 €'], ['أتاي بالنعناع', '1,80 €'], ['كرواسون', '1,20 €'], ['عصير الليمون', '2,50 €']],
     price: 'غير', once: 'كتخلص مرة وحدة', nosub: 'بلا اشتراك', ship: 'التوصيل فابور 🚚', custom: '🎨 بالّوغو ديالك؟ عندنا حتى المخصص',
-    wa: 'صيفط لينا فالواتساب', slogan: 'سكان واحد… كليان جديد', size: '9×13 سم', yourBiz: 'المحل ديالك',
+    wa: 'صيفط لينا فالواتساب', slogan: 'قرّب، دير سكان… وكليان جديد', tap: '📲 قرّب التيليفون… وصافي!', orScan: '📷 ولا دير سكان للكود QR', size: '9×13 سم', yourBiz: 'المحل ديالك',
   },
   es: {
     biz: ['☕ Bar', '🍽️ Restaurante', '🛍️ Tienda'], ceuta: '📍 Ceuta', reviews: (n: number) => `${n} reseñas`, noReviews: 'Sin reseñas 😕',
@@ -26,7 +26,7 @@ const L = {
     cardG: 'Valóranos en Google', cardGsub: 'Escanea el código ⭐', cardI: 'Síguenos en Instagram', cardM: 'MENÚ', scan: 'Escanea con la cámara 📷',
     write: 'Escribe tu reseña', post: 'Publicar', follow: 'Seguir', following: 'Siguiendo ✓', menu: [['Café con leche', '1,50 €'], ['Té moruno', '1,80 €'], ['Croissant', '1,20 €'], ['Zumo natural', '2,50 €']],
     price: 'Solo', once: 'Pago único', nosub: 'Sin suscripción', ship: 'Envío gratis 🚚', custom: '🎨 ¿Con tu logo? También personalizada',
-    wa: 'Escríbenos por WhatsApp', slogan: 'Un escaneo… un cliente más', size: '9×13 cm', yourBiz: 'Tu negocio',
+    wa: 'Escríbenos por WhatsApp', slogan: 'Acerca, escanea… ¡cliente nuevo!', tap: '📲 Acerca el móvil… ¡y listo!', orScan: '📷 O escanea el código QR', size: '9×13 cm', yourBiz: 'Tu negocio',
   },
 };
 
@@ -63,27 +63,42 @@ const IgGlyph: React.FC<{ size: number; color?: string }> = ({ size, color = '#f
 );
 const IG_GRAD = 'linear-gradient(45deg,#feda75,#fa7e1e 25%,#d62976 50%,#962fbf 75%,#4f5bd5)';
 
+// علامة NFC (موجات) ف زاوية البطاقة
+const NfcWaves: React.FC<{ size: number; color: string; phase?: number }> = ({ size, color, phase = 0 }) => (
+  <svg width={size} height={size} viewBox="0 0 40 40" style={{ display: 'block' }}>
+    {[9, 16, 23].map((r, i) => { const a = Math.PI / 4, cx0 = 6, cy0 = 20;
+      return <path key={r} d={`M ${cx0 + r * Math.cos(-a)} ${cy0 + r * Math.sin(-a)} A ${r} ${r} 0 0 1 ${cx0 + r * Math.cos(a)} ${cy0 + r * Math.sin(a)}`}
+        fill="none" stroke={color} strokeWidth={3.5} strokeLinecap="round" opacity={phase ? 0.35 + 0.65 * Math.max(0, Math.sin(phase - i * 0.9)) : 1} />; })}
+  </svg>
+);
+const NfcMark: React.FC<{ w: number; color: string }> = ({ w, color }) => (
+  <div style={{ position: 'absolute', top: w * 0.035, right: w * 0.04, display: 'flex', alignItems: 'center', gap: 2, direction: 'ltr' }}>
+    <NfcWaves size={w * 0.1} color={color} />
+    <div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontWeight: 900, fontSize: w * 0.05, color }}>NFC</div>
+  </div>
+);
+
 // البطاقة 9×13
 const Card: React.FC<{ kind: 'google' | 'insta' | 'menu'; qr: QrveTimeline['qr']; lang: 'ar' | 'es'; w?: number }> = ({ kind, qr, lang, w = 340 }) => {
   const h = w * 13 / 9, T = L[lang];
   const base: React.CSSProperties = { width: w, height: h, borderRadius: w * 0.07, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between',
-    padding: `${w * 0.09}px ${w * 0.07}px`, boxSizing: 'border-box', boxShadow: '0 40px 80px #000a, 0 0 0 2px #ffffff22', fontFamily: FONT };
+    padding: `${w * 0.09}px ${w * 0.07}px`, boxSizing: 'border-box', boxShadow: '0 40px 80px #000a, 0 0 0 2px #ffffff22', fontFamily: FONT, position: 'relative' };
   if (kind === 'google') return (
-    <div style={{ ...base, background: '#fff' }}>
+    <div style={{ ...base, background: '#fff' }}><NfcMark w={w} color="#1a73e8" />
       <GoogleWord size={w * 0.2} />
       <Stars size={w * 0.12} />
       <Qr qr={qr} px={w * 0.62} />
       <div style={{ fontWeight: 900, fontSize: w * 0.085, color: '#202124', direction: lang === 'ar' ? 'rtl' : 'ltr', whiteSpace: 'nowrap' }}>{T.cardG}</div>
     </div>);
   if (kind === 'insta') return (
-    <div style={{ ...base, background: IG_GRAD }}>
+    <div style={{ ...base, background: IG_GRAD }}><NfcMark w={w} color="#fff" />
       <IgGlyph size={w * 0.22} />
       <div style={{ fontWeight: 900, fontSize: w * 0.085, color: '#fff', direction: lang === 'ar' ? 'rtl' : 'ltr', whiteSpace: 'nowrap' }}>{T.cardI}</div>
       <Qr qr={qr} px={w * 0.62} />
       <div style={{ fontWeight: 800, fontSize: w * 0.07, color: '#fff', direction: 'ltr' }}>@tu_negocio</div>
     </div>);
   return (
-    <div style={{ ...base, background: 'linear-gradient(160deg,#2b1d14,#120c08)' }}>
+    <div style={{ ...base, background: 'linear-gradient(160deg,#2b1d14,#120c08)' }}><NfcMark w={w} color="#ffcf87" />
       <div style={{ fontSize: w * 0.2, fontFamily: "'Noto Color Emoji'" }}>🍽️</div>
       <div style={{ fontWeight: 900, fontSize: w * 0.12, color: '#ffcf87', letterSpacing: 2 }}>{T.cardM}</div>
       <Qr qr={qr} px={w * 0.62} fg="#120c08" bg="#ffe9c7" />
@@ -181,29 +196,41 @@ const Scene: React.FC<{ p: Part; tl: QrveTimeline }> = ({ p, tl }) => {
       </>);
     }
     case 'google': {
-      const ca = Math.min(c.cardAt ?? S0 + 0.5, S0 + 0.3), sc = c.scanAt ?? ca + 2, op = c.openAt ?? sc + 1.5;
-      const ph = sp(sc - 0.5, 14, 120); // التيليفون كيجي فوق البطاقة
-      const scanY = interpolate(t, [sc, sc + 0.9], [0, 1], clampX);
+      const ca = Math.min(c.cardAt ?? S0 + 0.5, S0 + 0.3), nf = c.nfcAt ?? ca + 1.5, tp = c.tapAt ?? nf + 1, sc = c.scanAt ?? tp + 1.5, op = c.openAt ?? sc + 1.2;
+      const ph = sp(tp - 0.45, 14, 120); // التيليفون كيتقرب للبطاقة (NFC)
+      const touched = t >= tp + 0.15;
       const opened = t >= op;
       const fill = interpolate(t, [op + 0.3, op + 1.6], [0, 5], clampX);
+      const ripple = (k: number) => ((t - tp - 0.15 - k * 0.35) % 1.05 + 1.05) % 1.05;
       return (<>
-        <In at={S0 + 0.05} x={cx} y={Y + 40} out={op + 1.35}><Logo size={70} /></In>
+        <In at={S0 + 0.05} x={cx} y={Y + 40} out={tp - 0.6}><Logo size={70} /></In>
         <In at={ca} x={cx - 150 * ph} y={Y + 440} from="up">
           <div style={{ position: 'relative' }}>
             <Card kind="google" qr={tl.qr} lang={lang} w={360} />
             <div style={{ position: 'absolute', left: -60, bottom: -70, fontFamily: FONT, fontWeight: 800, fontSize: 30, color: '#fff', background: '#ffffff22', padding: '6px 18px', borderRadius: 20, direction: lang === 'ar' ? 'rtl' : 'ltr' }}>{T.size}</div>
+            {touched && !opened && [0, 1, 2].map((k) => <div key={k} style={{ position: 'absolute', left: '82%', top: '12%', width: 40 + ripple(k) * 420, height: 40 + ripple(k) * 420, borderRadius: '50%',
+              border: '6px solid #4285F4', transform: 'translate(-50%,-50%)', opacity: 0.8 * (1 - ripple(k)) }} />)}
           </div>
         </In>
-        {t >= sc - 0.5 && (
-          <div style={{ position: 'absolute', left: cx + 470 - 300 * ph, top: Y + 440, transform: `translate(-50%,-50%) rotate(${(1 - ph) * 20}deg)`, opacity: Math.min(1, ph * 2) }}>
+        <In at={nf} x={cx + 250} y={Y + 150} out={tp - 0.5}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#1a73e8', padding: '10px 26px', borderRadius: 30, boxShadow: '0 16px 40px #1a73e888' }}>
+            <NfcWaves size={52} color="#fff" phase={t * 6} /><div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontSize: 46, color: '#fff' }}>NFC</div>
+          </div>
+        </In>
+        {t >= tp - 0.45 && (
+          <div style={{ position: 'absolute', left: cx + 470 - 330 * ph, top: Y + 400 - 40 * ph, transform: `translate(-50%,-50%) rotate(${(1 - ph) * 25 - 8 * ph}deg)`, opacity: Math.min(1, ph * 2) }}>
             <Phone w={330}>
               {!opened ? (
-                <div style={{ position: 'absolute', inset: 0, background: '#111' }}>
-                  <div style={{ position: 'absolute', left: '50%', top: '42%', transform: 'translate(-50%,-50%)', opacity: 0.85 }}><Qr qr={tl.qr} px={200} /></div>
-                  {[0, 1, 2, 3].map((i) => <div key={i} style={{ position: 'absolute', width: 50, height: 50, left: i % 2 ? 'calc(50% + 80px)' : 'calc(50% - 130px)', top: i < 2 ? 'calc(42% - 130px)' : 'calc(42% + 80px)',
-                    borderColor: '#34A853', borderStyle: 'solid', borderWidth: `${i < 2 ? 6 : 0}px ${i % 2 ? 6 : 0}px ${i >= 2 ? 6 : 0}px ${i % 2 ? 0 : 6}px`, borderRadius: 8 }} />)}
-                  {t >= sc && <div style={{ position: 'absolute', left: '15%', width: '70%', top: `calc(42% - 120px + ${scanY * 240}px)`, height: 6, background: '#34A853', boxShadow: '0 0 20px #34A853' }} />}
-                  <div style={{ position: 'absolute', bottom: 60, width: '100%', textAlign: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 26, color: '#fff', direction: lang === 'ar' ? 'rtl' : 'ltr' }}>{T.scan}</div>
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,#1b2a4a,#0b1020)' }}>
+                  <div style={{ position: 'absolute', top: 90, width: '100%', textAlign: 'center', fontFamily: 'Arial, sans-serif', fontWeight: 700, fontSize: 64, color: '#fff' }}>12:30</div>
+                  {touched && <div style={{ position: 'absolute', left: 16, right: 16, top: 200, background: '#ffffffee', borderRadius: 22, padding: '16px 18px', display: 'flex', gap: 12, alignItems: 'center',
+                    transform: `translateY(${(1 - sp(tp + 0.15, 12, 200)) * -80}px)`, opacity: sp(tp + 0.15, 12, 200) }}>
+                    <NfcWaves size={40} color="#1a73e8" />
+                    <div style={{ display: 'flex', flexDirection: 'column', direction: 'ltr' }}>
+                      <b style={{ fontFamily: 'Arial, sans-serif', fontSize: 22, color: '#111' }}>NFC · Google</b>
+                      <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 18, color: '#555' }}>g.page/review ↗</span>
+                    </div>
+                  </div>}
                 </div>
               ) : (
                 <div style={{ position: 'absolute', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '80px 20px', gap: 26, boxSizing: 'border-box' }}>
@@ -218,6 +245,8 @@ const Scene: React.FC<{ p: Part; tl: QrveTimeline }> = ({ p, tl }) => {
             </Phone>
           </div>
         )}
+        <In at={tp + 0.2} x={cx} y={Y + 830} out={sc - 0.2}><Txt size={40} lang={lang} color="#8ab4ff">{T.tap}</Txt></In>
+        <In at={sc} x={cx} y={Y + 830}><Txt size={40} lang={lang} color="#7CFC9A">{T.orScan}</Txt></In>
         {opened && <In at={op + 1.7} x={cx} y={Y + 40}><div style={{ background: '#34A853', color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 44, padding: '8px 26px', borderRadius: 30, direction: 'ltr' }}>+1 ⭐⭐⭐⭐⭐</div></In>}
       </>);
     }
