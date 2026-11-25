@@ -17,6 +17,7 @@ import s13 from '../studio/build/2026-11-23-spain-pp-papers.timeline.json';
 import s14 from '../studio/build/2026-11-23-spain-vox-remigration.timeline.json';
 import s15 from '../studio/build/2026-11-23-trend-afcon.timeline.json';
 import s16 from '../studio/build/2026-11-25-spain-3-programs.timeline.json';
-import s17 from '../studio/build/intro-bilmukhtasar.timeline.json';
+import s17 from '../studio/build/2026-11-26-spain-3-programs.timeline.json';
+import s18 from '../studio/build/intro-bilmukhtasar.timeline.json';
 
-export const STUDIO = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17] as unknown as StudioTimeline[];
+export const STUDIO = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18] as unknown as StudioTimeline[];
