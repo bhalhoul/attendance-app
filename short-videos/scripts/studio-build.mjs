@@ -8,7 +8,8 @@ import path from 'node:path';
 
 const brand = JSON.parse(fs.readFileSync('studio/brand.json', 'utf8'));
 const ep = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-const V = { ...brand.voice, tempo: ep.tempo ?? brand.voice.tempo }; // سرعة خاصة بالحلقة (اختياري)
+const V = { ...brand.voice, ...(ep.voice ?? {}), tempo: ep.tempo ?? ep.voice?.tempo ?? brand.voice.tempo }; // صوت/سرعة خاصة بالحلقة (اختياري)
+const OUTDIR = ep.outDir ?? path.join('studio', 'build');
 const cacheDir = path.join('public', 'voice', 'studio');
 fs.mkdirSync(cacheDir, { recursive: true });
 const LEAD = ep.lead ?? 0.35, GAP = ep.gap ?? (ep.format === 'quick' ? 0.35 : 0.5), TAIL = ep.tail ?? 1.3;
@@ -83,6 +84,7 @@ ep.parts.forEach((p, i) => {
 });
 parts.forEach((p, i) => { p.sceneEnd = i + 1 < parts.length ? parts[i + 1].sceneStart : +(t - GAP + TAIL).toFixed(3); });
 const durationSec = Math.ceil((t - GAP + TAIL) * 30) / 30;
-const out = { id: ep.id, format: ep.format, dateLabel: ep.dateLabel, brand, durationSec, parts };
-fs.writeFileSync(path.join('studio', 'build', `${ep.id}.timeline.json`), JSON.stringify(out));
-console.log(`✔ studio/build/${ep.id}.timeline.json — ${durationSec.toFixed(1)}s`);
+const out = { id: ep.id, format: ep.format, dateLabel: ep.dateLabel, lang: ep.lang, brand, durationSec, parts };
+fs.mkdirSync(OUTDIR, { recursive: true });
+fs.writeFileSync(path.join(OUTDIR, `${ep.id}.timeline.json`), JSON.stringify(out));
+console.log(`✔ ${OUTDIR}/${ep.id}.timeline.json — ${durationSec.toFixed(1)}s`);

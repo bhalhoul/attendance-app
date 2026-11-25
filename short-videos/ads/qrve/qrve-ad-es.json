@@ -1,0 +1,81 @@
+{
+  "format": "ad",
+  "dateLabel": "Ceuta",
+  "gap": 0.25,
+  "lead": 0.15,
+  "tail": 3.2,
+  "outDir": "ads/build",
+  "id": "qrve-ad-es",
+  "lang": "es",
+  "voice": {
+    "id": "HfvB83WfJmz9muzlBPPN",
+    "name": "Rodrigo (ES)",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.8,
+      "style": 0.3,
+      "use_speaker_boost": true
+    },
+    "tempo": 1.12
+  },
+  "parts": [
+    {
+      "key": "hook",
+      "color": "#EA4335",
+      "text": "¿Tienes un bar, un restaurante o una tienda en Ceuta? Tus clientes salen contentos… pero casi nadie te deja una reseña en Google.",
+      "cues": {
+        "sadAt": "pero"
+      }
+    },
+    {
+      "key": "problem",
+      "color": "#FBBC05",
+      "text": "Hoy, antes de entrar en un local, la gente mira sus estrellas en Google. A tus clientes les gustas, pero les da pereza buscarte.",
+      "cues": {
+        "starsAt": "estrellas",
+        "lazyAt": "pereza"
+      }
+    },
+    {
+      "key": "google",
+      "color": "#4285F4",
+      "text": "Con QR ve es facilísimo: una tarjeta pequeña en tu mostrador. El cliente escanea el código con la cámara del móvil y llega directo a tus reseñas.",
+      "cues": {
+        "cardAt": "tarjeta",
+        "scanAt": "escanea",
+        "openAt": "llega"
+      }
+    },
+    {
+      "key": "social",
+      "color": "#E1306C",
+      "text": "También hay tarjeta para Instagram, para que te sigan sin buscar tu usuario. Y para tu menú digital: carta y precios en el móvil.",
+      "cues": {
+        "followAt": "sigan",
+        "menuAt": "Y para tu",
+        "pricesAt": "carta"
+      }
+    },
+    {
+      "key": "price",
+      "color": "#34A853",
+      "text": "Solo quince euros. Pago único, sin suscripción y con envío gratis.",
+      "cues": {
+        "onceAt": "Pago",
+        "subAt": "sin",
+        "shipAt": "con envío"
+      }
+    },
+    {
+      "key": "cta",
+      "color": "#25D366",
+      "text": "Entra en qrve punto click o escríbenos por WhatsApp. Un escaneo… un cliente más.",
+      "cues": {
+        "waAt": "escríbenos",
+        "sloganAt": "Un escaneo"
+      }
+    }
+  ],
+  "tempo": 1.12
+}

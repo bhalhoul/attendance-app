@@ -1,5 +1,6 @@
 import React from 'react';
 import { Composition } from 'remotion';
+import { QrveAd } from './ads/QrveAd';
 import { DURATION_FRAMES, FPS, HEIGHT, VARIANTS, VARIANT_INFO, WIDTH } from '../shared/timing.js';
 import { ChallengeVideo } from './ChallengeVideo';
 import './theme';
@@ -79,6 +80,9 @@ export const RemotionRoot: React.FC = () => (
           <Logo brand={brandJson as any} size={720} />
         </AbsoluteFill>
       )} />
+    <Composition<any, any> id="qrve-ad" component={QrveAd} width={1080} height={1920} fps={30} durationInFrames={300}
+      calculateMetadata={({ props }: any) => ({ durationInFrames: Math.round((props.tl?.durationSec ?? 10) * 30) })}
+      defaultProps={{ tl: null as any, withAudio: true }} />
     {STUDIO.map((tl) => (
       <Composition<any, StudioProps>
         key={tl.id}
