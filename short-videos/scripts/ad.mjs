@@ -58,10 +58,11 @@ for (const f of files) {
   master(mix);
   const musicWav = path.join(tmp, 'music.wav'); writeWav(musicWav, mix);
   const voiceWav = path.join(tmp, 'voice.wav');
-  const vin = tl.parts.flatMap((p) => ['-i', path.join('public', p.audio)]);
-  const vdel = tl.parts.map((p, i) => `[${i}:a]aresample=48000,aformat=channel_layouts=stereo,adelay=${Math.round(p.start * 1000)}:all=1[v${i}]`).join(';');
+  const vp = tl.parts.filter((p) => p.audio).map((p) => (tl.voiceFull ? { ...p, start: 0.15 } : p));
+  const vin = vp.flatMap((p) => ['-i', path.join('public', p.audio)]);
+  const vdel = vp.map((p, i) => `[${i}:a]aresample=48000,aformat=channel_layouts=stereo,adelay=${Math.round(p.start * 1000)}:all=1[v${i}]`).join(';');
   execFileSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', ...vin, '-filter_complex',
-    `${vdel};${tl.parts.map((_, i) => `[v${i}]`).join('')}amix=inputs=${tl.parts.length}:normalize=0,highpass=f=70,acompressor=threshold=-18dB:ratio=2.5:attack=8:release=150,apad=whole_dur=${D},atrim=0:${D}[v]`, '-map', '[v]', voiceWav]);
+    `${vdel};${vp.map((_, i) => `[v${i}]`).join('')}amix=inputs=${vp.length}:normalize=0,highpass=f=70,acompressor=threshold=-18dB:ratio=2.5:attack=8:release=150,apad=whole_dur=${D},atrim=0:${D}[v]`, '-map', '[v]', voiceWav]);
   const rawVideo = path.join(tmp, 'video.mp4'); let last = -1;
   await renderMedia({ composition, serveUrl, codec: 'h264', outputLocation: rawVideo, inputProps, browserExecutable, crf: 17, muted: true, pixelFormat: 'yuv420p', imageFormat: 'jpeg', jpegQuality: 95,
     onProgress: ({ progress }) => { const k = Math.floor(progress * 4); if (k !== last) { last = k; console.log(`${tl.id}: ${k * 25}%`); } } });

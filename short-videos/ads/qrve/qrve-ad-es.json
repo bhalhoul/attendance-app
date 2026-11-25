@@ -1,37 +1,37 @@
 {
   "format": "ad",
   "dateLabel": "Ceuta",
-  "gap": 0.25,
+  "single": true,
   "lead": 0.15,
-  "tail": 3.2,
+  "tail": 2.6,
   "outDir": "ads/build",
+  "tempo": 1.0,
   "id": "qrve-ad-es",
   "lang": "es",
   "voice": {
-    "id": "HfvB83WfJmz9muzlBPPN",
-    "name": "Rodrigo (ES)",
-    "model": "eleven_multilingual_v2",
+    "id": "RXPQcKYH6wnQn5NLiWCD",
+    "name": "Bobby (ES commercial)",
+    "model": "eleven_v3",
     "settings": {
       "stability": 0.5,
       "similarity_boost": 0.8,
-      "style": 0.3,
       "use_speaker_boost": true
     },
-    "tempo": 1.12
+    "tempo": 1.0
   },
   "parts": [
     {
       "key": "hook",
       "color": "#EA4335",
-      "text": "¿Tienes un bar, un restaurante o una tienda en Ceuta? Tus clientes salen contentos… pero casi nadie te deja una reseña en Google.",
+      "text": "[excited] ¿Tienes un bar, un restaurante o una tienda en Ceuta? [curious] Tus clientes salen encantados… ¿y en Google? [sighs] Ni una reseña.",
       "cues": {
-        "sadAt": "pero"
+        "sadAt": "¿y en"
       }
     },
     {
       "key": "problem",
       "color": "#FBBC05",
-      "text": "Hoy, antes de entrar en un local, la gente mira sus estrellas en Google. A tus clientes les gustas, pero les da pereza buscarte.",
+      "text": "[confident] Hoy la gente elige por las estrellas. Y tus clientes… te quieren, pero les da pereza.",
       "cues": {
         "starsAt": "estrellas",
         "lazyAt": "pereza"
@@ -40,44 +40,44 @@
     {
       "key": "google",
       "color": "#4285F4",
-      "text": "Con QR ve es facilísimo: una tarjeta pequeña en tu mostrador, con tecnología NFC. El cliente solo acerca el móvil a la tarjeta, o escanea el código, y se abren tus reseñas al instante.",
+      "text": "[excited] ¡Para eso está QR ve! Una tarjeta con NFC: el cliente acerca el móvil… ¡y zas! Se abren tus reseñas. ¿Prefiere escanear el código? También.",
       "cues": {
-        "cardAt": "tarjeta",
+        "cardAt": "Una tarjeta",
         "nfcAt": "NFC",
         "tapAt": "acerca",
-        "scanAt": "escanea",
-        "openAt": "y se abren"
+        "openAt": "¡y zas",
+        "scanAt": "escanear"
       }
     },
     {
       "key": "social",
       "color": "#E1306C",
-      "text": "También hay tarjeta para Instagram, para que te sigan sin buscar tu usuario. Y para tu menú digital: carta y precios en el móvil.",
+      "text": "Y hay tarjeta para Instagram, para que te sigan, y para tu menú digital, con precios en el móvil.",
       "cues": {
         "followAt": "sigan",
-        "menuAt": "Y para tu",
-        "pricesAt": "carta"
+        "menuAt": "y para tu menú",
+        "pricesAt": "precios"
       }
     },
     {
       "key": "price",
       "color": "#34A853",
-      "text": "Solo quince euros. Pago único, sin suscripción y con envío gratis.",
+      "text": "[excited] ¿El precio? ¡Solo quince euros! Pago único, sin suscripción y envío gratis.",
       "cues": {
         "onceAt": "Pago",
         "subAt": "sin",
-        "shipAt": "con envío"
+        "shipAt": "envío"
       }
     },
     {
       "key": "cta",
       "color": "#25D366",
-      "text": "Entra en qrve punto click o escríbenos por WhatsApp. Acerca, escanea… y un cliente más.",
+      "text": "[confident] Entra ya en qrve punto click o escríbenos por WhatsApp. [excited] Acerca, escanea… ¡y llegan los clientes!",
       "cues": {
         "waAt": "escríbenos",
         "sloganAt": "Acerca,"
       }
     }
   ],
-  "tempo": 1.12
+  "maxPause": 0.45
 }

@@ -18,7 +18,7 @@ const L = {
     cardG: 'قيّمنا فـ Google', cardGsub: 'سكاني الكود ⭐', cardI: 'تبعنا فـ Instagram', cardM: 'المينيو', scan: 'سكان بالكاميرا 📷',
     write: 'اكتب التقييم ديالك', post: 'نشر', follow: 'تبع', following: 'كتبعو ✓', menu: [['قهوة نص نص', '1,50 €'], ['أتاي بالنعناع', '1,80 €'], ['كرواسون', '1,20 €'], ['عصير الليمون', '2,50 €']],
     price: 'غير', once: 'كتخلص مرة وحدة', nosub: 'بلا اشتراك', ship: 'التوصيل فابور 🚚', custom: '🎨 بالّوغو ديالك؟ عندنا حتى المخصص',
-    wa: 'صيفط لينا فالواتساب', slogan: 'قرّب، دير سكان… وكليان جديد', tap: '📲 قرّب التيليفون… وصافي!', orScan: '📷 ولا دير سكان للكود QR', size: '9×13 سم', yourBiz: 'المحل ديالك',
+    wa: 'صيفط لينا فالواتساب', slogan: 'قرّب، دير سكان… وزيد الكليان!', tap: '📲 قرّب التيليفون… وصافي!', orScan: '📷 ولا دير سكان للكود QR', size: '9×13 سم', yourBiz: 'المحل ديالك',
   },
   es: {
     biz: ['☕ Bar', '🍽️ Restaurante', '🛍️ Tienda'], ceuta: '📍 Ceuta', reviews: (n: number) => `${n} reseñas`, noReviews: 'Sin reseñas 😕',
@@ -26,7 +26,7 @@ const L = {
     cardG: 'Valóranos en Google', cardGsub: 'Escanea el código ⭐', cardI: 'Síguenos en Instagram', cardM: 'MENÚ', scan: 'Escanea con la cámara 📷',
     write: 'Escribe tu reseña', post: 'Publicar', follow: 'Seguir', following: 'Siguiendo ✓', menu: [['Café con leche', '1,50 €'], ['Té moruno', '1,80 €'], ['Croissant', '1,20 €'], ['Zumo natural', '2,50 €']],
     price: 'Solo', once: 'Pago único', nosub: 'Sin suscripción', ship: 'Envío gratis 🚚', custom: '🎨 ¿Con tu logo? También personalizada',
-    wa: 'Escríbenos por WhatsApp', slogan: 'Acerca, escanea… ¡cliente nuevo!', tap: '📲 Acerca el móvil… ¡y listo!', orScan: '📷 O escanea el código QR', size: '9×13 cm', yourBiz: 'Tu negocio',
+    wa: 'Escríbenos por WhatsApp', slogan: 'Acerca, escanea… ¡y llegan los clientes!', tap: '📲 Acerca el móvil… ¡y listo!', orScan: '📷 O escanea el código QR', size: '9×13 cm', yourBiz: 'Tu negocio',
   },
 };
 
@@ -358,7 +358,7 @@ export const QrveAd: React.FC<QrveProps> = ({ tl, withAudio }) => {
         const o = Math.min(lin(p.sceneStart - 0.2, p.sceneStart + 0.3), 1 - lin(p.sceneEnd - 0.2, p.sceneEnd + 0.3));
         return o > 0 ? <AbsoluteFill key={p.key} style={{ opacity: o * 0.55, background: `radial-gradient(circle at 50% 38%, ${p.color}, transparent 60%)` }} /> : null;
       })}
-      {withAudio && tl.parts.map((p) => <Sequence key={p.key} from={Math.round(p.start * FPS)}><Audio src={staticFile(p.audio)} /></Sequence>)}
+      {withAudio && tl.parts.filter((p) => p.audio).map((p) => <Sequence key={p.key} from={Math.round(((tl as any).voiceFull ? 0.15 : p.start) * FPS)}><Audio src={staticFile(p.audio)} /></Sequence>)}
       {tl.parts.map((p, i) => {
         if (t < p.sceneStart - 0.05 || t > p.sceneEnd + 0.4) return null;
         const outO = i + 1 < tl.parts.length ? 1 - lin(p.sceneEnd - 0.05, p.sceneEnd + 0.3) : 1;
