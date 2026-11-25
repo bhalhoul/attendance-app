@@ -373,3 +373,61 @@ export const QrveAd: React.FC<QrveProps> = ({ tl, withAudio }) => {
     </AbsoluteFill>
   );
 };
+
+// ---------- الكوفر (1080×1920، المحتوى المهم داخل 1080×1440 ف الوسط) ----------
+const CV = {
+  ar: { h1: 'بغيتي تقييمات', h2: 'فـ Google؟', sub: '📲 قرّب التيليفون… وصافي!', price: '15€ فقط', p2: 'بلا اشتراك · التوصيل فابور', city: '📍 سبتة' },
+  es: { h1: '¿Quieres más', h2: 'reseñas en Google?', sub: '📲 Acerca el móvil… ¡y listo!', price: 'Solo 15 €', p2: 'Sin suscripción · Envío gratis', city: '📍 Ceuta' },
+};
+export const QrveCover: React.FC<{ lang: 'ar' | 'es'; qr: QrveTimeline['qr'] }> = ({ lang, qr }) => {
+  const T = CV[lang], dir = lang === 'ar' ? 'rtl' : 'ltr';
+  return (
+    <AbsoluteFill style={{ background: 'radial-gradient(circle at 50% 45%, #1d3f8f 0%, #0b1530 45%, #050913 80%)', fontFamily: FONT, overflow: 'hidden' }}>
+      <AbsoluteFill style={{ backgroundImage: 'linear-gradient(#ffffff0a 2px, transparent 2px), linear-gradient(90deg, #ffffff0a 2px, transparent 2px)', backgroundSize: '60px 60px' }} />
+      {/* أشعة */}
+      <AbsoluteFill style={{ background: 'repeating-conic-gradient(from 0deg at 50% 52%, #ffffff07 0deg 8deg, transparent 8deg 20deg)' }} />
+      {/* اللوغو + المدينة */}
+      <div style={{ position: 'absolute', top: 270, left: 0, right: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 26 }}>
+        <Logo size={74} />
+        <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 36, color: '#fff', background: '#ffffff1f', padding: '6px 22px', borderRadius: 30, direction: dir }}>{T.city}</div>
+      </div>
+      {/* العنوان */}
+      <div style={{ position: 'absolute', top: 400, left: 0, right: 0, textAlign: 'center', direction: dir }}>
+        <div style={{ fontWeight: 900, fontSize: lang === 'ar' ? 100 : 84, color: '#fff', lineHeight: 1.1, textShadow: '0 8px 30px #000' }}>{T.h1}</div>
+        <div style={{ fontWeight: 900, fontSize: lang === 'ar' ? 112 : 84, lineHeight: 1.15, color: '#FBBC05', textShadow: '0 8px 30px #000, 0 0 40px #fbbc0566' }}>{T.h2}</div>
+      </div>
+      {/* البطاقة + التيليفون + موجات NFC */}
+      <div style={{ position: 'absolute', left: 330, top: 1040, transform: 'translate(-50%,-50%) rotate(-6deg)' }}>
+        <div style={{ position: 'relative' }}>
+          <Card kind="google" qr={qr} lang={lang} w={330} />
+          {[0, 1, 2].map((k) => <div key={k} style={{ position: 'absolute', left: '86%', top: '14%', width: 120 + k * 130, height: 120 + k * 130, borderRadius: '50%', border: '7px solid #4285F4', transform: 'translate(-50%,-50%)', opacity: 0.75 - k * 0.22 }} />)}
+        </div>
+      </div>
+      <div style={{ position: 'absolute', left: 750, top: 1040, transform: 'translate(-50%,-50%) rotate(10deg)' }}>
+        <Phone w={250}>
+          <div style={{ position: 'absolute', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '64px 14px', gap: 18, boxSizing: 'border-box' }}>
+            <GoogleWord size={44} />
+            <div style={{ width: 80, height: 80, borderRadius: '50%', background: '#4285F4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 44, fontFamily: "'Noto Color Emoji'" }}>☕</div>
+            <Stars size={34} fill={5} />
+            <div style={{ background: '#1a73e8', color: '#fff', fontFamily: FONT, fontWeight: 800, fontSize: 24, padding: '8px 34px', borderRadius: 30 }}>{L[lang].post}</div>
+          </div>
+        </Phone>
+        <div style={{ position: 'absolute', right: -40, top: -30, background: '#34A853', color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 40, padding: '6px 20px', borderRadius: 26, direction: 'ltr', boxShadow: '0 10px 30px #0008' }}>+1 ⭐</div>
+      </div>
+      {/* NFC شارة */}
+      <div style={{ position: 'absolute', left: 540, top: 715, transform: 'translate(-50%,-50%)', display: 'flex', alignItems: 'center', gap: 10, background: '#1a73e8', padding: '8px 26px', borderRadius: 34, boxShadow: '0 16px 40px #1a73e8aa' }}>
+        <NfcWaves size={46} color="#fff" /><div style={{ fontFamily: 'Arial Black, Arial, sans-serif', fontSize: 42, color: '#fff' }}>NFC + QR</div>
+      </div>
+      {/* الشريط المائل */}
+      <div style={{ position: 'absolute', left: -40, right: -40, top: 1300, height: 96, background: '#EA4335', transform: 'rotate(-3deg)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 40px #0009' }}>
+        <div style={{ fontWeight: 900, fontSize: 54, color: '#fff', direction: dir }}>{T.sub}</div>
+      </div>
+      {/* الثمن */}
+      <div style={{ position: 'absolute', top: 1430, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        <div style={{ background: '#FBBC05', color: '#111', fontWeight: 900, fontSize: 64, padding: '4px 44px', borderRadius: 40, direction: dir, boxShadow: '0 0 40px #fbbc0577' }}>{T.price}</div>
+        <div style={{ fontWeight: 800, fontSize: 34, color: '#ffffffcc', direction: dir }}>{T.p2}</div>
+        <div style={{ marginTop: 10, fontFamily: 'Arial Black, Arial, sans-serif', fontSize: 44, color: '#fff', direction: 'ltr' }}>qrve.click</div>
+      </div>
+    </AbsoluteFill>
+  );
+};
